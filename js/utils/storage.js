@@ -300,11 +300,11 @@
   const getAdminConfig = () => {
     return safeExecute(() => {
       return {
-        username: localStorage.getItem('ESE_ADMIN_USERNAME') || 'admin',
+        username: localStorage.getItem('ESE_ADMIN_USERNAME') || 'Admin',
         password: localStorage.getItem('ESE_ADMIN_PASSWORD') || 'admin123',
         email: localStorage.getItem('ESE_ADMIN_EMAIL') || ''
       };
-    }, 'getAdminConfig', { username: 'admin', password: 'admin123', email: '' });
+    }, 'getAdminConfig', { username: 'Admin', password: 'admin123', email: '' });
   };
 
   /**

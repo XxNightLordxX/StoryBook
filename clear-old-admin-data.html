@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Old Admin Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        button {
+            padding: 10px 20px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Clear Old Admin Data</h1>
+    
+    <div id="status"></div>
+    
+    <button onclick="clearOldData()">Clear Old Admin Data</button>
+    <button onclick="checkData()">Check Current Data</button>
+
+    <script>
+        function clearOldData() {
+            const statusDiv = document.getElementById('status');
+            let results = [];
+            
+            results.push('<h2>Clearing Old Admin Data...</h2>');
+            
+            // Clear old admin config
+            localStorage.removeItem('ESE_ADMIN_USERNAME');
+            localStorage.removeItem('ESE_ADMIN_PASSWORD');
+            localStorage.removeItem('ESE_ADMIN_EMAIL');
+            results.push('<span class="success">✓ Cleared old admin config from localStorage</span>');
+            
+            // Clear old admin user
+            localStorage.removeItem('ese_adminUser');
+            results.push('<span class="success">✓ Cleared old admin user from localStorage</span>');
+            
+            // Clear current user
+            localStorage.removeItem('ese_currentUser');
+            results.push('<span class="success">✓ Cleared current user from localStorage</span>');
+            
+            results.push('<p class="info">Please refresh the page to apply changes.</p>');
+            
+            statusDiv.innerHTML = results.join('');
+        }
+        
+        function checkData() {
+            const statusDiv = document.getElementById('status');
+            let results = [];
+            
+            results.push('<h2>Current Admin Data:</h2>');
+            
+            const adminUsername = localStorage.getItem('ESE_ADMIN_USERNAME');
+            const adminPassword = localStorage.getItem('ESE_ADMIN_PASSWORD');
+            const adminEmail = localStorage.getItem('ESE_ADMIN_EMAIL');
+            const adminUser = localStorage.getItem('ese_adminUser');
+            const currentUser = localStorage.getItem('ese_currentUser');
+            
+            results.push(`<p><strong>ESE_ADMIN_USERNAME:</strong> ${adminUsername || 'null'}</p>`);
+            results.push(`<p><strong>ESE_ADMIN_PASSWORD:</strong> ${adminPassword ? '***' : 'null'}</p>`);
+            results.push(`<p><strong>ESE_ADMIN_EMAIL:</strong> ${adminEmail || 'null'}</p>`);
+            results.push(`<p><strong>ese_adminUser:</strong></p><pre>${adminUser || 'null'}</pre>`);
+            results.push(`<p><strong>ese_currentUser:</strong></p><pre>${currentUser || 'null'}</pre>`);
+            
+            statusDiv.innerHTML = results.join('');
+        }
+        
+        // Check data on load
+        window.addEventListener('DOMContentLoaded', checkData);
+    </script>
+</body>
+</html>
