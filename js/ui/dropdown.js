@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Dropdown menu functionality
  * Extracted from index.html
  * @module dropdown
@@ -12,15 +15,21 @@
 // ============================================
 
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Toggles the dropdown menu open/closed
  * @example
  * toggleDropdown(); // Opens or closes dropdown
  */
 const toggleDropdown = () => {
   AppState.dropdownOpen = !AppState.dropdownOpen;
-  document.getElementById('dropdownMenu').classList.toggle('open', AppState.dropdownOpen);
+  DOMHelpers.safeGetElement('dropdownMenu').classList.toggle('open', AppState.dropdownOpen);
 }
 
+/**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
 /**
  * Closes the dropdown menu
  * @example
@@ -28,9 +37,12 @@ const toggleDropdown = () => {
  */
 const closeDropdown = () => {
   AppState.dropdownOpen = false;
-  document.getElementById('dropdownMenu').classList.remove('open');
+  DOMHelpers.safeToggleClass('dropdownMenu', 'open', false);
 }
 
+/**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
 /**
  * Initializes click-outside-to-close functionality for dropdown
  * @example

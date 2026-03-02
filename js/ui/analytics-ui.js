@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Analytics UI Module
  * Provides user interface for analytics dashboard
  * 
@@ -12,6 +15,9 @@
     let currentTab = 'overview';
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Initialize analytics UI
      */
     const init = () => {
@@ -20,6 +26,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create analytics modal
      */
     const createAnalyticsModal = () => {
@@ -87,10 +96,13 @@
 `;
 
         document.body.insertAdjacentHTML('beforeend', modalHTML);
-        analyticsModal = document.getElementById('analytics-modal');
+        analyticsModal = DOMHelpers.safeGetElement('analytics-modal');
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create overview tab content
      */
     const createOverviewContent = () => {
@@ -128,6 +140,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create sessions tab content
      */
     const createSessionsContent = () => {
@@ -162,6 +177,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create chapters tab content
      */
     const createChaptersContent = () => {
@@ -196,6 +214,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create daily stats tab content
      */
     const createDailyContent = () => {
@@ -229,6 +250,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create actions tab content
      */
     const createActionsContent = () => {
@@ -268,6 +292,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Open analytics modal
      */
     const openModal = () => {
@@ -278,6 +305,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Close analytics modal
      */
     const closeModal = () => {
@@ -287,6 +317,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Switch between tabs
      * @param {string} tabName - Tab name
      */
@@ -305,13 +338,16 @@
         document.querySelectorAll('.tab-content').forEach(content => {
             content.classList.remove('active');
         });
-        document.getElementById('tab-' + tabName).classList.add('active');
+        DOMHelpers.safeGetElement('tab-' + tabName).classList.add('active');
 
         // Update charts for the active tab
         updateCharts(tabName);
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update dashboard with current data
      */
     const updateDashboard = () => {
@@ -342,45 +378,49 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update overview statistics
      * @param {object} summary - Analytics summary
      */
     const updateOverviewStats = (summary) => {
-        document.getElementById('stat-total-sessions').textContent = 
-            summary.sessionStats.totalSessions;
+        DOMHelpers.safeSetText('stat-total-sessions', summary.sessionStats.totalSessions);
         
         const totalHours = Math.round(summary.sessionStats.totalDuration / (1000 * 60 * 60) * 10) / 10;
-        document.getElementById('stat-total-time').textContent = totalHours + 'h';
+        DOMHelpers.safeSetText('stat-total-time', totalHours + 'h');
         
-        document.getElementById('stat-chapters-read').textContent = 
-            summary.sessionStats.totalChaptersRead;
+        DOMHelpers.safeSetText('stat-chapters-read', summary.sessionStats.totalChaptersRead);
         
-        document.getElementById('stat-total-actions').textContent = 
-            summary.actionStats.totalActions;
+        DOMHelpers.safeSetText('stat-total-actions', summary.actionStats.totalActions);
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update session statistics
      * @param {object} summary - Analytics summary
      */
     const updateSessionStats = (summary) => {
         const avgMinutes = Math.round(summary.sessionStats.averageDuration / (1000 * 60));
-        document.getElementById('stat-avg-session-duration').textContent = avgMinutes + 'm';
+        DOMHelpers.safeSetText('stat-avg-session-duration', avgMinutes + 'm');
         
-        document.getElementById('stat-avg-chapters-per-session').textContent = 
-            Math.round(summary.sessionStats.avgChaptersPerSession * 10) / 10;
+        DOMHelpers.safeSetText('stat-avg-chapters-per-session', Math.round(summary.sessionStats.avgChaptersPerSession * 10) / 10);
         
         // Update recent sessions list
         updateRecentSessionsList();
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update chapter statistics
      * @param {object} summary - Analytics summary
      */
     const updateChapterStats = (summary) => {
-        document.getElementById('stat-total-views').textContent = 
-            summary.chapterStats.totalViews;
+        DOMHelpers.safeSetText('stat-total-views', summary.chapterStats.totalViews);
         
         // Calculate average reading time
         let totalTime = 0;
@@ -390,19 +430,22 @@
             count++;
         });
         const avgMinutes = count > 0 ? Math.round(totalTime / count / (1000 * 60)) : 0;
-        document.getElementById('stat-avg-reading-time').textContent = avgMinutes + 'm';
+        DOMHelpers.safeSetText('stat-avg-reading-time', avgMinutes + 'm');
         
         // Update chapter details list
         updateChapterDetailsList(summary);
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update daily statistics
      * @param {object} summary - Analytics summary
      */
     const updateDailyStats = (summary) => {
         // Update daily table
-        const tableBody = document.getElementById('daily-table-body');
+        const tableBody = DOMHelpers.safeGetElement('daily-table-body');
         
         if (summary.dailyStats.length === 0) {
             tableBody.innerHTML = '<tr><td colspan="6" class="no-data">No daily data available</td></tr>';
@@ -422,24 +465,27 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update action statistics
      * @param {object} summary - Analytics summary
      */
     const updateActionStats = (summary) => {
-        document.getElementById('stat-saves').textContent = 
-            summary.actionStats.actionCounts['save'] || 0;
+        DOMHelpers.safeSetText('stat-saves', summary.actionStats.actionCounts['save'] || 0);
         
-        document.getElementById('stat-bookmarks').textContent = 
-            summary.actionStats.actionCounts['bookmark'] || 0;
+        DOMHelpers.safeSetText('stat-bookmarks', summary.actionStats.actionCounts['bookmark'] || 0);
         
-        document.getElementById('stat-searches').textContent = 
-            summary.actionStats.actionCounts['search'] || 0;
+        DOMHelpers.safeSetText('stat-searches', summary.actionStats.actionCounts['search'] || 0);
         
         // Update recent actions list
         updateRecentActionsList();
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update charts for specific tab
      * @param {string} tabName - Tab name
      */
@@ -468,10 +514,13 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create daily activity chart
      */
     const createDailyActivityChart = () => {
-        const canvas = document.getElementById('daily-chart');
+        const canvas = DOMHelpers.safeGetElement('daily-chart');
         if (!canvas) return;
         
         const ctx = canvas.getContext('2d');
@@ -504,10 +553,13 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create session duration chart
      */
     const createSessionDurationChart = () => {
-        const canvas = document.getElementById('session-chart');
+        const canvas = DOMHelpers.safeGetElement('session-chart');
         if (!canvas) return;
         
         const ctx = canvas.getContext('2d');
@@ -522,10 +574,13 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create chapter popularity chart
      */
     const createChapterPopularityChart = () => {
-        const canvas = document.getElementById('chapter-chart');
+        const canvas = DOMHelpers.safeGetElement('chapter-chart');
         if (!canvas) return;
         
         const ctx = canvas.getContext('2d');
@@ -540,10 +595,13 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create daily time chart
      */
     const createDailyTimeChart = () => {
-        const canvas = document.getElementById('daily-time-chart');
+        const canvas = DOMHelpers.safeGetElement('daily-time-chart');
         if (!canvas) return;
         
         const ctx = canvas.getContext('2d');
@@ -558,10 +616,13 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create action distribution chart
      */
     const createActionDistributionChart = () => {
-        const canvas = document.getElementById('action-chart');
+        const canvas = DOMHelpers.safeGetElement('action-chart');
         if (!canvas) return;
         
         const ctx = canvas.getContext('2d');
@@ -576,10 +637,13 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update recent sessions list
      */
     const updateRecentSessionsList = () => {
-        const listContainer = document.getElementById('recent-sessions-list');
+        const listContainer = DOMHelpers.safeGetElement('recent-sessions-list');
         if (!listContainer) return;
         
         const summary = Analytics.getSummary();
@@ -604,11 +668,14 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update chapter details list
      * @param {object} summary - Analytics summary
      */
     const updateChapterDetailsList = (summary) => {
-        const listContainer = document.getElementById('chapter-details-list');
+        const listContainer = DOMHelpers.safeGetElement('chapter-details-list');
         if (!listContainer) return;
         
         const chapters = Object.entries(summary.chapterStats.chapterViews)
@@ -639,10 +706,13 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update recent actions list
      */
     const updateRecentActionsList = () => {
-        const listContainer = document.getElementById('recent-actions-list');
+        const listContainer = DOMHelpers.safeGetElement('recent-actions-list');
         if (!listContainer) return;
         
         const actions = Analytics.getMetrics().userActions.slice(-10).reverse();
@@ -666,6 +736,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Get icon for action type
      * @param {string} actionType - Action type
      * @returns {string} Icon emoji
@@ -683,6 +756,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Export analytics data
      * @param {string} format - Export format
      */
@@ -708,6 +784,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Clear analytics data
      */
     const clearData = () => {
@@ -719,6 +798,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format date for display
      * @param {string} dateString - Date string
      * @returns {string} Formatted date
@@ -733,6 +815,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format date and time for display
      * @param {number} timestamp - Timestamp
      * @returns {string} Formatted date and time
@@ -748,6 +833,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format duration for display
      * @param {number} milliseconds - Duration in milliseconds
      * @returns {string} Formatted duration
@@ -767,6 +855,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Setup event listeners
      */
     const setupEventListeners = () => {

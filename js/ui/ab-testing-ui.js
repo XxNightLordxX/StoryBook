@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * A/B Testing UI Component
  * 
  * Provides user interface for:
@@ -21,6 +24,9 @@
   let currentTab = 'experiments';
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Open A/B testing modal
    */
   const openModal = () => {
@@ -32,6 +38,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Close A/B testing modal
    */
   const closeModal = () => {
@@ -41,6 +50,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Create modal element
    */
   const createModal = () => {
@@ -170,6 +182,9 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Switch to a different tab
    * @param {string} tabName - Tab name
    */
@@ -189,7 +204,7 @@
       content.style.display = 'none';
     });
 
-    const activeContent = document.getElementById(`ab-testing-${tabName}`);
+    const activeContent = DOMHelpers.safeGetElement(`ab-testing-${tabName}`);
     if (activeContent) {
       activeContent.style.display = 'block';
     }
@@ -209,12 +224,15 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Load experiments list
    */
   const loadExperiments = () => {
     const experiments = window.ABTesting.getAllExperiments();
-    const container = document.getElementById('ab-testing-experiments-list');
-    const statusFilter = document.getElementById('ab-testing-status-filter').value;
+    const container = DOMHelpers.safeGetElement('ab-testing-experiments-list');
+    const statusFilter = DOMHelpers.safeGetElement('ab-testing-status-filter').value;
 
     let filteredExperiments = experiments;
     if (statusFilter !== 'all') {
@@ -273,6 +291,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Filter experiments by status
    */
   const filterExperiments = () => {
@@ -280,17 +301,20 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Create new experiment
    * @param {Event} event - Form submit event
    */
   const createExperiment = (event) => {
     event.preventDefault();
 
-    const id = document.getElementById('experiment-id').value.trim();
-    const name = document.getElementById('experiment-name').value.trim();
-    const description = document.getElementById('experiment-description').value.trim();
-    const minSampleSize = parseInt(document.getElementById('min-sample-size').value);
-    const confidenceLevel = parseFloat(document.getElementById('confidence-level').value);
+    const id = DOMHelpers.safeGetElement('experiment-id').value.trim();
+    const name = DOMHelpers.safeGetElement('experiment-name').value.trim();
+    const description = DOMHelpers.safeGetElement('experiment-description').value.trim();
+    const minSampleSize = parseInt(DOMHelpers.safeGetElement('min-sample-size').value);
+    const confidenceLevel = parseFloat(DOMHelpers.safeGetElement('confidence-level').value);
 
     // Collect variants
     const variantRows = document.querySelectorAll('.ab-testing-variant-row');
@@ -311,7 +335,7 @@
     });
 
     if (variants.length < 2) {
-      alert('Please add at least 2 variants');
+      showNotification('Please add at least 2 variants');
       return;
     }
 
@@ -326,7 +350,7 @@
     });
 
     // Reset form and switch to experiments tab
-    document.getElementById('ab-testing-create-form').reset();
+    DOMHelpers.safeGetElement('ab-testing-create-form').reset();
     switchTab('experiments');
 
     // Show success notification
@@ -336,6 +360,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Activate experiment
    * @param {string} experimentId - Experiment ID
    */
@@ -351,6 +378,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Pause experiment
    * @param {string} experimentId - Experiment ID
    */
@@ -366,6 +396,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Complete experiment
    * @param {string} experimentId - Experiment ID
    */
@@ -381,6 +414,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Delete experiment
    * @param {string} experimentId - Experiment ID
    */
@@ -400,10 +436,13 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Add variant row to form
    */
   const addVariant = () => {
-    const container = document.getElementById('ab-testing-variants-container');
+    const container = DOMHelpers.safeGetElement('ab-testing-variants-container');
     const variantRow = document.createElement('div');
     variantRow.className = 'ab-testing-variant-row';
     variantRow.innerHTML = `
@@ -418,15 +457,18 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Remove variant row
    * @param {HTMLElement} button - Remove button
    */
   const removeVariant = (button) => {
-    const container = document.getElementById('ab-testing-variants-container');
+    const container = DOMHelpers.safeGetElement('ab-testing-variants-container');
     if (container.children.length > 1) {
       button.parentElement.remove();
     } else {
-      alert('You must have at least 2 variants');
+      showNotification('You must have at least 2 variants');
     }
   }
 
@@ -435,11 +477,14 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Load results filter dropdown
    */
   const loadResultsFilter = () => {
     const experiments = window.ABTesting.getAllExperiments();
-    const filter = document.getElementById('ab-testing-results-filter');
+    const filter = DOMHelpers.safeGetElement('ab-testing-results-filter');
     
     filter.textContent = '';
     const defaultOpt = document.createElement('option');
@@ -455,11 +500,14 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Load experiment results
    */
   const loadResults = () => {
-    const experimentId = document.getElementById('ab-testing-results-filter').value;
-    const container = document.getElementById('ab-testing-results-container');
+    const experimentId = DOMHelpers.safeGetElement('ab-testing-results-filter').value;
+    const container = DOMHelpers.safeGetElement('ab-testing-results-container');
 
     if (!experimentId) {
       container.innerHTML = '<p class="ab-testing-empty-state">Select an experiment to view results</p>';
@@ -545,21 +593,27 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * View results for specific experiment
    * @param {string} experimentId - Experiment ID
    */
   const viewResults = (experimentId) => {
     switchTab('results');
-    document.getElementById('ab-testing-results-filter').value = experimentId;
+    DOMHelpers.safeGetElement('ab-testing-results-filter').value = experimentId;
     loadResults();
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Load statistics
    */
   const loadStatistics = () => {
     const stats = window.ABTesting.getStatistics();
-    const container = document.getElementById('ab-testing-statistics-grid');
+    const container = DOMHelpers.safeGetElement('ab-testing-statistics-grid');
 
     container.innerHTML = `
       <div class="ab-testing-stat-card">

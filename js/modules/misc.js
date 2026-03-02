@@ -17,7 +17,6 @@ window.miscJsLoaded = true;
     } else if (typeof window.showNotification === 'function') {
       window.showNotification(...args);
     } else {
-      console.log('[Notification]', ...args);
     }
   };
   
@@ -55,7 +54,7 @@ const addSidebarItem = (chapter) => {
       item.className = 'sidebar-item';
       item.dataset.num = chapter.number;
       item.onclick = () => {
-        alert(`Clicked chapter ${chapter.number}: ${chapter.title}`);
+        showNotification(`Clicked chapter ${chapter.number}: ${chapter.title}`);
         showChapter(chapter.number);
         if (window.innerWidth < 768) toggleSidebar();
       };
@@ -159,7 +158,6 @@ const generateNewChapter = () => {
       updateStatsBar();
       updateDropdownStats();
       updateBadge();
-      updateAdminProgressInfo();
 
       safeShowNotification('chapter-notif', '📖 New Chapter', `Ch. ${chapter.number}: ${chapter.title}`);
 
@@ -189,13 +187,13 @@ const showChapter = (num) => {
       
       if (!container) {
         console.error('❌ storyContainer element not found!');
-        alert('storyContainer element not found!');
+        showNotification('storyContainer element not found!');
         return;
       }
       
       if (!chapter) {
         console.error(`❌ Chapter ${num} not found in AppState.chapters`);
-        alert(`Chapter ${num} not found in AppState.chapters`);
+        showNotification(`Chapter ${num} not found in AppState.chapters`);
         return;
       }
       
@@ -533,8 +531,6 @@ const setChapterSpeed = (ms) => {
       }
 
       // Update UI
-      updateSpeedDisplay();
-      highlightActiveSpeed();
 
       // Reset pause display if speed changed while paused
       if (AppState.paused) {
@@ -562,17 +558,6 @@ const formatSpeed = (ms) => {
       if (ms < 60000) return (ms / 1000) + 's';
       if (ms < 3600000) return (ms / 60000) + 'm';
       return (ms / 3600000).toFixed(1) + 'h';
-    }
-
-const updateSpeedDisplay = () => {
-      const display = DOMHelpers.safeGetElement('speedValueDisplay');
-      if (display) display.textContent = formatSpeed(CHAPTER_INTERVAL_MS);
-    }
-
-const highlightActiveSpeed = () => {
-      document.querySelectorAll('.speed-btn').forEach(btn => {
-        btn.classList.toggle('active', parseInt(btn.dataset.speed) === CHAPTER_INTERVAL_MS);
-      });
     }
 
 const toggleDirectorMode = () => {
@@ -742,15 +727,6 @@ const updateStatusScreen = () => {
       }
     }
 
-const setCustomSpeedScreen = () => {
-      const input = DOMHelpers.safeGetElement('customSpeedInputScreen');
-      const ms = parseInt(input.value) * 1000;
-      if (isNaN(ms) || ms < 1000 || ms > 3600000) {
-        safeShowNotification('combat-notif', '❌ Invalid Speed', 'Enter a value between 1 and 3600 seconds');
-        return;
-      }
-      setSpeed(ms);
-    }
 
 const submitDirectiveScreen = () => {
       const text = DOMHelpers.safeGetElement('directiveTextScreen').value.trim();
@@ -811,60 +787,8 @@ const getActiveRules = () => {
       return storyRules.filter(r => r.active);
     }
 
-const updateGenerationMode = () => {
-      generationMode = DOMHelpers.safeGetElement('generationMode').value;
-      Storage.setItem('ese_generationMode', generationMode);
-      updateAdminProgressInfo();
-      safeShowNotification('level-notif', '🎮 Mode Changed', `Generation: ${generationMode === 'unlimited' ? 'Unlimited' : 'Admin Progress'}`);
-    }
 
-const updateAdminProgressInfo = () => {
-      const info = DOMHelpers.safeGetElement('adminProgressInfo');
-      if (!info) return;
-      if (generationMode === 'admin_progress') {
-        info.style.display = 'block';
-        const adminCh = DOMHelpers.safeGetElement('adminCurrentChapter');
-        if (adminCh) adminCh.textContent = AppState.currentChapter;
-        const genCount = DOMHelpers.safeGetElement('generatedChaptersCount');
-        if (genCount) genCount.textContent = AppState.totalGenerated;
-      } else {
-        info.style.display = 'none';
-      }
-    }
 
-const resetStory = () => {
-      if (!confirm('⚠️ Are you sure you want to reset the story to Chapter 1?\n\nThis will:\n• Delete all generated chapters\n• Reset MC stats to level 1\n• Clear all directives\n• Keep story rules intact\n\nThis action cannot be undone!')) {
-        return;
-      }
-      
-      // Reset app state
-      AppState.chapters = [];
-      AppState.currentChapter = 1;
-      AppState.totalGenerated = 0;
-      
-      // Clear generation interval
-      if (AppState.generationInterval) {
-        clearInterval(AppState.generationInterval);
-        AppState.generationInterval = null;
-      }
-      
-      // Reset story engine
-      StoryEngine.reset();
-      
-      // Clear directives
-      Storage.removeItem('ese_directives');
-      
-      // Update UI
-      DOMHelpers.safeGetElement('storyContainer').innerHTML = '';
-      updateChapterNav();
-      updateStats();
-      updateDirectiveList();
-      
-      // Restart generation
-      catchUpAndStart();
-      
-      safeShowNotification('level-notif', '🔄 Story Reset', 'Story has been reset to Chapter 1!');
-    }
 
 const quickResetStory = () => {
       // Reset app state
@@ -894,38 +818,6 @@ const quickResetStory = () => {
       catchUpAndStart();
     }
 
-const togglePause = () => {
-      AppState.paused = !AppState.paused;
-      const pauseIcon = DOMHelpers.safeGetElement('pauseIcon');
-      const pauseLabel = DOMHelpers.safeGetElement('pauseLabel');
-      const pauseBtn = DOMHelpers.safeGetElement('pauseBtn');
-      const speedDisplay = DOMHelpers.safeGetElement('speedCurrentDisplay');
-
-      if (AppState.paused) {
-        // Pause — clear interval
-        if (AppState.generationInterval) {
-          clearInterval(AppState.generationInterval);
-          AppState.generationInterval = null;
-        }
-        Storage.setPausedState(true);
-        pauseIcon.textContent = '▶️';
-        pauseLabel.textContent = 'Resume Generation';
-        pauseBtn.classList.add('paused');
-        speedDisplay.innerHTML = '<strong style="color:#f87171;">⏸️ PAUSED</strong>';
-        safeShowNotification('combat-notif', '⏸️ Paused', 'Chapter generation paused.');
-      } else {
-        // Resume — restart interval
-        Storage.setPausedState(false);
-        generateNewChapter(); // Generate one immediately
-        AppState.generationInterval = setInterval(generateNewChapter, CHAPTER_INTERVAL_MS);
-        pauseIcon.textContent = '⏸️';
-        pauseLabel.textContent = 'Pause Generation';
-        pauseBtn.classList.remove('paused');
-        updateSpeedDisplay();
-        DOMHelpers.safeGetElement('speedCurrentDisplay').innerHTML = `Current: <strong>1 chapter every <span id="speedValueDisplay">${formatSpeed(CHAPTER_INTERVAL_MS)}</span></strong>`;
-        safeShowNotification('level-notif', '▶️ Resumed', `Generating 1 chapter every ${formatSpeed(CHAPTER_INTERVAL_MS)}`);
-      }
-    }
 
 const submitDirective = () => {
       const text = DOMHelpers.safeGetElement('directiveText').value.trim();
@@ -1187,8 +1079,6 @@ const closeSubModal = () => {
     setChapterSpeed: setChapterSpeed,
     setCustomSpeed: setCustomSpeed,
     formatSpeed: formatSpeed,
-    updateSpeedDisplay: updateSpeedDisplay,
-    highlightActiveSpeed: highlightActiveSpeed,
     toggleDirectorMode: toggleDirectorMode,
     showDirectorModeToggle: showDirectorModeToggle,
     hideDirectorModeToggle: hideDirectorModeToggle,
@@ -1196,17 +1086,12 @@ const closeSubModal = () => {
     toggleSection: toggleSection,
     toggleStatusScreen: toggleStatusScreen,
     updateStatusScreen: updateStatusScreen,
-    setCustomSpeedScreen: setCustomSpeedScreen,
     submitDirectiveScreen: submitDirectiveScreen,
     addStoryRule: addStoryRule,
     updateStoryRulesList: updateStoryRulesList,
     removeStoryRule: removeStoryRule,
     getActiveRules: getActiveRules,
-    updateGenerationMode: updateGenerationMode,
-    updateAdminProgressInfo: updateAdminProgressInfo,
-    resetStory: resetStory,
     quickResetStory: quickResetStory,
-    togglePause: togglePause,
     submitDirective: submitDirective,
     updateDirectiveList: updateDirectiveList,
     updateAdminCredentials: updateAdminCredentials,
@@ -1251,26 +1136,18 @@ const closeSubModal = () => {
     window.setChapterSpeed = setChapterSpeed;
     window.setCustomSpeed = setCustomSpeed;
     window.formatSpeed = formatSpeed;
-    window.updateSpeedDisplay = updateSpeedDisplay;
-    window.highlightActiveSpeed = highlightActiveSpeed;
-    window.toggleDirectorMode = toggleDirectorMode;
     window.showDirectorModeToggle = showDirectorModeToggle;
     window.hideDirectorModeToggle = hideDirectorModeToggle;
     window.toggleDirectorModeFromUser = toggleDirectorModeFromUser;
     window.toggleSection = toggleSection;
     window.toggleStatusScreen = toggleStatusScreen;
     window.updateStatusScreen = updateStatusScreen;
-    window.setCustomSpeedScreen = setCustomSpeedScreen;
     window.submitDirectiveScreen = submitDirectiveScreen;
     window.addStoryRule = addStoryRule;
     window.updateStoryRulesList = updateStoryRulesList;
     window.removeStoryRule = removeStoryRule;
     window.getActiveRules = getActiveRules;
-    window.updateGenerationMode = updateGenerationMode;
-    window.updateAdminProgressInfo = updateAdminProgressInfo;
-    window.resetStory = resetStory;
     window.quickResetStory = quickResetStory;
-    window.togglePause = togglePause;
     window.submitDirective = submitDirective;
     window.updateDirectiveList = updateDirectiveList;
     window.updateAdminCredentials = updateAdminCredentials;

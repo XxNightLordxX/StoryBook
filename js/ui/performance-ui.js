@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Performance UI Module
  * Manages performance monitoring interface
  * @module performance-ui
@@ -8,29 +11,38 @@
   'use strict';
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Opens the performance modal
    */
   const openPerformanceModal = () => {
-    const modal = document.getElementById('performance-modal');
+    const modal = DOMHelpers.safeGetElement('performance-modal');
     if (!modal) {
       createPerformanceModal();
     }
     
     refreshPerformanceMetrics();
-    document.getElementById('performance-modal').classList.add('active');
+    DOMHelpers.safeToggleClass('performance-modal', 'active', true);
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Closes the performance modal
    */
   const closePerformanceModal = () => {
-    const modal = document.getElementById('performance-modal');
+    const modal = DOMHelpers.safeGetElement('performance-modal');
     if (modal) {
       modal.classList.remove('active');
     }
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Creates the performance modal HTML structure
    */
   const createPerformanceModal = () => {
@@ -79,6 +91,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Refreshes performance metrics display
    */
   const refreshPerformanceMetrics = () => {
@@ -88,11 +103,14 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Renders page performance metrics
    */
   const renderPageMetrics = () => {
     const metrics = Performance.getPerformanceMetrics();
-    const pageMetrics = document.getElementById('page-metrics');
+    const pageMetrics = DOMHelpers.safeGetElement('page-metrics');
     
     if (!pageMetrics) return;
     
@@ -139,11 +157,14 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Renders cache metrics
    */
   const renderCacheMetrics = () => {
     const cacheStats = Performance.getCacheStats();
-    const cacheMetrics = document.getElementById('cache-metrics');
+    const cacheMetrics = DOMHelpers.safeGetElement('cache-metrics');
     
     if (!cacheMetrics) return;
     
@@ -190,10 +211,13 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Renders optimization status
    */
   const renderOptimizationStatus = () => {
-    const optimizationList = document.getElementById('optimization-list');
+    const optimizationList = DOMHelpers.safeGetElement('optimization-list');
     
     if (!optimizationList) return;
     
@@ -242,6 +266,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Formats time in milliseconds
    * @param {number} ms - Time in milliseconds
    * @returns {string} Formatted time
@@ -252,6 +279,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Gets status based on value and threshold
    * @param {number} value - Value to check
    * @param {number} threshold - Threshold value
@@ -263,6 +293,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Clears cache
    */
   const clearCache = () => {
@@ -274,6 +307,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Refreshes metrics
    */
   const refreshMetrics = () => {
@@ -282,6 +318,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Initializes performance optimizations
    */
   const initializeOptimizations = () => {
@@ -299,6 +338,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Optimizes chapter loading
    */
   const optimizeChapterLoading = () => {
@@ -323,26 +365,35 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Shows loading indicator
    */
   const showLoadingIndicator = () => {
-    const indicator = document.getElementById('loading-indicator');
+    const indicator = DOMHelpers.safeGetElement('loading-indicator');
     if (indicator) {
       indicator.style.display = 'flex';
     }
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Hides loading indicator
    */
   const hideLoadingIndicator = () => {
-    const indicator = document.getElementById('loading-indicator');
+    const indicator = DOMHelpers.safeGetElement('loading-indicator');
     if (indicator) {
       indicator.style.display = 'none';
     }
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Adds loading indicators
    */
   const addLoadingIndicators = () => {

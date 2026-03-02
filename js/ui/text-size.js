@@ -48,7 +48,7 @@ const applyTextSize = () => {
  * updateTextSizeInput(); // Updates input field
  */
 const updateTextSizeInput = () => {
-  const input = document.getElementById('textSizeInput');
+  const input = DOMHelpers.safeGetElement('textSizeInput');
   if (input) {
     input.value = currentTextSize;
   }

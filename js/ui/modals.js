@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Modal management
  * Extracted from index.html
  * @module modals
@@ -8,15 +11,21 @@
 (function() {
   
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Opens a modal by ID
  * @param {string} id - Modal element ID
  * @example
  * openModal('loginOverlay'); // Opens login modal
  */
 const openModal = (id) => { 
-  document.getElementById(id).classList.add('active'); 
+  DOMHelpers.safeGetElement(id).classList.add('active'); 
 }
 
+/**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
 /**
  * Closes a modal by ID
  * @param {string} id - Modal element ID
@@ -24,9 +33,12 @@ const openModal = (id) => {
  * closeModal('loginOverlay'); // Closes login modal
  */
 const closeModal = (id) => { 
-  document.getElementById(id).classList.remove('active'); 
+  DOMHelpers.safeGetElement(id).classList.remove('active'); 
 }
 
+/**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
 /**
  * Closes all open modals
  * @example

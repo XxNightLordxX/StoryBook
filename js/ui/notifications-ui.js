@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Notification System UI Module
  * 
  * User interface for managing notifications including:
@@ -85,7 +88,7 @@
     }
 
     const setupEventListeners = () => {
-        document.getElementById(MODAL_ID).addEventListener('click', (e) => {
+        DOMHelpers.safeGetElement(MODAL_ID).addEventListener('click', (e) => {
             if (e.target.id === MODAL_ID) {
                 closeModal();
             }
@@ -96,7 +99,7 @@
 
     const openModal = () => {
         try {
-            const modal = document.getElementById(MODAL_ID);
+            const modal = DOMHelpers.safeGetElement(MODAL_ID);
             modal.style.display = 'block';
             refreshCurrentTab();
             updateUnreadBadge();
@@ -107,7 +110,7 @@
 
     const closeModal = () => {
         try {
-            const modal = document.getElementById(MODAL_ID);
+            const modal = DOMHelpers.safeGetElement(MODAL_ID);
             modal.style.display = 'none';
         } catch (error) {
             ErrorHandler.handleError('Failed to close notification modal', error);
@@ -128,7 +131,7 @@
             document.querySelectorAll('.tab-pane').forEach(pane => {
                 pane.classList.remove('active');
             });
-            document.getElementById(`${tabName}-tab`).classList.add('active');
+            DOMHelpers.safeGetElement(`${tabName}-tab`).classList.add('active');
             
             refreshCurrentTab();
         } catch (error) {
@@ -258,33 +261,33 @@
     }
 
     const refreshPreferences = () => {
-        const tabContent = document.getElementById(`${TABS.PREFERENCES}-tab`);
+        const tabContent = DOMHelpers.safeGetElement(`${TABS.PREFERENCES}-tab`);
         tabContent.innerHTML = getPreferencesContent();
     }
 
     const savePreferences = () => {
         try {
             const newPreferences = {
-                enabled: document.getElementById('pref-enabled').checked,
+                enabled: DOMHelpers.safeGetElement('pref-enabled').checked,
                 types: {
-                    chapter_update: document.getElementById('pref-chapter').checked,
-                    bookmark_reminder: document.getElementById('pref-bookmark').checked,
-                    achievement: document.getElementById('pref-achievement').checked,
-                    social: document.getElementById('pref-social').checked,
-                    system: document.getElementById('pref-system').checked,
-                    email: document.getElementById('pref-email-enabled').checked
+                    chapter_update: DOMHelpers.safeGetElement('pref-chapter').checked,
+                    bookmark_reminder: DOMHelpers.safeGetElement('pref-bookmark').checked,
+                    achievement: DOMHelpers.safeGetElement('pref-achievement').checked,
+                    social: DOMHelpers.safeGetElement('pref-social').checked,
+                    system: DOMHelpers.safeGetElement('pref-system').checked,
+                    email: DOMHelpers.safeGetElement('pref-email-enabled').checked
                 },
                 email: {
-                    enabled: document.getElementById('pref-email-enabled').checked,
-                    address: document.getElementById('pref-email-address').value,
-                    frequency: document.getElementById('pref-email-frequency').value,
-                    digestTime: document.getElementById('pref-email-time').value
+                    enabled: DOMHelpers.safeGetElement('pref-email-enabled').checked,
+                    address: DOMHelpers.safeGetElement('pref-email-address').value,
+                    frequency: DOMHelpers.safeGetElement('pref-email-frequency').value,
+                    digestTime: DOMHelpers.safeGetElement('pref-email-time').value
                 },
                 display: {
-                    position: document.getElementById('pref-position').value,
-                    duration: parseInt(document.getElementById('pref-duration').value),
-                    sound: document.getElementById('pref-sound').checked,
-                    desktop: document.getElementById('pref-desktop').checked
+                    position: DOMHelpers.safeGetElement('pref-position').value,
+                    duration: parseInt(DOMHelpers.safeGetElement('pref-duration').value),
+                    sound: DOMHelpers.safeGetElement('pref-sound').checked,
+                    desktop: DOMHelpers.safeGetElement('pref-desktop').checked
                 }
             };
 
@@ -384,13 +387,13 @@
     }
 
     const refreshHistory = () => {
-        const tabContent = document.getElementById(`${TABS.HISTORY}-tab`);
+        const tabContent = DOMHelpers.safeGetElement(`${TABS.HISTORY}-tab`);
         tabContent.innerHTML = getHistoryContent();
     }
 
     const applyHistoryFilter = () => {
-        historyFilter.type = document.getElementById('filter-type').value;
-        const readFilter = document.getElementById('filter-read').value;
+        historyFilter.type = DOMHelpers.safeGetElement('filter-type').value;
+        const readFilter = DOMHelpers.safeGetElement('filter-read').value;
         
         if (readFilter === 'unread') {
             historyFilter.read = false;
@@ -489,7 +492,7 @@
     }
 
     const refreshScheduled = () => {
-        const tabContent = document.getElementById(`${TABS.SCHEDULED}-tab`);
+        const tabContent = DOMHelpers.safeGetElement(`${TABS.SCHEDULED}-tab`);
         tabContent.innerHTML = getScheduledContent();
     }
 
@@ -524,13 +527,13 @@
             </div>
         `;
         
-        const tabContent = document.getElementById(`${TABS.SCHEDULED}-tab`);
+        const tabContent = DOMHelpers.safeGetElement(`${TABS.SCHEDULED}-tab`);
         const controls = tabContent.querySelector('.scheduled-controls');
         controls.insertAdjacentHTML('afterend', formHTML);
     }
 
     const hideScheduleForm = () => {
-        const form = document.getElementById('schedule-form');
+        const form = DOMHelpers.safeGetElement('schedule-form');
         if (form) {
             form.remove();
         }
@@ -538,10 +541,10 @@
 
     const submitSchedule = () => {
         try {
-            const title = document.getElementById('schedule-title').value.trim();
-            const message = document.getElementById('schedule-message').value.trim();
-            const type = document.getElementById('schedule-type').value;
-            const time = document.getElementById('schedule-time').value;
+            const title = DOMHelpers.safeGetElement('schedule-title').value.trim();
+            const message = DOMHelpers.safeGetElement('schedule-message').value.trim();
+            const type = DOMHelpers.safeGetElement('schedule-type').value;
+            const time = DOMHelpers.safeGetElement('schedule-time').value;
             
             if (!title || !message || !time) {
                 UINotifications.showNotification('Error', 'Please fill in all fields', 'error');
@@ -621,7 +624,7 @@
     }
 
     const refreshTemplates = () => {
-        const tabContent = document.getElementById(`${TABS.TEMPLATES}-tab`);
+        const tabContent = DOMHelpers.safeGetElement(`${TABS.TEMPLATES}-tab`);
         tabContent.innerHTML = getTemplatesContent();
     }
 
@@ -653,7 +656,7 @@
             </div>
         `;
         
-        const tabContent = document.getElementById(`${TABS.TEMPLATES}-tab`);
+        const tabContent = DOMHelpers.safeGetElement(`${TABS.TEMPLATES}-tab`);
         tabContent.innerHTML = formHTML;
     }
 
@@ -677,8 +680,8 @@
 
     const saveTemplate = (type) => {
         try {
-            const title = document.getElementById('template-title').value.trim();
-            const message = document.getElementById('template-message').value.trim();
+            const title = DOMHelpers.safeGetElement('template-title').value.trim();
+            const message = DOMHelpers.safeGetElement('template-message').value.trim();
             
             if (!title || !message) {
                 UINotifications.showNotification('Error', 'Please fill in all fields', 'error');
@@ -708,7 +711,7 @@
     }
 
     const updateUnreadBadge = () => {
-        const badge = document.getElementById('unread-badge');
+        const badge = DOMHelpers.safeGetElement('unread-badge');
         if (badge) {
             const count = Notifications.getUnreadCount();
             badge.textContent = count;

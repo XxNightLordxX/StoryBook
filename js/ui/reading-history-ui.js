@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Reading History UI Module
  * Manages the reading history interface
  * @module reading-history-ui
@@ -8,29 +11,38 @@
   'use strict';
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Opens the reading history modal
    */
   const openReadingHistoryModal = () => {
-    const modal = document.getElementById('reading-history-modal');
+    const modal = DOMHelpers.safeGetElement('reading-history-modal');
     if (!modal) {
       createReadingHistoryModal();
     }
     
     refreshReadingHistory();
-    document.getElementById('reading-history-modal').classList.add('active');
+    DOMHelpers.safeToggleClass('reading-history-modal', 'active', true);
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Closes the reading history modal
    */
   const closeReadingHistoryModal = () => {
-    const modal = document.getElementById('reading-history-modal');
+    const modal = DOMHelpers.safeGetElement('reading-history-modal');
     if (modal) {
       modal.classList.remove('active');
     }
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Creates the reading history modal HTML structure
    */
   const createReadingHistoryModal = () => {
@@ -72,6 +84,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Refreshes the reading history display
    */
   const refreshReadingHistory = () => {
@@ -80,11 +95,14 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Renders reading statistics
    */
   const renderStatistics = () => {
     const stats = ReadingHistory.getReadingStatistics();
-    const statsGrid = document.getElementById('stats-grid');
+    const statsGrid = DOMHelpers.safeGetElement('stats-grid');
     
     if (!statsGrid) return;
     
@@ -142,12 +160,15 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Renders reading history list
    */
   const renderReadingHistory = () => {
     const history = ReadingHistory.getReadingHistory();
-    const historyList = document.getElementById('reading-history-list');
-    const emptySection = document.getElementById('reading-history-empty');
+    const historyList = DOMHelpers.safeGetElement('reading-history-list');
+    const emptySection = DOMHelpers.safeGetElement('reading-history-empty');
     
     if (!historyList) return;
     
@@ -169,6 +190,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Renders a single history item
    * @param {Object} session - Reading session
    * @returns {string} HTML string
@@ -203,6 +227,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Formats a date for display
    * @param {Date} date - Date to format
    * @returns {string} Formatted date
@@ -227,6 +254,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Formats a time for display
    * @param {Date} date - Date to format
    * @returns {string} Formatted time
@@ -236,6 +266,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Formats a number with commas
    * @param {number} num - Number to format
    * @returns {string} Formatted number
@@ -245,6 +278,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Clears reading history
    */
   const clearHistory = () => {
@@ -256,6 +292,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Goes to a specific chapter
    * @param {number} chapterNum - Chapter number
    */
@@ -265,6 +304,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Adds "Continue Reading" button if applicable
    */
   const addContinueReadingButton = () => {
@@ -273,11 +315,11 @@
       return;
     }
     
-    const chapterContent = document.getElementById('chapter-content');
+    const chapterContent = DOMHelpers.safeGetElement('chapter-content');
     if (!chapterContent) return;
     
     // Check if button already exists
-    if (document.getElementById('continue-reading-btn')) return;
+    if (DOMHelpers.safeGetElement('continue-reading-btn')) return;
     
     const buttonHTML = `
       <button id="continue-reading-btn" class="continue-reading-btn" onclick="ReadingHistoryUI.continueReading()">
@@ -289,6 +331,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Continues reading from last chapter
    */
   const continueReading = () => {
@@ -299,6 +344,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Initializes reading history tracking
    */
   const initializeTracking = () => {

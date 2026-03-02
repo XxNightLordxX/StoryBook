@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Backup System UI Module
  * Provides user interface for backup management
  */
@@ -7,13 +10,16 @@ const BackupUI = (function() {
     'use strict';
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Open backup modal
      * @returns {void}
      */
     const openModal = () => {
         try {
             // Create modal if it doesn't exist
-            let modal = document.getElementById('backup-modal');
+            let modal = DOMHelpers.safeGetElement('backup-modal');
             if (!modal) {
                 modal = createBackupModal();
                 document.body.appendChild(modal);
@@ -31,12 +37,15 @@ const BackupUI = (function() {
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Close backup modal
      * @returns {void}
      */
     const closeModal = () => {
         try {
-            const modal = document.getElementById('backup-modal');
+            const modal = DOMHelpers.safeGetElement('backup-modal');
             if (modal) {
                 modal.style.display = 'none';
             }
@@ -46,6 +55,9 @@ const BackupUI = (function() {
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create backup modal
      * @returns {HTMLElement} Modal element
      */
@@ -104,21 +116,24 @@ const BackupUI = (function() {
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load backups into the UI
      * @returns {void}
      */
     const loadBackups = () => {
         try {
             const backups = BackupSystem.getBackups();
-            const container = document.getElementById('backup-list-container');
+            const container = DOMHelpers.safeGetElement('backup-list-container');
             
             if (!container) return;
             
             // Update stats
             const stats = BackupSystem.getBackupStats();
             if (stats) {
-                document.getElementById('stat-count').textContent = stats.count;
-                document.getElementById('stat-size').textContent = stats.totalSizeFormatted;
+                DOMHelpers.safeSetText('stat-count', stats.count);
+                DOMHelpers.safeSetText('stat-size', stats.totalSizeFormatted);
             }
             
             // Clear container
@@ -142,6 +157,9 @@ const BackupUI = (function() {
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create backup item element
      * @param {Object} backup - Backup object
      * @returns {HTMLElement} Backup item element
@@ -183,6 +201,9 @@ const BackupUI = (function() {
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create a new backup
      * @returns {void}
      */
@@ -203,6 +224,9 @@ const BackupUI = (function() {
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Restore a backup
      * @param {string} backupId - Backup ID
      * @returns {void}
@@ -234,6 +258,9 @@ const BackupUI = (function() {
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Delete a backup
      * @param {string} backupId - Backup ID
      * @returns {void}
@@ -260,6 +287,9 @@ const BackupUI = (function() {
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Export a backup
      * @param {string} backupId - Backup ID
      * @returns {void}
@@ -280,12 +310,15 @@ const BackupUI = (function() {
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Import a backup
      * @returns {void}
      */
     const importBackup = () => {
         try {
-            const fileInput = document.getElementById('backup-import-file');
+            const fileInput = DOMHelpers.safeGetElement('backup-import-file');
             if (fileInput) {
                 fileInput.click();
             }
@@ -295,6 +328,9 @@ const BackupUI = (function() {
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Handle file import
      * @param {Event} event - File input event
      * @returns {void}
@@ -328,6 +364,9 @@ const BackupUI = (function() {
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format bytes for display
      * @param {number} bytes - Number of bytes
      * @returns {string} Formatted bytes

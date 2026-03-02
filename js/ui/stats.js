@@ -7,7 +7,7 @@
 (function() {
   
   const updateBadge = () => {
-    document.getElementById('badgeCount').textContent = AppState.totalGenerated;
+    DOMHelpers.safeGetElement('badgeCount').textContent = AppState.totalGenerated;
   };
 
   // ============================================

@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Screenshot UI Module
  * Manages the screenshot capture interface
  * @module screenshot-ui
@@ -8,28 +11,37 @@
   'use strict';
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Opens the screenshot modal
    */
   const openScreenshotModal = () => {
-    const modal = document.getElementById('screenshot-modal');
+    const modal = DOMHelpers.safeGetElement('screenshot-modal');
     if (!modal) {
       createScreenshotModal();
     }
     
-    document.getElementById('screenshot-modal').classList.add('active');
+    DOMHelpers.safeToggleClass('screenshot-modal', 'active', true);
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Closes the screenshot modal
    */
   const closeScreenshotModal = () => {
-    const modal = document.getElementById('screenshot-modal');
+    const modal = DOMHelpers.safeGetElement('screenshot-modal');
     if (modal) {
       modal.classList.remove('active');
     }
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Creates the screenshot modal HTML structure
    */
   const createScreenshotModal = () => {
@@ -129,13 +141,16 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Captures a screenshot
    */
   const captureScreenshot = async () => {
-    const type = document.getElementById('screenshot-type').value;
-    const scale = parseFloat(document.getElementById('screenshot-scale').value);
-    const backgroundColor = document.getElementById('screenshot-bg').value;
-    const useCORS = document.getElementById('screenshot-cors').checked;
+    const type = DOMHelpers.safeGetElement('screenshot-type').value;
+    const scale = parseFloat(DOMHelpers.safeGetElement('screenshot-scale').value);
+    const backgroundColor = DOMHelpers.safeGetElement('screenshot-bg').value;
+    const useCORS = DOMHelpers.safeGetElement('screenshot-cors').checked;
 
     const options = {
       scale: scale,
@@ -173,12 +188,15 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Displays screenshot preview
    * @param {string} dataUrl - Base64 encoded screenshot
    */
   const displayPreview = (dataUrl) => {
-    const previewSection = document.getElementById('screenshot-preview');
-    const imageElement = document.getElementById('screenshot-image');
+    const previewSection = DOMHelpers.safeGetElement('screenshot-preview');
+    const imageElement = DOMHelpers.safeGetElement('screenshot-image');
     
     imageElement.src = dataUrl;
     previewSection.style.display = 'block';
@@ -188,6 +206,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Downloads the current screenshot
    */
   const downloadScreenshot = () => {
@@ -205,6 +226,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Copies screenshot to clipboard
    */
   const copyToClipboard = async () => {
@@ -231,6 +255,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Attaches screenshot to save
    */
   const attachToSave = () => {
@@ -253,11 +280,14 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Clears the preview
    */
   const clearPreview = () => {
-    const previewSection = document.getElementById('screenshot-preview');
-    const imageElement = document.getElementById('screenshot-image');
+    const previewSection = DOMHelpers.safeGetElement('screenshot-preview');
+    const imageElement = DOMHelpers.safeGetElement('screenshot-image');
     
     imageElement.src = '';
     previewSection.style.display = 'none';
@@ -265,13 +295,16 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Updates cache statistics
    */
   const updateStats = () => {
     const stats = ScreenshotCapture.getScreenshotStats();
     
-    const countElement = document.getElementById('cache-count');
-    const sizeElement = document.getElementById('cache-size');
+    const countElement = DOMHelpers.safeGetElement('cache-count');
+    const sizeElement = DOMHelpers.safeGetElement('cache-size');
     
     if (countElement) {
       countElement.textContent = stats.cacheSize;
@@ -284,6 +317,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Clears screenshot cache
    */
   const clearCache = () => {

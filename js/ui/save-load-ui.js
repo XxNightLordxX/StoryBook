@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Save/Load UI Module
  * Manages the save/load interface
  * @module save-load-ui
@@ -8,29 +11,38 @@
   'use strict';
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Opens the save/load modal
    */
   const openSaveLoadModal = () => {
-    const modal = document.getElementById('save-load-modal');
+    const modal = DOMHelpers.safeGetElement('save-load-modal');
     if (!modal) {
       createSaveLoadModal();
     }
     
     refreshSaveSlotsList();
-    document.getElementById('save-load-modal').classList.add('active');
+    DOMHelpers.safeToggleClass('save-load-modal', 'active', true);
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Closes the save/load modal
    */
   const closeSaveLoadModal = () => {
-    const modal = document.getElementById('save-load-modal');
+    const modal = DOMHelpers.safeGetElement('save-load-modal');
     if (modal) {
       modal.classList.remove('active');
     }
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Creates the save/load modal HTML structure
    */
   const createSaveLoadModal = () => {
@@ -77,6 +89,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Switches between save/load tabs
    * @param {string} tabName - Tab name ('save', 'load', or 'manage')
    */
@@ -93,13 +108,16 @@
     document.querySelectorAll('.tab-content').forEach(content => {
       content.classList.remove('active');
     });
-    document.getElementById(`${tabName}-tab`).classList.add('active');
+    DOMHelpers.safeGetElement(`${tabName}-tab`).classList.add('active');
     
     // Refresh the appropriate grid
     refreshSaveSlotsList();
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Refreshes the save slots list display
    */
   const refreshSaveSlotsList = () => {
@@ -116,13 +134,16 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Renders save slots in a grid
    * @param {string} containerId - Container element ID
    * @param {Array} slots - Array of save slots
    * @param {string} mode - Mode ('save', 'load', or 'manage')
    */
   const renderSaveSlots = (containerId, slots, mode) => {
-    const container = document.getElementById(containerId);
+    const container = DOMHelpers.safeGetElement(containerId);
     if (!container) return;
     
     let html = '';
@@ -179,6 +200,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Formats a date string for display
    * @param {string} dateString - ISO date string
    * @returns {string} Formatted date
@@ -216,6 +240,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Saves the current game to a specific slot
    * @param {number} slotId - Slot identifier
    */
@@ -240,6 +267,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Loads a game from a specific slot
    * @param {number} slotId - Slot identifier
    */
@@ -263,6 +293,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Deletes a save slot
    * @param {number} slotId - Slot identifier
    */
@@ -277,6 +310,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Exports a save slot to JSON
    * @param {number} slotId - Slot identifier
    */
@@ -301,6 +337,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Exports all save slots
    */
   const exportAllSaves = () => {
@@ -326,6 +365,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Clears all save slots
    */
   const clearAllSaves = () => {
@@ -339,6 +381,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Imports a save from a file
    * @param {File} file - File to import
    */

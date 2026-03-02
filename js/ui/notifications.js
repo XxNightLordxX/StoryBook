@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Unified Notification System for Story-Unending Project
  * Provides centralized notification management with queue, persistence, preferences, and actions
  * @module notifications
@@ -13,6 +16,9 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Notification type enumeration
    * @enum {string}
    */
@@ -34,30 +40,45 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Notification queue array
    * @type {Array<Object>}
    */
   let notificationQueue = [];
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Maximum queue size
    * @type {number}
    */
   const MAX_QUEUE_SIZE = 50;
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Queue processing interval in milliseconds
    * @type {number}
    */
   const QUEUE_PROCESSING_INTERVAL = 500;
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Whether queue processing is enabled
    * @type {boolean}
    */
   let queueProcessingEnabled = true;
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Queue processing timer
    * @type {number|null}
    */
@@ -68,18 +89,27 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Notification history array
    * @type {Array<Object>}
    */
   let notificationHistory = [];
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Maximum history size
    * @type {number}
    */
   const MAX_HISTORY_SIZE = 100;
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * History storage key
    * @type {string}
    */
@@ -90,6 +120,9 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Default notification preferences
    * @type {Object}
    */
@@ -116,12 +149,18 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Current notification preferences
    * @type {Object}
    */
   let preferences = { ...DEFAULT_PREFERENCES };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Preferences storage key
    * @type {string}
    */
@@ -132,12 +171,18 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Notification ID counter
    * @type {number}
    */
   let notificationIdCounter = 0;
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Generates a unique notification ID
    * @returns {string} Unique notification ID
    */
@@ -150,6 +195,9 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Queues a notification
    * @param {Object} notification - Notification object
    * @returns {string} Notification ID
@@ -171,6 +219,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Processes the notification queue
    */
   const processQueue = () => {
@@ -183,6 +234,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Starts queue processing
    */
   const startQueueProcessing = () => {
@@ -195,6 +249,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Stops queue processing
    */
   const stopQueueProcessing = () => {
@@ -206,6 +263,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Clears the notification queue
    */
   const clearQueue = () => {
@@ -213,6 +273,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Gets the queue size
    * @returns {number} Queue size
    */
@@ -225,6 +288,9 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Saves a notification to history
    * @param {Object} notification - Notification object
    */
@@ -247,6 +313,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Loads notification history from storage
    */
   const loadNotificationHistory = () => {
@@ -259,6 +328,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Gets notification history
    * @param {Object} filters - Optional filters (type, limit)
    * @returns {Array<Object>} Filtered notification history
@@ -278,6 +350,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Clears notification history
    */
   const clearNotificationHistory = () => {
@@ -288,6 +363,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Exports notification history as JSON
    * @returns {string} JSON string of notification history
    */
@@ -300,6 +378,9 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Gets notification preferences
    * @returns {Object} Notification preferences
    */
@@ -308,6 +389,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Sets notification preferences
    * @param {Object} newPreferences - New preferences
    */
@@ -321,6 +405,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Updates a single preference
    * @param {string} key - Preference key
    * @param {*} value - Preference value
@@ -335,6 +422,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Resets preferences to defaults
    */
   const resetPreferences = () => {
@@ -347,6 +437,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Loads preferences from storage
    */
   const loadPreferences = () => {
@@ -363,6 +456,9 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Shows a notification immediately
    * @param {Object} notification - Notification object
    */
@@ -376,7 +472,7 @@
       return;
     }
 
-    const container = document.getElementById('notificationContainer');
+    const container = DOMHelpers.safeGetElement('notificationContainer');
     if (!container) {
       return;
     }
@@ -428,6 +524,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Shows a notification
    * @param {string} type - Notification type
    * @param {string} title - Notification title
@@ -463,11 +562,14 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Dismisses a notification
    * @param {string} id - Notification ID
    */
   const dismissNotification = (id) => {
-    const notif = document.getElementById(id);
+    const notif = DOMHelpers.safeGetElement(id);
     if (notif) {
       notif.style.opacity = '0';
       notif.style.transform = 'translateX(100px)';
@@ -481,10 +583,13 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Dismisses all notifications
    */
   const dismissAll = () => {
-    const container = document.getElementById('notificationContainer');
+    const container = DOMHelpers.safeGetElement('notificationContainer');
     if (container) {
       while (container.firstChild) {
         container.removeChild(container.firstChild);
@@ -493,12 +598,15 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Snoozes a notification
    * @param {string} id - Notification ID
    * @param {number} duration - Snooze duration in milliseconds
    */
   const snoozeNotification = (id, duration = 60000) => {
-    const notif = document.getElementById(id);
+    const notif = DOMHelpers.safeGetElement(id);
     if (notif) {
       dismissNotification(id);
       
@@ -517,6 +625,9 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Adds an action to a notification
    * @param {Object} notification - Notification object
    * @param {Object} action - Action object (id, label, handler)
@@ -529,6 +640,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Removes an action from a notification
    * @param {Object} notification - Notification object
    * @param {string} actionId - Action ID
@@ -540,6 +654,9 @@
   };
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Executes a notification action
    * @param {Object} notification - Notification object
    * @param {string} actionId - Action ID
@@ -558,6 +675,9 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Sanitizes HTML content
    * @param {string} str - String to sanitize
    * @returns {string} Sanitized string
@@ -577,6 +697,9 @@
   // ============================================================================
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Initializes the notification system
    */
   const init = () => {

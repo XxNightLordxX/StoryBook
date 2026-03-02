@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Sidebar functionality and navigation
  * Extracted from index.html
  */
@@ -7,12 +10,12 @@
 (function() {
   
   const addSidebarItem = (chapter) => {
-    const list = document.getElementById('sidebarList');
+    const list = DOMHelpers.safeGetElement('sidebarList');
     const item = document.createElement('div');
     item.className = 'sidebar-item';
     item.dataset.num = chapter.number;
     item.onclick = () => {
-      alert(`Clicked chapter ${chapter.number}: ${chapter.title}`);
+      showNotification(`Clicked chapter ${chapter.number}: ${chapter.title}`);
       showChapter(chapter.number);
       if (window.innerWidth < 768) toggleSidebar();
     };
@@ -25,8 +28,8 @@
 
   const toggleSidebar = () => {
     AppState.sidebarOpen = !AppState.sidebarOpen;
-    document.getElementById('sidebar').classList.toggle('open', AppState.sidebarOpen);
-    document.getElementById('mainContent').classList.toggle('sidebar-open', AppState.sidebarOpen);
+    DOMHelpers.safeGetElement('sidebar').classList.toggle('open', AppState.sidebarOpen);
+    DOMHelpers.safeGetElement('mainContent').classList.toggle('sidebar-open', AppState.sidebarOpen);
   };
 
   const handleSidebarJumpKey = (e) => {
@@ -34,7 +37,7 @@
   };
 
   const jumpToChapter = () => {
-    alert(`jumpToChapter: Calling showChapter(${chapterNum})`);
+    showNotification(`jumpToChapter: Calling showChapter(${chapterNum})`);
     showChapter(chapterNum);
     input.value = '';
 
@@ -42,7 +45,7 @@
     if (window.innerWidth < 768) toggleSidebar();
   };
 
-  document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
+  DOMHelpers.safeGetElement('sidebarToggle').addEventListener('click', toggleSidebar);
 
   // Create namespace object
   const UISidebar = {

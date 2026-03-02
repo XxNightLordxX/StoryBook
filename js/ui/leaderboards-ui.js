@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Leaderboards UI Module
  * 
  * Provides user interface for achievement leaderboards with tabs,
@@ -35,27 +38,33 @@
     // ============================================================================
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Initialize leaderboards UI
      */
     const init = () => {
         // Create modal if it doesn't exist
-        if (!document.getElementById('leaderboards-modal')) {
+        if (!DOMHelpers.safeGetElement('leaderboards-modal')) {
             createModal();
         }
         
         // Get DOM elements
-        modal = document.getElementById('leaderboards-modal');
-        leaderboardContent = document.getElementById('leaderboard-content');
-        searchInput = document.getElementById('leaderboard-search');
-        typeSelect = document.getElementById('leaderboard-type');
-        sortSelect = document.getElementById('leaderboard-sort');
-        limitSelect = document.getElementById('leaderboard-limit');
+        modal = DOMHelpers.safeGetElement('leaderboards-modal');
+        leaderboardContent = DOMHelpers.safeGetElement('leaderboard-content');
+        searchInput = DOMHelpers.safeGetElement('leaderboard-search');
+        typeSelect = DOMHelpers.safeGetElement('leaderboard-type');
+        sortSelect = DOMHelpers.safeGetElement('leaderboard-sort');
+        limitSelect = DOMHelpers.safeGetElement('leaderboard-limit');
         
         // Add event listeners
         addEventListeners();
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create leaderboards modal
      */
     const createModal = () => {
@@ -145,6 +154,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Add event listeners
      */
     const addEventListeners = () => {
@@ -168,6 +180,9 @@
     // ============================================================================
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Open leaderboards modal
      */
     const openModal = () => {
@@ -177,6 +192,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Close leaderboards modal
      */
     const closeModal = () => {
@@ -184,6 +202,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Switch between tabs
      * @param {string} tab - Tab name
      */
@@ -206,6 +227,9 @@
     // ============================================================================
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Change leaderboard type
      */
     const changeType = () => {
@@ -214,6 +238,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Change sort method
      */
     const changeSort = () => {
@@ -223,6 +250,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Change limit
      */
     const changeLimit = () => {
@@ -231,6 +261,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Search leaderboard
      */
     const searchLeaderboard = () => {
@@ -243,6 +276,9 @@
     // ============================================================================
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Render content based on current tab
      */
     const renderContent = () => {
@@ -263,6 +299,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Render leaderboard table
      */
     const renderLeaderboard = () => {
@@ -336,6 +375,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Render user's rank
      */
     const renderMyRank = () => {
@@ -438,6 +480,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Render statistics
      */
     const renderStatistics = () => {
@@ -504,6 +549,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Render comparison view
      */
     const renderCompare = () => {
@@ -529,10 +577,13 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Run user comparison
      */
     const runComparison = () => {
-        const input = document.getElementById('compare-users').value;
+        const input = DOMHelpers.safeGetElement('compare-users').value;
         const usernames = input.split(',').map(u => u.trim()).filter(u => u);
         
         if (usernames.length < 2) {
@@ -581,7 +632,7 @@
             </div>
         `;
         
-        document.getElementById('compare-results').innerHTML = html;
+        DOMHelpers.safeGetElement('compare-results').innerHTML = html;
     }
 
     // ============================================================================
@@ -589,6 +640,9 @@
     // ============================================================================
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Get rank CSS class
      * @param {number} rank - Rank number
      * @returns {string} CSS class
@@ -601,6 +655,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Get rank icon
      * @param {number} rank - Rank number
      * @returns {string} Icon
@@ -613,6 +670,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format type for display
      * @param {string} type - Type string
      * @returns {string} Formatted type
@@ -628,6 +688,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format sort method for display
      * @param {string} method - Sort method
      * @returns {string} Formatted method
@@ -644,6 +707,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format reading time
      * @param {number} minutes - Minutes
      * @returns {string} Formatted time
@@ -658,6 +724,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format date
      * @param {number} timestamp - Timestamp
      * @returns {string} Formatted date
@@ -667,6 +736,9 @@
     }
     
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Export leaderboard data
      */
     const exportData = () => {

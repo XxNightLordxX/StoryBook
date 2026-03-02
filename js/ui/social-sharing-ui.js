@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Social Sharing UI Module
  * Manages the social sharing interface
  * @module social-sharing-ui
@@ -8,28 +11,37 @@
   'use strict';
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Opens the share modal
    */
   const openShareModal = () => {
-    const modal = document.getElementById('share-modal');
+    const modal = DOMHelpers.safeGetElement('share-modal');
     if (!modal) {
       createShareModal();
     }
     
-    document.getElementById('share-modal').classList.add('active');
+    DOMHelpers.safeToggleClass('share-modal', 'active', true);
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Closes the share modal
    */
   const closeShareModal = () => {
-    const modal = document.getElementById('share-modal');
+    const modal = DOMHelpers.safeGetElement('share-modal');
     if (modal) {
       modal.classList.remove('active');
     }
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Creates the share modal HTML structure
    */
   const createShareModal = () => {
@@ -137,13 +149,16 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Updates share options based on selected type
    */
   const updateShareOptions = () => {
-    const shareType = document.getElementById('share-type').value;
-    const shareTextInput = document.getElementById('share-content-input');
-    const shareUrlInput = document.getElementById('share-url-input');
-    const shareText = document.getElementById('share-text');
+    const shareType = DOMHelpers.safeGetElement('share-type').value;
+    const shareTextInput = DOMHelpers.safeGetElement('share-content-input');
+    const shareUrlInput = DOMHelpers.safeGetElement('share-url-input');
+    const shareText = DOMHelpers.safeGetElement('share-text');
 
     switch (shareType) {
       case 'chapter':
@@ -174,12 +189,15 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Shares using native Web Share API
    */
   const shareNative = async () => {
-    const shareType = document.getElementById('share-type').value;
-    const shareText = document.getElementById('share-text').value;
-    const shareUrl = document.getElementById('share-url').value;
+    const shareType = DOMHelpers.safeGetElement('share-type').value;
+    const shareText = DOMHelpers.safeGetElement('share-text').value;
+    const shareUrl = DOMHelpers.safeGetElement('share-url').value;
 
     try {
       let result;
@@ -216,12 +234,15 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Shares to a specific platform
    * @param {string} platform - Platform name
    */
   const shareToPlatform = (platform) => {
-    const shareText = document.getElementById('share-text').value;
-    const shareUrl = document.getElementById('share-url').value || window.location.href;
+    const shareText = DOMHelpers.safeGetElement('share-text').value;
+    const shareUrl = DOMHelpers.safeGetElement('share-url').value || window.location.href;
 
     try {
       SocialSharing.shareToPlatform(platform, {
@@ -241,10 +262,13 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Copies link to clipboard
    */
   const copyLink = async () => {
-    const shareUrl = document.getElementById('share-url').value || window.location.href;
+    const shareUrl = DOMHelpers.safeGetElement('share-url').value || window.location.href;
 
     try {
       await SocialSharing.copyLink(shareUrl);
@@ -256,11 +280,14 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Loads share history
    */
   const loadShareHistory = () => {
     const history = SocialSharing.getHistory(5);
-    const historyList = document.getElementById('share-history-list');
+    const historyList = DOMHelpers.safeGetElement('share-history-list');
     
     if (!historyList) return;
 
@@ -287,11 +314,14 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Updates share statistics
    */
   const updateStats = () => {
     const stats = SocialSharing.getShareStats();
-    const totalSharesElement = document.getElementById('total-shares');
+    const totalSharesElement = DOMHelpers.safeGetElement('total-shares');
     
     if (totalSharesElement) {
       totalSharesElement.textContent = stats.totalShares;
@@ -299,6 +329,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Gets icon for share type
    * @param {string} type - Share type
    * @returns {string} Icon emoji
@@ -317,6 +350,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Capitalizes first letter
    * @param {string} str - String to capitalize
    * @returns {string} Capitalized string
@@ -326,6 +362,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Quick share current chapter
    */
   const quickShareChapter = async () => {

@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Enhanced Search UI Module
  * Manages the search interface with fuzzy search support
  * @module search-ui-enhanced
@@ -10,28 +13,34 @@
   let suggestionTimeout = null;
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Opens the search modal
    */
   const openSearchModal = () => {
-    const modal = document.getElementById('search-modal');
+    const modal = DOMHelpers.safeGetElement('search-modal');
     if (!modal) {
       createSearchModal();
     }
     
     loadSearchHistory();
-    document.getElementById('search-modal').classList.add('active');
+    DOMHelpers.safeToggleClass('search-modal', 'active', true);
     
     // Focus on search input
     setTimeout(() => {
-      document.getElementById('search-input').focus();
+      DOMHelpers.safeGetElement('search-input')?.focus();
     }, 100);
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Closes the search modal
    */
   const closeSearchModal = () => {
-    const modal = document.getElementById('search-modal');
+    const modal = DOMHelpers.safeGetElement('search-modal');
     if (modal) {
       modal.classList.remove('active');
     }
@@ -41,6 +50,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Creates the search modal HTML structure
    */
   const createSearchModal = () => {
@@ -138,10 +150,13 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Toggles advanced options visibility
    */
   const toggleAdvancedOptions = () => {
-    const options = document.getElementById('search-advanced-options');
+    const options = DOMHelpers.safeGetElement('search-advanced-options');
     const toggle = document.querySelector('.search-options-toggle .toggle-icon');
     
     if (options.style.display === 'none') {
@@ -154,14 +169,20 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Updates the threshold label
    */
   const updateThresholdLabel = () => {
-    const threshold = document.getElementById('fuzzy-threshold').value;
-    document.getElementById('threshold-label').textContent = (threshold / 100).toFixed(2);
+    const threshold = DOMHelpers.safeGetElement('fuzzy-threshold').value;
+    DOMHelpers.safeSetText('threshold-label', (threshold / 100).toFixed(2));
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Handles key press in search input
    * @param {KeyboardEvent} event - Keyboard event
    */
@@ -172,6 +193,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Handles input in search field (for suggestions)
    * @param {InputEvent} event - Input event
    */
@@ -194,6 +218,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Shows search suggestions
    * @param {string} query - Search query
    */
@@ -205,7 +232,7 @@
       useContext: true
     });
     
-    const suggestionsDiv = document.getElementById('search-suggestions');
+    const suggestionsDiv = DOMHelpers.safeGetElement('search-suggestions');
     
     if (!suggestionsDiv || suggestions.length === 0) {
       hideSuggestions();
@@ -232,30 +259,39 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Hides search suggestions
    */
   const hideSuggestions = () => {
-    const suggestionsDiv = document.getElementById('search-suggestions');
+    const suggestionsDiv = DOMHelpers.safeGetElement('search-suggestions');
     if (suggestionsDiv) {
       suggestionsDiv.style.display = 'none';
     }
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Applies a suggestion to the search input
    * @param {string} suggestion - Suggestion text
    */
   const applySuggestion = (suggestion) => {
-    document.getElementById('search-input').value = suggestion;
+    DOMHelpers.safeGetElement('search-input').value = suggestion;
     hideSuggestions();
     performSearch();
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Performs the search
    */
   const performSearch = () => {
-    const query = document.getElementById('search-input').value.trim();
+    const query = DOMHelpers.safeGetElement('search-input').value.trim();
     
     if (!query) {
       UINotifications.showNotification('Please enter a search query', 'warning');
@@ -270,12 +306,12 @@
     SearchSuggestions.addToHistory(query);
 
     // Get search options
-    const fuzzyMode = document.getElementById('fuzzy-mode').checked;
-    const caseSensitive = document.getElementById('case-sensitive').checked;
-    const wholeWord = document.getElementById('whole-word').checked;
-    const regexMode = document.getElementById('regex-mode').checked;
-    const fuzzyThreshold = parseInt(document.getElementById('fuzzy-threshold').value) / 100;
-    const minMatches = parseInt(document.getElementById('min-matches').value) || 1;
+    const fuzzyMode = DOMHelpers.safeGetElement('fuzzy-mode').checked;
+    const caseSensitive = DOMHelpers.safeGetElement('case-sensitive').checked;
+    const wholeWord = DOMHelpers.safeGetElement('whole-word').checked;
+    const regexMode = DOMHelpers.safeGetElement('regex-mode').checked;
+    const fuzzyThreshold = parseInt(DOMHelpers.safeGetElement('fuzzy-threshold').value) / 100;
+    const minMatches = parseInt(DOMHelpers.safeGetElement('min-matches').value) || 1;
 
     // Perform search
     let results;
@@ -308,6 +344,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Displays search results
    * @param {Array} results - Search results
    * @param {string} query - Search query
@@ -315,11 +354,11 @@
    * @param {boolean} fuzzyMode - Whether fuzzy search was used
    */
   const displaySearchResults = (results, query, caseSensitive, fuzzyMode) => {
-    const historySection = document.getElementById('search-history-section');
-    const resultsSection = document.getElementById('search-results-section');
-    const emptySection = document.getElementById('search-empty');
-    const resultsList = document.getElementById('search-results-list');
-    const resultsCount = document.getElementById('results-count');
+    const historySection = DOMHelpers.safeGetElement('search-history-section');
+    const resultsSection = DOMHelpers.safeGetElement('search-results-section');
+    const emptySection = DOMHelpers.safeGetElement('search-empty');
+    const resultsList = DOMHelpers.safeGetElement('search-results-list');
+    const resultsCount = DOMHelpers.safeGetElement('results-count');
 
     // Hide history section
     historySection.style.display = 'none';
@@ -350,6 +389,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Renders a single search result
    * @param {Object} result - Search result
    * @param {string} query - Search query
@@ -394,11 +436,14 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Loads and displays search history
    */
   const loadSearchHistory = () => {
     const history = Search.getSearchHistory();
-    const historyList = document.getElementById('search-history-list');
+    const historyList = DOMHelpers.safeGetElement('search-history-list');
     
     if (!historyList) return;
 
@@ -421,15 +466,21 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Searches from history
    * @param {string} query - Search query from history
    */
   const searchFromHistory = (query) => {
-    document.getElementById('search-input').value = query;
+    DOMHelpers.safeGetElement('search-input').value = query;
     performSearch();
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Clears search history
    */
   const clearHistory = () => {
@@ -441,13 +492,16 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Clears search results
    */
   const clearResults = () => {
-    const historySection = document.getElementById('search-history-section');
-    const resultsSection = document.getElementById('search-results-section');
-    const emptySection = document.getElementById('search-empty');
-    const searchInput = document.getElementById('search-input');
+    const historySection = DOMHelpers.safeGetElement('search-history-section');
+    const resultsSection = DOMHelpers.safeGetElement('search-results-section');
+    const emptySection = DOMHelpers.safeGetElement('search-empty');
+    const searchInput = DOMHelpers.safeGetElement('search-input');
     searchInput.value = '';
     historySection.style.display = 'block';
     resultsSection.style.display = 'none';
@@ -458,6 +512,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Goes to a specific chapter
    * @param {number} chapterNum - Chapter number
    */

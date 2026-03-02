@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Content Management UI Module
  * Provides user interface for content management system
  * 
@@ -14,6 +17,9 @@
     let editor = null;
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Initialize CMS UI
      */
     const init = () => {
@@ -22,6 +28,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create CMS modal
      */
     const createCMSModal = () => {
@@ -89,10 +98,13 @@
 `;
 
         document.body.insertAdjacentHTML('beforeend', modalHTML);
-        cmsModal = document.getElementById('cms-modal');
+        cmsModal = DOMHelpers.safeGetElement('cms-modal');
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create editor tab content
      */
     const createEditorContent = () => {
@@ -152,6 +164,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create versions tab content
      */
     const createVersionsContent = () => {
@@ -174,6 +189,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create approval tab content
      */
     const createApprovalContent = () => {
@@ -187,6 +205,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create search tab content
      */
     const createSearchContent = () => {
@@ -208,6 +229,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create statistics tab content
      */
     const createStatsContent = () => {
@@ -254,6 +278,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Open CMS modal
      */
     const openModal = () => {
@@ -266,6 +293,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Close CMS modal
      */
     const closeModal = () => {
@@ -275,6 +305,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Switch between tabs
      * @param {string} tabName - Tab name
      */
@@ -291,7 +324,7 @@
         document.querySelectorAll('.cms-content .tab-content').forEach(content => {
             content.classList.remove('active');
         });
-        document.getElementById('tab-' + tabName).classList.add('active');
+        DOMHelpers.safeGetElement('tab-' + tabName).classList.add('active');
 
         // Update content for specific tabs
         if (tabName === 'stats') {
@@ -302,11 +335,14 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Populate chapter select dropdown
      */
     const populateChapterSelect = () => {
-        const chapterSelect = document.getElementById('chapter-select');
-        const versionsChapterSelect = document.getElementById('versions-chapter-select');
+        const chapterSelect = DOMHelpers.safeGetElement('chapter-select');
+        const versionsChapterSelect = DOMHelpers.safeGetElement('versions-chapter-select');
         
         if (!chapterSelect || !versionsChapterSelect) return;
 
@@ -324,10 +360,13 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load chapter content into editor
      */
     const loadChapter = () => {
-        const chapterSelect = document.getElementById('chapter-select');
+        const chapterSelect = DOMHelpers.safeGetElement('chapter-select');
         currentChapter = parseInt(chapterSelect.value);
 
         if (!currentChapter) {
@@ -357,42 +396,54 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load draft into editor
      * @param {object} draft - Draft content
      */
     const loadDraftIntoEditor = (draft) => {
-        document.getElementById('chapter-title').value = draft.content.title || '';
-        document.getElementById('chapter-content').value = draft.content.content || '';
-        document.getElementById('change-description').value = '';
+        DOMHelpers.safeGetElement('chapter-title').value = draft.content.title || '';
+        DOMHelpers.safeGetElement('chapter-content').value = draft.content.content || '';
+        DOMHelpers.safeGetElement('change-description').value = '';
         
         UINotifications.showNotification('Draft loaded', 'info');
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load content into editor
      * @param {object} content - Chapter content
      */
     const loadContentIntoEditor = (content) => {
-        document.getElementById('chapter-title').value = content.title || '';
-        document.getElementById('chapter-content').value = content.content || '';
-        document.getElementById('change-description').value = '';
+        DOMHelpers.safeGetElement('chapter-title').value = content.title || '';
+        DOMHelpers.safeGetElement('chapter-content').value = content.content || '';
+        DOMHelpers.safeGetElement('change-description').value = '';
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Clear editor
      */
     const clearEditor = () => {
-        document.getElementById('chapter-title').value = '';
-        document.getElementById('chapter-content').value = '';
-        document.getElementById('change-description').value = '';
-        document.getElementById('version-select').innerHTML = '<option value="">Current</option>';
+        DOMHelpers.safeGetElement('chapter-title').value = '';
+        DOMHelpers.safeGetElement('chapter-content').value = '';
+        DOMHelpers.safeGetElement('change-description').value = '';
+        DOMHelpers.safeGetElement('version-select').innerHTML = '<option value="">Current</option>';
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update version select dropdown
      */
     const updateVersionSelect = () => {
-        const versionSelect = document.getElementById('version-select');
+        const versionSelect = DOMHelpers.safeGetElement('version-select');
         if (!versionSelect || !currentChapter) return;
 
         const versions = ContentManagement.getVersions(currentChapter);
@@ -403,10 +454,13 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load version into editor
      */
     const loadVersion = () => {
-        const versionSelect = document.getElementById('version-select');
+        const versionSelect = DOMHelpers.safeGetElement('version-select');
         currentVersionId = versionSelect.value;
 
         if (!currentVersionId || !currentChapter) {
@@ -417,7 +471,7 @@
             const version = ContentManagement.getVersion(currentChapter, currentVersionId);
             if (version) {
                 loadContentIntoEditor(version.content);
-                document.getElementById('change-description').value = version.changeDescription;
+                DOMHelpers.safeGetElement('change-description').value = version.changeDescription;
                 UINotifications.showNotification('Version loaded', 'info');
             }
         } catch (error) {
@@ -427,6 +481,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Save draft
      */
     const saveDraft = () => {
@@ -437,8 +494,8 @@
 
         try {
             const content = {
-                title: document.getElementById('chapter-title').value,
-                content: document.getElementById('chapter-content').value
+                title: DOMHelpers.safeGetElement('chapter-title').value,
+                content: DOMHelpers.safeGetElement('chapter-content').value
             };
 
             ContentManagement.saveDraft(currentChapter, content);
@@ -450,6 +507,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create version
      */
     const createVersion = () => {
@@ -460,11 +520,11 @@
 
         try {
             const content = {
-                title: document.getElementById('chapter-title').value,
-                content: document.getElementById('chapter-content').value
+                title: DOMHelpers.safeGetElement('chapter-title').value,
+                content: DOMHelpers.safeGetElement('chapter-content').value
             };
 
-            const changeDescription = document.getElementById('change-description').value || 'No description';
+            const changeDescription = DOMHelpers.safeGetElement('change-description').value || 'No description';
             const versionId = ContentManagement.createVersion(currentChapter, content, changeDescription);
 
             UINotifications.showNotification(`Version ${versionId} created`, 'success');
@@ -480,6 +540,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Submit for approval
      */
     const submitForApproval = () => {
@@ -494,7 +557,7 @@
         }
 
         try {
-            const notes = document.getElementById('change-description').value || 'No notes';
+            const notes = DOMHelpers.safeGetElement('change-description').value || 'No notes';
             const approvalId = ContentManagement.submitForApproval(currentChapter, currentVersionId, notes);
 
             UINotifications.showNotification(`Submitted for approval (${approvalId})`, 'success');
@@ -506,11 +569,14 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Preview content
      */
     const previewContent = () => {
-        const title = document.getElementById('chapter-title').value;
-        const content = document.getElementById('chapter-content').value;
+        const title = DOMHelpers.safeGetElement('chapter-title').value;
+        const content = DOMHelpers.safeGetElement('chapter-content').value;
 
         const previewWindow = window.open('', '_blank');
         
@@ -542,6 +608,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Delete draft
      */
     const deleteDraft = () => {
@@ -563,12 +632,15 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load versions list
      */
     const loadVersions = () => {
-        const chapterSelect = document.getElementById('versions-chapter-select');
+        const chapterSelect = DOMHelpers.safeGetElement('versions-chapter-select');
         const chapterNumber = parseInt(chapterSelect.value);
-        const versionsList = document.getElementById('versions-list');
+        const versionsList = DOMHelpers.safeGetElement('versions-list');
 
         if (!chapterNumber) {
             versionsList.innerHTML = '<p class="no-data">Select a chapter to view versions</p>';
@@ -609,6 +681,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load version into editor from versions tab
      * @param {number} chapterNumber - Chapter number
      * @param {string} versionId - Version ID
@@ -621,19 +696,22 @@
         switchTab('editor');
 
         // Update selects
-        document.getElementById('chapter-select').value = chapterNumber;
+        DOMHelpers.safeGetElement('chapter-select').value = chapterNumber;
         updateVersionSelect();
-        document.getElementById('version-select').value = versionId;
+        DOMHelpers.safeGetElement('version-select').value = versionId;
 
         // Load version
         loadVersion();
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load approval queue
      */
     const loadApprovalQueue = () => {
-        const approvalList = document.getElementById('approval-list');
+        const approvalList = DOMHelpers.safeGetElement('approval-list');
         if (!approvalList) return;
 
         try {
@@ -677,6 +755,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Approve content
      * @param {string} approvalId - Approval ID
      */
@@ -695,6 +776,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Reject content
      * @param {string} approvalId - Approval ID
      */
@@ -718,6 +802,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * View approval details
      * @param {string} approvalId - Approval ID
      */
@@ -735,11 +822,14 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Search content
      */
     const searchContent = () => {
-        const searchInput = document.getElementById('search-input');
-        const searchResults = document.getElementById('search-results');
+        const searchInput = DOMHelpers.safeGetElement('search-input');
+        const searchResults = DOMHelpers.safeGetElement('search-results');
         const query = searchInput.value.trim();
 
         if (!query) {
@@ -776,18 +866,21 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update statistics
      */
     const updateStatistics = () => {
         try {
             const stats = ContentManagement.getStatistics();
 
-            document.getElementById('stat-total-versions').textContent = stats.totalVersions;
-            document.getElementById('stat-published-versions').textContent = stats.publishedVersions;
-            document.getElementById('stat-draft-versions').textContent = stats.draftVersions;
-            document.getElementById('stat-pending-approvals').textContent = stats.pendingApprovals;
-            document.getElementById('stat-chapters-with-versions').textContent = stats.chaptersWithVersions;
-            document.getElementById('stat-total-drafts').textContent = stats.totalDrafts;
+            DOMHelpers.safeSetText('stat-total-versions', stats.totalVersions);
+            DOMHelpers.safeSetText('stat-published-versions', stats.publishedVersions);
+            DOMHelpers.safeSetText('stat-draft-versions', stats.draftVersions);
+            DOMHelpers.safeSetText('stat-pending-approvals', stats.pendingApprovals);
+            DOMHelpers.safeSetText('stat-chapters-with-versions', stats.chaptersWithVersions);
+            DOMHelpers.safeSetText('stat-total-drafts', stats.totalDrafts);
 
         } catch (error) {
             ErrorHandler.handleError('Failed to update statistics', error);
@@ -795,6 +888,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Export content
      * @param {string} format - Export format
      */
@@ -822,6 +918,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Import content
      */
     const importContent = () => {
@@ -852,6 +951,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format date and time for display
      * @param {string} dateString - Date string
      * @returns {string} Formatted date and time
@@ -867,6 +969,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Setup event listeners
      */
     const setupEventListeners = () => {

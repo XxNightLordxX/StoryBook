@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * User Features UI Module
  * Provides user interface for user profiles, preferences, achievements, social features, and messaging
  * 
@@ -12,6 +15,9 @@
     let currentTab = 'profile';
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Initialize user features UI
      */
     const init = () => {
@@ -20,6 +26,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create user features modal
      */
     const createUserFeaturesModal = () => {
@@ -84,10 +93,13 @@
 `;
 
         document.body.insertAdjacentHTML('beforeend', modalHTML);
-        userFeaturesModal = document.getElementById('user-features-modal');
+        userFeaturesModal = DOMHelpers.safeGetElement('user-features-modal');
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create profile tab content
      */
     const createProfileContent = () => {
@@ -162,6 +174,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create preferences tab content
      */
     const createPreferencesContent = () => {
@@ -241,6 +256,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create achievements tab content
      */
     const createAchievementsContent = () => {
@@ -285,6 +303,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create social tab content
      */
     const createSocialContent = () => {
@@ -338,6 +359,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Create messages tab content
      */
     const createMessagesContent = () => {
@@ -379,6 +403,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Open user features modal
      */
     const openModal = () => {
@@ -393,6 +420,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Close user features modal
      */
     const closeModal = () => {
@@ -402,6 +432,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Switch between tabs
      * @param {string} tabName - Tab name
      */
@@ -420,7 +453,7 @@
         document.querySelectorAll('.user-features-content .tab-content').forEach(content => {
             content.classList.remove('active');
         });
-        document.getElementById('tab-' + tabName).classList.add('active');
+        DOMHelpers.safeGetElement('tab-' + tabName).classList.add('active');
 
         // Load content for specific tabs
         if (tabName === 'profile') {
@@ -437,6 +470,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load user profile
      */
     const loadUserProfile = () => {
@@ -453,31 +489,34 @@
         }
 
         // Update profile display
-        document.getElementById('profile-display-name').textContent = profile.displayName;
-        document.getElementById('profile-username').textContent = '@' + profile.username;
-        document.getElementById('profile-joined').textContent = 'Joined: ' + formatDate(profile.joinedAt);
+        DOMHelpers.safeSetText('profile-display-name', profile.displayName);
+        DOMHelpers.safeSetText('profile-username', '@' + profile.username);
+        DOMHelpers.safeSetText('profile-joined', 'Joined: ' + formatDate(profile.joinedAt));
 
         // Update form fields
-        document.getElementById('display-name').value = profile.displayName;
-        document.getElementById('profile-bio').value = profile.bio;
-        document.getElementById('profile-location').value = profile.location;
-        document.getElementById('profile-website').value = profile.website;
+        DOMHelpers.safeGetElement('display-name').value = profile.displayName;
+        DOMHelpers.safeGetElement('profile-bio').value = profile.bio;
+        DOMHelpers.safeGetElement('profile-location').value = profile.location;
+        DOMHelpers.safeGetElement('profile-website').value = profile.website;
 
         // Update avatar
         if (profile.avatar) {
-            document.getElementById('avatar-preview').innerHTML = `<img src="${profile.avatar}" alt="Avatar" class="avatar-image">`;
+            DOMHelpers.safeGetElement('avatar-preview').innerHTML = `<img src="${profile.avatar}" alt="Avatar" class="avatar-image">`;
         } else {
-            document.getElementById('avatar-preview').innerHTML = '<span class="avatar-placeholder">👤</span>';
+            DOMHelpers.safeGetElement('avatar-preview').innerHTML = '<span class="avatar-placeholder">👤</span>';
         }
 
         // Update statistics
-        document.getElementById('stat-chapters-read').textContent = profile.stats.chaptersRead;
-        document.getElementById('stat-reading-time').textContent = formatReadingTime(profile.stats.totalReadingTime);
-        document.getElementById('stat-bookmarks').textContent = profile.stats.bookmarks;
-        document.getElementById('stat-achievements').textContent = profile.stats.achievements;
+        DOMHelpers.safeSetText('stat-chapters-read', profile.stats.chaptersRead);
+        DOMHelpers.safeSetText('stat-reading-time', formatReadingTime(profile.stats.totalReadingTime));
+        DOMHelpers.safeSetText('stat-bookmarks', profile.stats.bookmarks);
+        DOMHelpers.safeSetText('stat-achievements', profile.stats.achievements);
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Save profile
      */
     const saveProfile = () => {
@@ -489,10 +528,10 @@
 
         try {
             const updates = {
-                displayName: document.getElementById('display-name').value,
-                bio: document.getElementById('profile-bio').value,
-                location: document.getElementById('profile-location').value,
-                website: document.getElementById('profile-website').value
+                displayName: DOMHelpers.safeGetElement('display-name').value,
+                bio: DOMHelpers.safeGetElement('profile-bio').value,
+                location: DOMHelpers.safeGetElement('profile-location').value,
+                website: DOMHelpers.safeGetElement('profile-website').value
             };
 
             UserProfiles.updateProfile(username, updates);
@@ -505,6 +544,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Upload avatar
      */
     const uploadAvatar = () => {
@@ -540,6 +582,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Remove avatar
      */
     const removeAvatar = () => {
@@ -560,6 +605,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load preferences
      */
     const loadPreferences = () => {
@@ -570,17 +618,20 @@
 
         const prefs = UserPreferences.getPreferences(username);
 
-        document.getElementById('theme-select').value = prefs.theme;
-        document.getElementById('text-size-select').value = prefs.textSize;
-        document.getElementById('enable-animations').checked = prefs.enableAnimations;
-        document.getElementById('notifications').checked = prefs.notifications;
-        document.getElementById('email-updates').checked = prefs.emailUpdates;
-        document.getElementById('auto-save').checked = prefs.autoSave;
-        document.getElementById('show-reading-progress').checked = prefs.showReadingProgress;
-        document.getElementById('show-online-status').checked = prefs.showOnlineStatus;
+        DOMHelpers.safeGetElement('theme-select').value = prefs.theme;
+        DOMHelpers.safeGetElement('text-size-select').value = prefs.textSize;
+        DOMHelpers.safeGetElement('enable-animations').checked = prefs.enableAnimations;
+        DOMHelpers.safeGetElement('notifications').checked = prefs.notifications;
+        DOMHelpers.safeGetElement('email-updates').checked = prefs.emailUpdates;
+        DOMHelpers.safeGetElement('auto-save').checked = prefs.autoSave;
+        DOMHelpers.safeGetElement('show-reading-progress').checked = prefs.showReadingProgress;
+        DOMHelpers.safeGetElement('show-online-status').checked = prefs.showOnlineStatus;
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Update preference
      * @param {string} key - Preference key
      * @param {any} value - Preference value
@@ -602,6 +653,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Reset preferences
      */
     const resetPreferences = () => {
@@ -624,6 +678,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load achievements
      */
     const loadAchievements = () => {
@@ -636,14 +693,14 @@
         const allAchievements = Achievements.getAllAchievements();
 
         // Update progress
-        document.getElementById('achievements-unlocked').textContent = progress.unlocked;
-        document.getElementById('achievements-total').textContent = progress.total;
-        document.getElementById('achievements-percentage').textContent = progress.percentage + '%';
+        DOMHelpers.safeSetText('achievements-unlocked', progress.unlocked);
+        DOMHelpers.safeSetText('achievements-total', progress.total);
+        DOMHelpers.safeSetText('achievements-percentage', progress.percentage + '%');
 
         // Load achievements by category
         const categories = ['reading', 'time', 'bookmark', 'streak'];
         categories.forEach(category => {
-            const container = document.getElementById('achievements-' + category);
+            const container = DOMHelpers.safeGetElement('achievements-' + category);
             if (!container) return;
 
             const categoryAchievements = Object.values(allAchievements).filter(a => a.category === category);
@@ -670,6 +727,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load social stats
      */
     const loadSocialStats = () => {
@@ -680,18 +740,21 @@
 
         const stats = SocialFeatures.getSocialStats(username);
 
-        document.getElementById('social-followers').textContent = stats.followers;
-        document.getElementById('social-following').textContent = stats.following;
-        document.getElementById('social-comments').textContent = stats.comments;
-        document.getElementById('social-shares').textContent = stats.shares;
+        DOMHelpers.safeSetText('social-followers', stats.followers);
+        DOMHelpers.safeSetText('social-following', stats.following);
+        DOMHelpers.safeSetText('social-comments', stats.comments);
+        DOMHelpers.safeSetText('social-shares', stats.shares);
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Search users
      */
     const searchUsers = () => {
-        const query = document.getElementById('search-users-input').value.trim();
-        const usersList = document.getElementById('users-list');
+        const query = DOMHelpers.safeGetElement('search-users-input').value.trim();
+        const usersList = DOMHelpers.safeGetElement('users-list');
 
         if (!query) {
             usersList.innerHTML = '<p class="no-data">Enter a search query</p>';
@@ -738,6 +801,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Follow user
      * @param {string} username - Username to follow
      */
@@ -760,6 +826,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Unfollow user
      * @param {string} username - Username to unfollow
      */
@@ -782,6 +851,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Load messages
      */
     const loadMessages = () => {
@@ -793,14 +865,14 @@
         const conversations = Messaging.getUserConversations(username);
         const unreadCount = Messaging.getUnreadCount(username);
 
-        document.getElementById('messages-unread').textContent = unreadCount;
+        DOMHelpers.safeSetText('messages-unread', unreadCount);
 
         if (conversations.length === 0) {
-            document.getElementById('conversations-list').innerHTML = '<p class="no-data">No conversations yet</p>';
+            DOMHelpers.safeGetElement('conversations-list').innerHTML = '<p class="no-data">No conversations yet</p>';
             return;
         }
 
-        document.getElementById('conversations-list').innerHTML = conversations.map(conv => {
+        DOMHelpers.safeGetElement('conversations-list').innerHTML = conversations.map(conv => {
             const otherUser = conv.participants.find(p => p !== username);
             const profile = UserProfiles.getProfile(otherUser);
             const displayName = profile ? profile.displayName : otherUser;
@@ -822,6 +894,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Select conversation
      * @param {string} conversationId - Conversation ID
      */
@@ -841,7 +916,7 @@
         Messaging.markConversationAsRead(conversationId, username);
 
         // Update messages view
-        document.getElementById('messages-view').innerHTML = `
+        DOMHelpers.safeGetElement('messages-view').innerHTML = `
       <div class="messages-header">
           <h4>${sanitizeHTML(displayName)}</h4>
       </div>
@@ -859,14 +934,17 @@
   `;
 
         // Show message input
-        document.getElementById('message-input').style.display = 'block';
-        document.getElementById('message-content').value = '';
+        DOMHelpers.safeGetElement('message-input').style.display = 'block';
+        DOMHelpers.safeGetElement('message-content').value = '';
 
         // Update unread count
         loadMessages();
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Start new conversation
      */
     const startNewConversation = async () => {
@@ -892,6 +970,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Send message
      */
     const sendMessage = () => {
@@ -901,7 +982,7 @@
             return;
         }
 
-        const content = document.getElementById('message-content').value.trim();
+        const content = DOMHelpers.safeGetElement('message-content').value.trim();
         if (!content) {
             UINotifications.showNotification('Please enter a message', 'warning');
             return;
@@ -930,6 +1011,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Export user data
      */
     const exportUserData = () => {
@@ -967,6 +1051,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Import user data
      */
     const importUserData = () => {
@@ -997,6 +1084,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format date for display
      * @param {string} dateString - Date string
      * @returns {string} Formatted date
@@ -1011,6 +1101,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format date and time for display
      * @param {string} dateString - Date string
      * @returns {string} Formatted date and time
@@ -1026,6 +1119,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format time for display
      * @param {string} dateString - Date string
      * @returns {string} Formatted time
@@ -1039,6 +1135,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Format reading time for display
      * @param {number} milliseconds - Reading time in milliseconds
      * @returns {string} Formatted reading time
@@ -1049,6 +1148,9 @@
     }
 
     /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
      * Setup event listeners
      */
     const setupEventListeners = () => {

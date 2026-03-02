@@ -1,4 +1,7 @@
 /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
  * Bookmarks UI Module
  * Manages the bookmarks interface
  * @module bookmarks-ui
@@ -8,29 +11,38 @@
   'use strict';
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Opens the bookmarks modal
    */
   const openBookmarksModal = () => {
-    const modal = document.getElementById('bookmarks-modal');
+    const modal = DOMHelpers.safeGetElement('bookmarks-modal');
     if (!modal) {
       createBookmarksModal();
     }
     
     refreshBookmarksList();
-    document.getElementById('bookmarks-modal').classList.add('active');
+    DOMHelpers.safeToggleClass('bookmarks-modal', 'active', true);
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Closes the bookmarks modal
    */
   const closeBookmarksModal = () => {
-    const modal = document.getElementById('bookmarks-modal');
+    const modal = DOMHelpers.safeGetElement('bookmarks-modal');
     if (modal) {
       modal.classList.remove('active');
     }
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Creates the bookmarks modal HTML structure
    */
   const createBookmarksModal = () => {
@@ -77,12 +89,15 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Refreshes the bookmarks list display
    */
   const refreshBookmarksList = () => {
     const bookmarks = Bookmarks.getBookmarks();
-    const listContainer = document.getElementById('bookmarks-list');
-    const emptyContainer = document.getElementById('bookmarks-empty');
+    const listContainer = DOMHelpers.safeGetElement('bookmarks-list');
+    const emptyContainer = DOMHelpers.safeGetElement('bookmarks-empty');
     
     if (!listContainer) return;
     
@@ -104,6 +119,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Renders a single bookmark item
    * @param {Object} bookmark - Bookmark object
    * @returns {string} HTML string
@@ -154,6 +172,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Formats a date string for display
    * @param {string} dateString - ISO date string
    * @returns {string} Formatted date
@@ -191,6 +212,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Toggles bookmark for current chapter
    */
   const toggleBookmark = async () => {
@@ -221,10 +245,13 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Updates the bookmark button state
    */
   const updateBookmarkButton = () => {
-    const button = document.getElementById('bookmark-btn');
+    const button = DOMHelpers.safeGetElement('bookmark-btn');
     if (!button) return;
     
     const currentChapter = AppStateModule.AppState.currentChapter;
@@ -240,6 +267,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Goes to a specific chapter
    * @param {number} chapterNum - Chapter number
    */
@@ -249,6 +279,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Edits a bookmark's note
    * @param {string} bookmarkId - Bookmark ID
    */
@@ -269,6 +302,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Deletes a bookmark
    * @param {string} bookmarkId - Bookmark ID
    */
@@ -286,12 +322,15 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Searches bookmarks
    * @param {string} query - Search query
    */
   const searchBookmarks = (query) => {
-    const listContainer = document.getElementById('bookmarks-list');
-    const emptyContainer = document.getElementById('bookmarks-empty');
+    const listContainer = DOMHelpers.safeGetElement('bookmarks-list');
+    const emptyContainer = DOMHelpers.safeGetElement('bookmarks-empty');
     
     if (!query.trim()) {
       refreshBookmarksList();
@@ -320,11 +359,14 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Sorts bookmarks
    * @param {string} sortBy - Sort method ('date' or 'chapter')
    */
   const sortBookmarks = (sortBy) => {
-    const listContainer = document.getElementById('bookmarks-list');
+    const listContainer = DOMHelpers.safeGetElement('bookmarks-list');
     if (!listContainer) return;
     
     let bookmarks;
@@ -343,6 +385,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Exports bookmarks
    */
   const exportBookmarks = () => {
@@ -367,6 +412,9 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Clears all bookmarks
    */
   const clearAllBookmarks = () => {
@@ -383,14 +431,17 @@
   }
 
   /**
+ * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
+ */
+/**
    * Adds bookmark button to chapter view
    */
   const addBookmarkButton = () => {
-    const chapterContent = document.getElementById('chapter-content');
+    const chapterContent = DOMHelpers.safeGetElement('chapter-content');
     if (!chapterContent) return;
     
     // Check if button already exists
-    if (document.getElementById('bookmark-btn')) return;
+    if (DOMHelpers.safeGetElement('bookmark-btn')) return;
     
     const buttonHTML = `
       <button id="bookmark-btn" class="bookmark-btn" onclick="BookmarksUI.toggleBookmark()">
