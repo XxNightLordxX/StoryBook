@@ -269,7 +269,6 @@
                 types: {
                     chapter_update: DOMHelpers.safeGetElement('pref-chapter').checked,
                     bookmark_reminder: DOMHelpers.safeGetElement('pref-bookmark').checked,
-                    achievement: DOMHelpers.safeGetElement('pref-achievement').checked,
                     social: DOMHelpers.safeGetElement('pref-social').checked,
                     system: DOMHelpers.safeGetElement('pref-system').checked,
                     email: DOMHelpers.safeGetElement('pref-email-enabled').checked
@@ -322,8 +321,6 @@
                       <option value="">All Types</option>
                       <option value="chapter_update" ${historyFilter.type === 'chapter_update' ? 'selected' : ''}>Chapter Updates</option>
                       <option value="bookmark_reminder" ${historyFilter.type === 'bookmark_reminder' ? 'selected' : ''}>Bookmark Reminders</option>
-                      <option value="achievement" ${historyFilter.type === 'achievement' ? 'selected' : ''}>Achievements</option>
-                      <option value="system" ${historyFilter.type === 'system' ? 'selected' : ''}>System</option>
                   </select>
               </div>
               <div class="filter-group">
@@ -509,9 +506,7 @@
                     <select id="schedule-type">
                     <option value="system">System</option>
                     <option value="chapter_update">Chapter Update</option>
-                    <option value="achievement">Achievement</option>
                     </select>
-                </div>
                 <div class="form-group">
                     <label for="schedule-time">Schedule Time:</label>
                     <input type="datetime-local" id="schedule-time">
@@ -660,10 +655,8 @@
         const variables = {
             chapter_update: ['{chapterNumber}'],
             bookmark_reminder: ['{count}'],
-            achievement: ['{achievementName}'],
             social: ['{action}', '{username}'],
             system: ['{message}'],
-            email: []
         };
         
         const vars = variables[type] || [];

@@ -75,16 +75,6 @@
           CREATE: '/notifications',
           UPDATE: '/notifications/:id',
           DELETE: '/notifications/:id',
-          MARK_READ: '/notifications/:id/read',
-          MARK_ALL_READ: '/notifications/read-all'
-        },
-        // Bookmarks
-        BOOKMARKS: {
-          LIST: '/bookmarks',
-          GET: '/bookmarks/:id',
-          CREATE: '/bookmarks',
-          UPDATE: '/bookmarks/:id',
-          DELETE: '/bookmarks/:id'
         },
         // Search
         SEARCH: {

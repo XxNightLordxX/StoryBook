@@ -18,9 +18,6 @@ const LazyLoader = (function() {
             files: ['js/modules/analytics.js', 'js/ui/analytics-ui.js'],
             css: ['css/analytics.css']
         },
-        bookmarks: {
-            files: ['js/modules/bookmarks.js', 'js/ui/bookmarks-ui.js'],
-            css: ['css/bookmarks.css']
         },
         search: {
             files: ['js/modules/search.js', 'js/ui/search-ui.js'],
@@ -42,16 +39,6 @@ const LazyLoader = (function() {
             files: ['js/modules/content-management.js', 'js/ui/content-management-ui.js'],
             css: ['css/content-management.css']
         },
-        'user-features': {
-            files: [
-                'js/modules/user-profiles.js',
-                'js/modules/user-preferences.js',
-                'js/modules/achievements.js',
-                'js/modules/social-features.js',
-                'js/modules/messaging.js',
-                'js/ui/user-features-ui.js'
-            ],
-            css: ['css/user-features.css']
         },
         notifications: {
             files: ['js/modules/notifications.js', 'js/ui/notifications-ui.js'],

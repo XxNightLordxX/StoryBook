@@ -94,15 +94,12 @@
             stats: {
                 chaptersRead: 0,
                 totalReadingTime: 0,
-                bookmarks: 0,
-                achievements: 0
             },
             preferences: {
                 theme: 'light',
                 textSize: 'medium',
                 notifications: true,
                 emailUpdates: false
-            },
             achievements: [],
             social: {
                 followers: [],
