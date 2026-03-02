@@ -10,6 +10,10 @@ window.miscJsLoaded = true;
 
 (function() {
   
+    // Import security functions from global scope
+    const sanitizeHTML = window.sanitizeHTML || ((str) => str);
+    const sanitizeAttribute = window.sanitizeAttribute || ((str) => str);
+
   // Safe showNotification wrapper - prevents crashes if notifications UI hasn't loaded yet
   const safeShowNotification = (...args) => {
     if (typeof showNotification === 'function') {
@@ -19,7 +23,6 @@ window.miscJsLoaded = true;
     } else {
     }
   };
-  
   // Constants
   const STORY_START = new Date('2026-02-26T00:00:00Z').getTime();
   let CHAPTER_INTERVAL_MS = parseInt(Storage.getItem('ese_chapterInterval', 30000));
