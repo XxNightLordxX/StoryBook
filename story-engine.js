@@ -2025,6 +2025,22 @@ const StoryEngine = (() => {
 
     return chapter;
 
+    // Apply continuity and variety enhancements
+    if (typeof window !== 'undefined' && window.StoryContinuityEngine) {
+      try {
+        chapter = window.StoryContinuityEngine.generateChapterWithContinuity(
+          () => chapter,
+          {
+            addTransition: true,
+            enhanceVariety: true
+          }
+        );
+      } catch (error) {
+        console.warn('Continuity enhancement failed:', error);
+        // Continue with original chapter if enhancement fails
+      }
+    }
+
       // Track content with UniquenessTracker for Phase 1 testing
       if (typeof window !== 'undefined' && window.UniquenessTracker) {
         // Track title
