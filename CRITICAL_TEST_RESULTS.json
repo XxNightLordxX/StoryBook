@@ -1,0 +1,232 @@
+{
+  "total": 45,
+  "passed": 45,
+  "failed": 0,
+  "tests": [
+    {
+      "name": "Auth module exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Login function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Logout function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Auth module - No console.log",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Auth module - No alert()",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Auth module - Uses DOM Helpers",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Generation module exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Unified AI generator exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Generate chapter function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Generation module - No console.log",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Generation module - Uses DOM Helpers",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Story generation control module exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Set speed function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Toggle pause function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Reset story function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Update generation mode function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Story generation control module - No console.log",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Story generation control module - Uses DOM Helpers",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Storage module exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Set app state function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Get app state function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Storage module - No console.log",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "DOM helpers module exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Safe get element function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Safe set text function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Safe set display function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Safe toggle class function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Misc module (UI helpers) exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Show notification function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Open modal function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Close modal function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Misc module - No console.log",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Misc module - No alert()",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Misc module - Uses DOM Helpers",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Initialization module exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Initialization module - No console.log",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Index HTML exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "DOM helpers included in HTML",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Story generation control included in HTML",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "System init included in HTML",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "System rules document exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "System rules version is UZF-MSR v1.0",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Error handler module exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Safe execute function exists",
+      "passed": true,
+      "message": ""
+    },
+    {
+      "name": "Error handler module - No console.log",
+      "passed": true,
+      "message": ""
+    }
+  ]
+}
