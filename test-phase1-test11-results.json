@@ -1,0 +1,93 @@
+{
+  "testName": "TEST 1.11: Verify Duplicate Prevention Mechanism",
+  "totalTests": 9,
+  "passedTests": 9,
+  "failedTests": 0,
+  "elapsedTime": "0m 0s",
+  "results": [
+    {
+      "test": "TEST 1: Generate a chapter and track it",
+      "status": "PASS",
+      "details": {
+        "paragraphsTracked": 12,
+        "titlesTracked": 1,
+        "chaptersTracked": 1
+      }
+    },
+    {
+      "test": "TEST 2: Attempt to add the same paragraph again",
+      "status": "PASS",
+      "details": {
+        "originalCount": 12,
+        "afterDuplicate": 12,
+        "isDuplicateDetected": true
+      }
+    },
+    {
+      "test": "TEST 3: Attempt to add the same title again",
+      "status": "PASS",
+      "details": {
+        "originalCount": 1,
+        "afterDuplicate": 1,
+        "isDuplicateDetected": true
+      }
+    },
+    {
+      "test": "TEST 4: Attempt to add the same chapter again",
+      "status": "PASS",
+      "details": {
+        "originalCount": 1,
+        "afterDuplicate": 1,
+        "isDuplicateDetected": true
+      }
+    },
+    {
+      "test": "TEST 5: Generate a new chapter and verify it's not a duplicate",
+      "status": "PASS",
+      "details": {
+        "isParagraphDuplicate": false,
+        "isTitleDuplicate": false,
+        "isChapterDuplicate": false
+      }
+    },
+    {
+      "test": "TEST 6: Verify duplicate detection methods return correct results",
+      "status": "PASS",
+      "details": {
+        "duplicateParagraphs": 0,
+        "duplicateTitles": 0,
+        "duplicateChapters": 0
+      }
+    },
+    {
+      "test": "TEST 7: Verify clearAll() clears all tracking arrays",
+      "status": "PASS",
+      "details": {
+        "paragraphsAfterClear": 0,
+        "titlesAfterClear": 0,
+        "chaptersAfterClear": 0
+      }
+    },
+    {
+      "test": "TEST 8: Verify tracking after clearAll()",
+      "status": "PASS",
+      "details": {
+        "paragraphsAfterClear": 15,
+        "titlesAfterClear": 1,
+        "chaptersAfterClear": 1
+      }
+    },
+    {
+      "test": "TEST 9: Verify duplicate detection with multiple identical attempts",
+      "status": "PASS",
+      "details": {
+        "attempts": 10,
+        "successfulAdds": 1,
+        "preventedDuplicates": 9,
+        "trackedCount": 16
+      }
+    }
+  ],
+  "errors": [],
+  "passed": true
+}
