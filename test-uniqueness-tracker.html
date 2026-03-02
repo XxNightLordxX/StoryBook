@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test UniquenessTracker Methods</title>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>UniquenessTracker Method Test</h1>
+    <div id="results"></div>
+    
+    <script src="js/uniqueness-tracker.js?v=4"></script>
+    <script>
+        const results = document.getElementById('results');
+        
+        function log(message, success = true) {
+            const div = document.createElement('div');
+            div.style.color = success ? 'green' : 'red';
+            div.textContent = message;
+            results.appendChild(div);
+        }
+        
+        // Test 1: Check if UniquenessTracker exists
+        if (typeof window.UniquenessTracker === 'object') {
+            log('✓ UniquenessTracker object exists');
+        } else {
+            log('✗ UniquenessTracker object does NOT exist', false);
+        }
+        
+        // Test 2: Check if getTrackedParagraphs exists
+        if (typeof window.UniquenessTracker.getTrackedParagraphs === 'function') {
+            log('✓ getTrackedParagraphs() method exists');
+        } else {
+            log('✗ getTrackedParagraphs() method does NOT exist', false);
+        }
+        
+        // Test 3: Check if getTrackedTitles exists
+        if (typeof window.UniquenessTracker.getTrackedTitles === 'function') {
+            log('✓ getTrackedTitles() method exists');
+        } else {
+            log('✗ getTrackedTitles() method does NOT exist', false);
+        }
+        
+        // Test 4: Check if getTrackedChapters exists
+        if (typeof window.UniquenessTracker.getTrackedChapters === 'function') {
+            log('✓ getTrackedChapters() method exists');
+        } else {
+            log('✗ getTrackedChapters() method does NOT exist', false);
+        }
+        
+        // Test 5: Check if addParagraph exists
+        if (typeof window.UniquenessTracker.addParagraph === 'function') {
+            log('✓ addParagraph() method exists');
+        } else {
+            log('✗ addParagraph() method does NOT exist', false);
+        }
+        
+        // Test 6: Check if addTitle exists
+        if (typeof window.UniquenessTracker.addTitle === 'function') {
+            log('✓ addTitle() method exists');
+        } else {
+            log('✗ addTitle() method does NOT exist', false);
+        }
+        
+        // Test 7: Check if addChapter exists
+        if (typeof window.UniquenessTracker.addChapter === 'function') {
+            log('✓ addChapter() method exists');
+        } else {
+            log('✗ addChapter() method does NOT exist', false);
+        }
+        
+        // Test 8: Check if isParagraphDuplicate exists
+        if (typeof window.UniquenessTracker.isParagraphDuplicate === 'function') {
+            log('✓ isParagraphDuplicate() method exists');
+        } else {
+            log('✗ isParagraphDuplicate() method does NOT exist', false);
+        }
+        
+        // Test 9: Check if isTitleDuplicate exists
+        if (typeof window.UniquenessTracker.isTitleDuplicate === 'function') {
+            log('✓ isTitleDuplicate() method exists');
+        } else {
+            log('✗ isTitleDuplicate() method does NOT exist', false);
+        }
+        
+        // Test 10: Check if isChapterDuplicate exists
+        if (typeof window.UniquenessTracker.isChapterDuplicate === 'function') {
+            log('✓ isChapterDuplicate() method exists');
+        } else {
+            log('✗ isChapterDuplicate() method does NOT exist', false);
+        }
+        
+        // Test 11: Test getTrackedParagraphs returns empty array initially
+        const paragraphs = window.UniquenessTracker.getTrackedParagraphs();
+        if (Array.isArray(paragraphs) && paragraphs.length === 0) {
+            log('✓ getTrackedParagraphs() returns empty array initially');
+        } else {
+            log('✗ getTrackedParagraphs() does NOT return empty array initially', false);
+        }
+        
+        // Test 12: Test getTrackedTitles returns empty array initially
+        const titles = window.UniquenessTracker.getTrackedTitles();
+        if (Array.isArray(titles) && titles.length === 0) {
+            log('✓ getTrackedTitles() returns empty array initially');
+        } else {
+            log('✗ getTrackedTitles() does NOT return empty array initially', false);
+        }
+        
+        // Test 13: Test getTrackedChapters returns empty array initially
+        const chapters = window.UniquenessTracker.getTrackedChapters();
+        if (Array.isArray(chapters) && chapters.length === 0) {
+            log('✓ getTrackedChapters() returns empty array initially');
+        } else {
+            log('✗ getTrackedChapters() does NOT return empty array initially', false);
+        }
+        
+        // Test 14: Test addParagraph
+        const result1 = window.UniquenessTracker.addParagraph('Test paragraph 1');
+        if (result1 === true) {
+            log('✓ addParagraph() returns true for new paragraph');
+        } else {
+            log('✗ addParagraph() does NOT return true for new paragraph', false);
+        }
+        
+        // Test 15: Test addParagraph duplicate
+        const result2 = window.UniquenessTracker.addParagraph('Test paragraph 1');
+        if (result2 === false) {
+            log('✓ addParagraph() returns false for duplicate paragraph');
+        } else {
+            log('✗ addParagraph() does NOT return false for duplicate paragraph', false);
+        }
+        
+        // Test 16: Test isParagraphDuplicate
+        const isDup = window.UniquenessTracker.isParagraphDuplicate('Test paragraph 1');
+        if (isDup === true) {
+            log('✓ isParagraphDuplicate() returns true for existing paragraph');
+        } else {
+            log('✗ isParagraphDuplicate() does NOT return true for existing paragraph', false);
+        }
+        
+        // Test 17: Verify paragraph count
+        const paragraphsAfter = window.UniquenessTracker.getTrackedParagraphs();
+        if (paragraphsAfter.length === 1) {
+            log('✓ getTrackedParagraphs() returns 1 paragraph after adding');
+        } else {
+            log('✗ getTrackedParagraphs() does NOT return 1 paragraph after adding', false);
+        }
+        
+        log('\n=== ALL TESTS COMPLETED ===');
+    </script>
+</body>
+</html>
