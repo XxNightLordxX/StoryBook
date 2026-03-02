@@ -23,9 +23,6 @@ const LazyLoader = (function() {
             files: ['js/modules/search.js', 'js/ui/search-ui.js'],
             css: ['css/search.css']
         },
-        'save-load': {
-            files: ['js/modules/save-load.js', 'js/ui/save-load-ui.js'],
-            css: ['css/save-load.css']
         },
         'reading-history': {
             files: ['js/modules/reading-history.js', 'js/ui/reading-history-ui.js'],
