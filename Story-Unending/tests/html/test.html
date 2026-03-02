@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+  <h1>Test Page</h1>
+  <div id="output"></div>
+  
+  <script src="backstory-engine.js"></script>
+  <script src="story-engine.js"></script>
+  <script>
+    console.log('Test page loaded');
+    console.log('StoryEngine:', typeof StoryEngine);
+    console.log('BackstoryEngine:', typeof BackstoryEngine);
+    
+    try {
+      const chapter = StoryEngine.generateChapter();
+      console.log('Chapter generated:', chapter);
+      document.getElementById('output').innerHTML = '<h2>' + chapter.title + '</h2><p>' + chapter.paragraphs.join('</p><p>') + '</p>';
+    } catch (error) {
+      console.error('Error:', error);
+      document.getElementById('output').innerHTML = '<p style="color:red">Error: ' + error.message + '</p>';
+    }
+  </script>
+</body>
+</html>

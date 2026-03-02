@@ -92,30 +92,35 @@
    * @returns {Promise<boolean>} True if shared successfully
    */
   const shareText = async (text, title = 'Share Text') => {
-    if (!isSupported()) {
-      throw new Error('Web Share API not supported');
-    }
-
-    const shareData = {
-      title: title,
-      text: text
-    };
-
-    if (!canShare(shareData)) {
-      throw new Error('Cannot share this data');
-    }
-
-    try {
-      await navigator.share(shareData);
-      addToHistory('text', { text, title });
-      return true;
-    } catch (error) {
-      if (error.name !== 'AbortError') {
-        // Error handled silently: console.error('Error sharing text:', error);
-        throw error;
-      }
-      return false;
-    }
+  try {
+        if (!isSupported()) {
+          throw new Error('Web Share API not supported');
+        }
+    
+        const shareData = {
+          title: title,
+          text: text
+        };
+    
+        if (!canShare(shareData)) {
+          throw new Error('Cannot share this data');
+        }
+    
+        try {
+          await navigator.share(shareData);
+          addToHistory('text', { text, title });
+          return true;
+        } catch (error) {
+          if (error.name !== 'AbortError') {
+            // Error handled silently: console.error('Error sharing text:', error);
+            throw error;
+          }
+          return false;
+        }
+  } catch (error) {
+    console.error('Error in handling:', error);
+    throw error; // Re-throw to allow caller to handle
+  }
   }
 
   /**
@@ -177,10 +182,15 @@
    * @returns {Promise<boolean>} True if shared successfully
    */
   const shareAchievement = async (achievementName, description = '') => {
-    const text = `I just unlocked the "${achievementName}" achievement in Story-Unending! ${description}`;
-    const title = 'Achievement Unlocked!';
-
-    return await shareText(text, title);
+  try {
+        const text = `I just unlocked the "${achievementName}" achievement in Story-Unending! ${description}`;
+        const title = 'Achievement Unlocked!';
+    
+        return await shareText(text, title);
+  } catch (error) {
+    console.error('Error in handling:', error);
+    throw error; // Re-throw to allow caller to handle
+  }
   }
 
   /**

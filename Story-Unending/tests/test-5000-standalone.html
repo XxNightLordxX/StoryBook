@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5000 Chapter Comprehensive Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        .container {
+            background: #16213e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #e94560;
+            text-align: center;
+        }
+        .progress-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #0f3460;
+            border: 3px solid #e94560;
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 300px;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .progress-box h3 {
+            margin: 0 0 15px 0;
+            color: #e94560;
+        }
+        .progress-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #1a1a2e;
+            border-radius: 5px;
+        }
+        .progress-item.success {
+            border-left: 4px solid #4caf50;
+        }
+        .progress-item.warning {
+            border-left: 4px solid #ff9800;
+        }
+        .progress-item.error {
+            border-left: 4px solid #f44336;
+        }
+        button {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #c73e54;
+        }
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        #results {
+            margin-top: 30px;
+            display: none;
+        }
+        .result-section {
+            background: #1a1a2e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .result-section h2 {
+            color: #e94560;
+            border-bottom: 2px solid #e94560;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #333;
+        }
+        th {
+            background: #0f3460;
+        }
+        .stat {
+            display: inline-block;
+            padding: 5px 15px;
+            margin: 5px;
+            background: #0f3460;
+            border-radius: 5px;
+        }
+        .stat.good {
+            background: #2e7d32;
+        }
+        .stat.bad {
+            background: #c62828;
+        }
+        .stat.warning {
+            background: #f57c00;
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 5000 Chapter Comprehensive Test</h1>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <button id="startBtn" onclick="startTest()">🚀 Start Test</button>
+            <button id="downloadBtn" onclick="downloadResults()" disabled>📥 Download Results</button>
+        </div>
+        
+        <div id="progressBox" class="progress-box" style="display: none;">
+            <h3>📊 Test Progress</h3>
+            <div class="progress-item">
+                <strong>Chapters Tested:</strong> <span id="progressCount">0</span>/5000
+            </div>
+            <div class="progress-item">
+                <strong>Duplicate Titles:</strong> <span id="dupTitles">0</span>
+            </div>
+            <div class="progress-item">
+                <strong>Consecutive Duplicates:</strong> <span id="consecDups">0</span>
+            </div>
+            <div class="progress-item">
+                <strong>Duplicate Paragraphs:</strong> <span id="dupParas">0</span>
+            </div>
+            <div class="progress-item">
+                <strong>Low Word Count:</strong> <span id="lowWords">0</span>
+            </div>
+            <div class="progress-item">
+                <strong>Time Elapsed:</strong> <span id="timeElapsed">0s</span>
+            </div>
+        </div>
+        
+        <div id="results">
+            <div class="result-section">
+                <h2>📈 Overall Statistics</h2>
+                <div id="overallStats"></div>
+            </div>
+            
+            <div class="result-section">
+                <h2>🔍 Duplicate Titles</h2>
+                <div id="duplicateTitles"></div>
+            </div>
+            
+            <div class="result-section">
+                <h2>🔗 Consecutive Duplicates</h2>
+                <div id="consecutiveDuplicates"></div>
+            </div>
+            
+            <div class="result-section">
+                <h2>📝 Duplicate Paragraphs</h2>
+                <div id="duplicateParagraphs"></div>
+            </div>
+            
+            <div class="result-section">
+                <h2>📏 Low Word Count Chapters</h2>
+                <div id="lowWordCount"></div>
+            </div>
+            
+            <div class="result-section">
+                <h2>📚 Chapter Type Distribution</h2>
+                <div id="chapterTypes"></div>
+            </div>
+            
+            <div class="result-section">
+                <h2>🌍 Setting Distribution</h2>
+                <div id="settings"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="story-engine.js"></script>
+    <script>
+        let testResults = null;
+        let testInterval = null;
+
+        async function startTest() {
+            const startBtn = document.getElementById('startBtn');
+            const progressBox = document.getElementById('progressBox');
+            
+            startBtn.disabled = true;
+            progressBox.style.display = 'block';
+            
+            // Initialize results
+            testResults = {
+                totalChapters: 5000,
+                duplicateTitles: [],
+                consecutiveDuplicates: [],
+                duplicateParagraphs: [],
+                lowWordCount: [],
+                chapterTypes: {},
+                settings: {},
+                arcProgression: [],
+                statProgression: [],
+                startTime: Date.now()
+            };
+            
+            // Track seen titles and paragraphs
+            const seenTitles = new Set();
+            const seenParagraphs = new Set();
+            let lastTitle = '';
+            
+            console.log('🚀 Starting Comprehensive 5000 Chapter Test...');
+            
+            // Process in batches to avoid blocking UI
+            const batchSize = 50;
+            let currentChapter = 1;
+            
+            function processBatch() {
+                const batchEnd = Math.min(currentChapter + batchSize, 5001);
+                
+                for (let i = currentChapter; i < batchEnd; i++) {
+                    // Generate chapter
+                    const chapter = window.storyEngine.generateChapter(i);
+                    
+                    // Check for duplicate titles
+                    if (seenTitles.has(chapter.title)) {
+                        testResults.duplicateTitles.push({
+                            chapter: i,
+                            title: chapter.title,
+                            firstSeen: Array.from(seenTitles).indexOf(chapter.title) + 1
+                        });
+                    }
+                    seenTitles.add(chapter.title);
+                    
+                    // Check for consecutive duplicates
+                    if (chapter.title === lastTitle) {
+                        testResults.consecutiveDuplicates.push({
+                            chapter: i,
+                            title: chapter.title
+                        });
+                    }
+                    lastTitle = chapter.title;
+                    
+                    // Check for duplicate paragraphs
+                    const paragraphs = chapter.content.split('\n\n');
+                    paragraphs.forEach((para, idx) => {
+                        if (para.length > 50 && seenParagraphs.has(para)) {
+                            testResults.duplicateParagraphs.push({
+                                chapter: i,
+                                paragraph: idx + 1,
+                                text: para.substring(0, 100) + '...'
+                            });
+                        }
+                        seenParagraphs.add(para);
+                    });
+                    
+                    // Check word count
+                    const wordCount = chapter.content.split(/\s+/).length;
+                    if (wordCount < 1000) {
+                        testResults.lowWordCount.push({
+                            chapter: i,
+                            wordCount: wordCount,
+                            title: chapter.title
+                        });
+                    }
+                    
+                    // Track chapter types
+                    testResults.chapterTypes[chapter.type] = (testResults.chapterTypes[chapter.type] || 0) + 1;
+                    
+                    // Track settings
+                    testResults.settings[chapter.setting] = (testResults.settings[chapter.setting] || 0) + 1;
+                    
+                    // Track arc progression
+                    testResults.arcProgression.push({
+                        chapter: i,
+                        arc: chapter.arc
+                    });
+                    
+                    // Track stat progression
+                    testResults.statProgression.push({
+                        chapter: i,
+                        stats: { ...chapter.stats }
+                    });
+                }
+                
+                currentChapter = batchEnd;
+                
+                // Update progress
+                updateProgress();
+                
+                // Continue or finish
+                if (currentChapter < 5001) {
+                    setTimeout(processBatch, 10);
+                } else {
+                    finishTest();
+                }
+            }
+            
+            // Start processing
+            processBatch();
+        }
+
+        function updateProgress() {
+            const elapsed = (Date.now() - testResults.startTime) / 1000;
+            
+            document.getElementById('progressCount').textContent = testResults.arcProgression.length;
+            document.getElementById('dupTitles').textContent = testResults.duplicateTitles.length;
+            document.getElementById('consecDups').textContent = testResults.consecutiveDuplicates.length;
+            document.getElementById('dupParas').textContent = testResults.duplicateParagraphs.length;
+            document.getElementById('lowWords').textContent = testResults.lowWordCount.length;
+            document.getElementById('timeElapsed').textContent = elapsed.toFixed(1) + 's';
+        }
+
+        function finishTest() {
+            testResults.endTime = Date.now();
+            testResults.duration = (testResults.endTime - testResults.startTime) / 1000;
+            
+            console.log('✅ Test completed!');
+            console.log('Duration:', testResults.duration.toFixed(2), 'seconds');
+            
+            // Display results
+            displayResults();
+            
+            // Enable download
+            document.getElementById('downloadBtn').disabled = false;
+        }
+
+        function displayResults() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+            
+            // Overall statistics
+            const overallStats = document.getElementById('overallStats');
+            overallStats.innerHTML = `
+                <div class="stat ${testResults.duplicateTitles.length === 0 ? 'good' : 'bad'}">
+                    <strong>Total Chapters:</strong> ${testResults.totalChapters}
+                </div>
+                <div class="stat ${testResults.duplicateTitles.length === 0 ? 'good' : 'bad'}">
+                    <strong>Duration:</strong> ${testResults.duration.toFixed(2)}s
+                </div>
+                <div class="stat ${testResults.duplicateTitles.length === 0 ? 'good' : 'bad'}">
+                    <strong>Duplicate Titles:</strong> ${testResults.duplicateTitles.length}
+                </div>
+                <div class="stat ${testResults.consecutiveDuplicates.length === 0 ? 'good' : 'bad'}">
+                    <strong>Consecutive Duplicates:</strong> ${testResults.consecutiveDuplicates.length}
+                </div>
+                <div class="stat ${testResults.duplicateParagraphs.length === 0 ? 'good' : 'bad'}">
+                    <strong>Duplicate Paragraphs:</strong> ${testResults.duplicateParagraphs.length}
+                </div>
+                <div class="stat ${testResults.lowWordCount.length === 0 ? 'good' : 'bad'}">
+                    <strong>Low Word Count:</strong> ${testResults.lowWordCount.length}
+                </div>
+            `;
+            
+            // Duplicate titles
+            const dupTitlesDiv = document.getElementById('duplicateTitles');
+            if (testResults.duplicateTitles.length === 0) {
+                dupTitlesDiv.innerHTML = '<p class="stat good">✅ No duplicate titles found!</p>';
+            } else {
+                dupTitlesDiv.innerHTML = `
+                    <p class="stat bad">❌ Found ${testResults.duplicateTitles.length} duplicate titles</p>
+                    <table>
+                        <tr><th>Chapter</th><th>Title</th><th>First Seen</th></tr>
+                        ${testResults.duplicateTitles.slice(0, 20).map(d => 
+                            `<tr><td>${d.chapter}</td><td>${d.title}</td><td>${d.firstSeen}</td></tr>`
+                        ).join('')}
+                    </table>
+                    ${testResults.duplicateTitles.length > 20 ? `<p>...and ${testResults.duplicateTitles.length - 20} more</p>` : ''}
+                `;
+            }
+            
+            // Consecutive duplicates
+            const consecDupsDiv = document.getElementById('consecutiveDuplicates');
+            if (testResults.consecutiveDuplicates.length === 0) {
+                consecDupsDiv.innerHTML = '<p class="stat good">✅ No consecutive duplicates found!</p>';
+            } else {
+                consecDupsDiv.innerHTML = `
+                    <p class="stat bad">❌ Found ${testResults.consecutiveDuplicates.length} consecutive duplicates</p>
+                    <table>
+                        <tr><th>Chapter</th><th>Title</th></tr>
+                        ${testResults.consecutiveDuplicates.slice(0, 20).map(d => 
+                            `<tr><td>${d.chapter}</td><td>${d.title}</td></tr>`
+                        ).join('')}
+                    </table>
+                `;
+            }
+            
+            // Duplicate paragraphs
+            const dupParasDiv = document.getElementById('duplicateParagraphs');
+            if (testResults.duplicateParagraphs.length === 0) {
+                dupParasDiv.innerHTML = '<p class="stat good">✅ No duplicate paragraphs found!</p>';
+            } else {
+                dupParasDiv.innerHTML = `
+                    <p class="stat bad">❌ Found ${testResults.duplicateParagraphs.length} duplicate paragraphs</p>
+                    <table>
+                        <tr><th>Chapter</th><th>Paragraph</th><th>Text Preview</th></tr>
+                        ${testResults.duplicateParagraphs.slice(0, 20).map(d => 
+                            `<tr><td>${d.chapter}</td><td>${d.paragraph}</td><td>${d.text}</td></tr>`
+                        ).join('')}
+                    </table>
+                `;
+            }
+            
+            // Low word count
+            const lowWordsDiv = document.getElementById('lowWordCount');
+            if (testResults.lowWordCount.length === 0) {
+                lowWordsDiv.innerHTML = '<p class="stat good">✅ All chapters have 1000+ words!</p>';
+            } else {
+                lowWordsDiv.innerHTML = `
+                    <p class="stat bad">❌ Found ${testResults.lowWordCount.length} chapters with < 1000 words</p>
+                    <table>
+                        <tr><th>Chapter</th><th>Title</th><th>Word Count</th></tr>
+                        ${testResults.lowWordCount.slice(0, 20).map(d => 
+                            `<tr><td>${d.chapter}</td><td>${d.title}</td><td>${d.wordCount}</td></tr>`
+                        ).join('')}
+                    </table>
+                `;
+            }
+            
+            // Chapter types
+            const typesDiv = document.getElementById('chapterTypes');
+            typesDiv.innerHTML = `
+                <table>
+                    <tr><th>Type</th><th>Count</th><th>Percentage</th></tr>
+                    ${Object.entries(testResults.chapterTypes).map(([type, count]) => 
+                        `<tr><td>${type}</td><td>${count}</td><td>${((count/5000)*100).toFixed(1)}%</td></tr>`
+                    ).join('')}
+                </table>
+            `;
+            
+            // Settings
+            const settingsDiv = document.getElementById('settings');
+            settingsDiv.innerHTML = `
+                <table>
+                    <tr><th>Setting</th><th>Count</th><th>Percentage</th></tr>
+                    ${Object.entries(testResults.settings).map(([setting, count]) => 
+                        `<tr><td>${setting}</td><td>${count}</td><td>${((count/5000)*100).toFixed(1)}%</td></tr>`
+                    ).join('')}
+                </table>
+            `;
+            
+            // Scroll to results
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function downloadResults() {
+            const blob = new Blob([JSON.stringify(testResults, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'comprehensive-test-results.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            console.log('✅ Results downloaded!');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Chapter Display</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .info { background: #d1ecf1; border-color: #bee5eb; }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Chapter Display Test</h1>
+    <div id="results"></div>
+    
+    <script src="backstory-engine.js"></script>
+    <script src="story-engine.js"></script>
+    <script>
+        const results = document.getElementById('results');
+        
+        function addResult(message, type) {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.textContent = message;
+            results.appendChild(div);
+        }
+        
+        // Test 1: Check if StoryEngine exists
+        if (typeof StoryEngine !== 'undefined') {
+            addResult('✓ StoryEngine is loaded', 'success');
+        } else {
+            addResult('✗ StoryEngine is NOT loaded', 'error');
+        }
+        
+        // Test 2: Check if generateChapter exists
+        if (typeof StoryEngine !== 'undefined' && typeof StoryEngine.generateChapter === 'function') {
+            addResult('✓ StoryEngine.generateChapter exists', 'success');
+        } else {
+            addResult('✗ StoryEngine.generateChapter does NOT exist', 'error');
+        }
+        
+        // Test 3: Generate a chapter
+        try {
+            if (typeof StoryEngine !== 'undefined' && typeof StoryEngine.generateChapter === 'function') {
+                const chapter = StoryEngine.generateChapter();
+                addResult(`✓ Generated chapter: ${chapter.title}`, 'success');
+                addResult(`  Chapter number: ${chapter.number}`, 'info');
+                addResult(`  Word count: ${chapter.wordCount}`, 'info');
+                addResult(`  Paragraphs: ${chapter.paragraphs.length}`, 'info');
+                addResult(`  First paragraph: ${chapter.paragraphs[0].substring(0, 100)}...`, 'info');
+            }
+        } catch (error) {
+            addResult(`✗ Error generating chapter: ${error.message}`, 'error');
+        }
+        
+        // Test 4: Check AppState
+        setTimeout(() => {
+            if (typeof AppState !== 'undefined') {
+                addResult(`✓ AppState exists`, 'success');
+                addResult(`  Total generated: ${AppState.totalGenerated}`, 'info');
+                addResult(`  Chapters array length: ${AppState.chapters.length}`, 'info');
+                if (AppState.chapters.length > 0) {
+                    addResult(`  First chapter: ${AppState.chapters[0].title}`, 'info');
+                }
+            } else {
+                addResult(`✗ AppState does NOT exist`, 'error');
+            }
+        }, 100);
+    </script>
+</body>
+</html>

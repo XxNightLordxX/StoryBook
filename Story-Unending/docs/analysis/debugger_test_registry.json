@@ -1,0 +1,117 @@
+{
+  "completed_tests": [
+    "syntax_check",
+    "html_validation",
+    "feature_tests",
+    "console_errors",
+    "security_scan",
+    "performance_check",
+    "code_quality",
+    "accessibility_check",
+    "memory_leak_detection",
+    "cross_browser_compatibility",
+    "api_endpoint_validation"
+  ],
+  "available_tests": [
+    {
+      "id": "syntax_check",
+      "name": "JavaScript Syntax Validation",
+      "description": "Check all JavaScript files for syntax errors",
+      "priority": "critical",
+      "function": "run_syntax_check"
+    },
+    {
+      "id": "html_validation",
+      "name": "HTML Structure Validation",
+      "description": "Validate HTML structure and integrity",
+      "priority": "critical",
+      "function": "run_html_validation"
+    },
+    {
+      "id": "feature_tests",
+      "name": "Feature Functionality Tests",
+      "description": "Run comprehensive feature tests",
+      "priority": "high",
+      "function": "run_feature_tests"
+    },
+    {
+      "id": "console_errors",
+      "name": "Console Error Detection",
+      "description": "Check for console errors in code",
+      "priority": "high",
+      "function": "run_console_error_check"
+    },
+    {
+      "id": "security_scan",
+      "name": "Security Vulnerability Scan",
+      "description": "Scan for security vulnerabilities",
+      "priority": "critical",
+      "function": "run_security_scan"
+    },
+    {
+      "id": "performance_check",
+      "name": "Performance Analysis",
+      "description": "Analyze performance bottlenecks",
+      "priority": "medium",
+      "function": "run_performance_check"
+    },
+    {
+      "id": "code_quality",
+      "name": "Code Quality Analysis",
+      "description": "Check code quality and best practices",
+      "priority": "medium",
+      "function": "run_code_quality_check"
+    },
+    {
+      "id": "accessibility_check",
+      "name": "Accessibility Compliance",
+      "description": "Check accessibility features",
+      "priority": "medium",
+      "function": "run_accessibility_check"
+    },
+    {
+      "id": "memory_leak_detection",
+      "name": "Memory Leak Detection",
+      "description": "Detect potential memory leaks in JavaScript code",
+      "priority": "high",
+      "function": "run_memory_leak_check"
+    },
+    {
+      "id": "cross_browser_compatibility",
+      "name": "Cross-Browser Compatibility",
+      "description": "Check for cross-browser compatibility issues",
+      "priority": "medium",
+      "function": "run_cross_browser_check"
+    },
+    {
+      "id": "api_endpoint_validation",
+      "name": "API Endpoint Validation",
+      "description": "Validate all API endpoints and responses",
+      "priority": "high",
+      "function": "run_api_validation"
+    }
+  ],
+  "web_search_tests": [
+    {
+      "id": "memory_leak_detection",
+      "name": "Memory Leak Detection",
+      "description": "Detect potential memory leaks in JavaScript code",
+      "priority": "high",
+      "function": "run_memory_leak_check"
+    },
+    {
+      "id": "cross_browser_compatibility",
+      "name": "Cross-Browser Compatibility",
+      "description": "Check for cross-browser compatibility issues",
+      "priority": "medium",
+      "function": "run_cross_browser_check"
+    },
+    {
+      "id": "api_endpoint_validation",
+      "name": "API Endpoint Validation",
+      "description": "Validate all API endpoints and responses",
+      "priority": "high",
+      "function": "run_api_validation"
+    }
+  ]
+}

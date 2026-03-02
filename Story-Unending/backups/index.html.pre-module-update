@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Endless Story Engine — Vampire Progenitor: Extraction</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧛</text></svg>">
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="btn btn-icon" id="sidebarToggle" title="Chapters (S)">☰</button>
+      <div class="topbar-info">
+        <div class="topbar-title">🧛 Vampire Progenitor: Extraction</div>
+        <div class="topbar-subtitle" id="arcDisplay">Arc: Awakening</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <!-- Chapter Nav in topbar -->
+      <div class="topbar-nav">
+        <button class="nav-btn" id="prevBtnTop" onclick="prevChapter()" title="Previous Chapter">◀</button>
+        <span class="nav-current" id="navCurrentTop">Ch. 1</span>
+        <button class="nav-btn" id="nextBtnTop" onclick="nextChapter()" title="Next Chapter">▶</button>
+      </div>
+      <div class="dropdown-wrapper">
+        <button class="menu-toggle-btn" id="menuToggle" onclick="toggleDropdown()">⚙️</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+
+          <!-- Auth: Logged Out -->
+          <div class="dropdown-section" id="dropdownAuthSection">
+            <div class="dropdown-section-title">Account</div>
+            <button class="dropdown-btn purple-btn" onclick="openModal('loginOverlay'); closeDropdown();">
+              <span class="dropdown-btn-icon">🔑</span><span class="dropdown-btn-text">Login</span>
+            </button>
+            <button class="dropdown-btn green-btn" onclick="openModal('registerOverlay'); closeDropdown();">
+              <span class="dropdown-btn-icon">📝</span><span class="dropdown-btn-text">Register</span>
+            </button>
+          </div>
+
+          <!-- Auth: Logged In -->
+          <div class="dropdown-section" id="dropdownUserSection" style="display:none;">
+            <div class="dropdown-section-title">Account</div>
+            <div class="dropdown-user-info" id="dropdownUserInfo" onclick="toggleDirectorModeFromUser()" style="cursor:pointer;">
+              <span class="dui-icon" id="dropdownUserIcon">👤</span>
+              <div>
+                <div class="dui-name" id="dropdownUserName"></div>
+                <div class="dui-role" id="dropdownUserRole">Reader</div>
+              </div>
+              <span class="dui-toggle-hint" id="duiToggleHint" style="display:none;">🎬 Click for Director Mode</span>
+            </div>
+            <button class="dropdown-btn blue-btn" id="addEmailBtn" onclick="openModal('addEmailOverlay'); closeDropdown();" style="display:none;">
+              <span class="dropdown-btn-icon">📧</span>
+              <div><span class="dropdown-btn-text">Add Email</span><br><span class="dropdown-btn-sub">Enable password reset</span></div>
+            </button>
+            <button class="dropdown-btn red-btn" onclick="logout(); closeDropdown();">
+              <span class="dropdown-btn-icon">🚪</span><span class="dropdown-btn-text">Logout</span>
+            </button>
+
+          <!-- Director Section (Admin Only) -->
+          </div>
+          <div class="dropdown-section" id="dropdownDirectorSection" style="display:none;">
+            <div class="dropdown-section-title">🎬 Director Controls</div>
+            <button class="dropdown-btn purple-btn" onclick="toggleDirectorModeFromUser(); closeDropdown();">
+              <span class="dropdown-btn-icon">🎬</span>
+              <div><span class="dropdown-btn-text">Director Mode</span><br><span class="dropdown-btn-sub">Full director panel</span></div>
+            </button>
+            <button class="dropdown-btn red-btn" onclick="resetStory(); closeDropdown();">
+              <span class="dropdown-btn-icon">🔄</span>
+              <div><span class="dropdown-btn-text">Reset Story</span><br><span class="dropdown-btn-sub">Start from Chapter 1</span></div>
+            </button>
+          </div>
+
+          <!-- MC Stat Sheet -->
+          <div class="dropdown-section dropdown-stat-sheet">
+            <div class="dropdown-section-title">🧛 Kael — Vampire Progenitor (Lv. <span id="ddLevel">1</span>)</div>
+            <div id="ddChapterIndicator" class="dd-chapter-indicator">
+              <span class="dd-chapter-badge latest">📖 Latest — Ch. 1</span>
+            </div>
+            <button class="btn btn-jump-latest" id="ddJumpLatest" onclick="jumpToLatestChapter()" style="display:none;">
+              ⚡ Jump to Latest Chapter
+            </button>
+            <div class="dropdown-stat-bars">
+              <div class="dropdown-stat-bar"><span class="ds-label">❤️ HP</span><div class="ds-track"><div class="ds-fill hp" id="ddBarHp" style="width:100%"></div></div><span class="ds-val" id="ddHpVal">500/500</span></div>
+              <div class="dropdown-stat-bar"><span class="ds-label">💚 SP</span><div class="ds-track"><div class="ds-fill sp" id="ddBarSp" style="width:100%"></div></div><span class="ds-val" id="ddSpVal">300/300</span></div>
+              <div class="dropdown-stat-bar"><span class="ds-label">💙 MP</span><div class="ds-track"><div class="ds-fill mp" id="ddBarMp" style="width:100%"></div></div><span class="ds-val" id="ddMpVal">400/400</span></div>
+              <div class="dropdown-stat-bar"><span class="ds-label">🩸 Blood</span><div class="ds-track"><div class="ds-fill blood" id="ddBarBlood" style="width:100%"></div></div><span class="ds-val" id="ddBloodVal">100/100</span></div>
+            </div>
+            <div class="dropdown-stat-grid">
+              <div class="dropdown-stat-cell"><span class="dsc-name">💪 STR</span><span class="dsc-val purple" id="ddStr">12</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🏃 AGI</span><span class="dsc-val green" id="ddAgi">15</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🧠 INT</span><span class="dsc-val blue" id="ddInt">18</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">❤️ VIT</span><span class="dsc-val red" id="ddVit">14</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🛡️ END</span><span class="dsc-val green" id="ddEnd">13</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🍀 LCK</span><span class="dsc-val gold" id="ddLuck">10</span></div>
+            </div>
+            <div class="dropdown-stat-grid">
+              <div class="dropdown-stat-cell"><span class="dsc-name">🩸 Bloodlust</span><span class="dsc-val crimson" id="ddBloodlust">0</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🌑 Dark</span><span class="dsc-val purple" id="ddDark">15</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">💗 Regen</span><span class="dsc-val green" id="ddRegen">5</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">👁️ Dom</span><span class="dsc-val crimson" id="ddDom">8</span></div>
+            </div>
+            <div class="dropdown-stat-grid">
+              <div class="dropdown-stat-cell"><span class="dsc-name">⚔️ ATK</span><span class="dsc-val red" id="ddAtk">25</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🛡️ DEF</span><span class="dsc-val blue" id="ddDef">18</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">💥 Crit</span><span class="dsc-val gold" id="ddCrit">8%</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">💨 Eva</span><span class="dsc-val green" id="ddEva">12%</span></div>
+            </div>
+            <div class="dropdown-stat-grid">
+              <div class="dropdown-stat-cell"><span class="dsc-name">⚖️ Karma</span><span class="dsc-val gold" id="ddKarma">50</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🔮 Instinct</span><span class="dsc-val purple" id="ddInstinct">10</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🧠 Will</span><span class="dsc-val blue" id="ddWill">16</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">👤 Presence</span><span class="dsc-val crimson" id="ddPresence">12</span></div>
+            </div>
+            <div class="dropdown-stat-grid">
+              <div class="dropdown-stat-cell"><span class="dsc-name">🪙 Gold</span><span class="dsc-val gold" id="ddGold">0</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🔮 Extract</span><span class="dsc-val cyan" id="ddExtract">0</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">💀 Kills</span><span class="dsc-val red" id="ddKills">0</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">👑 Bosses</span><span class="dsc-val gold" id="ddBosses">0</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🏰 Dungeons</span><span class="dsc-val purple" id="ddDungeons">0</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">📍 Location</span><span class="dsc-val" id="ddLocation">Real World</span></div>
+            </div>
+          </div>
+
+          <!-- Text Size -->
+          <div class="dropdown-section">
+            <div class="dropdown-section-title">📖 Text Size</div>
+            <div class="text-size-controls">
+              <input type="number" id="textSizeInput" class="text-size-input" min="10" max="32" value="16" onchange="setTextSize(this.value)">
+              <span class="text-size-unit">px</span>
+            </div>
+          </div>
+
+          <!-- Full Status -->
+          <div class="dropdown-section">
+            <button class="dropdown-btn purple-btn" onclick="toggleSection('statusContent')">
+              <span class="dropdown-btn-icon">📊</span>
+              <div><span class="dropdown-btn-text">Status</span><br><span class="dropdown-btn-sub">Full status screen</span></div>
+              <span class="dropdown-toggle-icon">▼</span>
+            </button>
+            <div class="dropdown-section-content" id="statusContent">
+              <button class="dropdown-btn purple-btn" onclick="toggleStatusScreen(); closeDropdown();">
+                <span class="dropdown-btn-icon">📊</span>
+                <div><span class="dropdown-btn-text">Full Status Screen</span><br><span class="dropdown-btn-sub">Skills, abilities & stats</span></div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Support -->
+          <div class="dropdown-section">
+            <button class="dropdown-btn gold-btn" onclick="toggleSection('supportContent')">
+              <span class="dropdown-btn-icon">💰</span>
+              <div><span class="dropdown-btn-text">Support</span><br><span class="dropdown-btn-sub">Donate & Subscribe</span></div>
+              <span class="dropdown-toggle-icon">▼</span>
+            </button>
+            <div class="dropdown-section-content" id="supportContent">
+              <button class="dropdown-btn gold-btn" onclick="openModal('donateOverlay'); closeDropdown();">
+                <span class="dropdown-btn-icon">💰</span>
+                <div><span class="dropdown-btn-text">Donate</span><br><span class="dropdown-btn-sub">Support the story</span></div>
+              </button>
+              <button class="dropdown-btn purple-btn" onclick="openModal('subscribeOverlay'); closeDropdown();">
+                <span class="dropdown-btn-icon">⭐</span>
+                <div><span class="dropdown-btn-text">Subscribe</span><br><span class="dropdown-btn-sub">$4.99/mo — Premium</span></div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Session -->
+          <div class="dropdown-section">
+            <button class="dropdown-btn blue-btn" onclick="toggleSection('sessionContent')">
+              <span class="dropdown-btn-icon">⏱️</span>
+              <div><span class="dropdown-btn-text">Session Stats</span><br><span class="dropdown-btn-sub">Chapters, words & time</span></div>
+              <span class="dropdown-toggle-icon">▼</span>
+            </button>
+            <div class="dropdown-section-content" id="sessionContent">
+              <div class="dropdown-stat-grid">
+                <div class="dropdown-stat-cell"><span class="dsc-name">📖 Chapters</span><span class="dsc-val purple" id="ddChapters">0</span></div>
+                <div class="dropdown-stat-cell"><span class="dsc-name">📝 Words</span><span class="dsc-val blue" id="ddWords">0</span></div>
+                <div class="dropdown-stat-cell"><span class="dsc-name">⏱️ Time</span><span class="dsc-val" id="ddTimer">00:00:00</span></div>
+                <div class="dropdown-stat-cell"><span class="dsc-name">⚔️ Level</span><span class="dsc-val purple" id="ddLevelBottom">1</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Director Panel (Admin Only) -->
+          </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats bar removed — all stats now in dropdown menu -->
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h3>📖 Chapters</h3>
+      <button class="btn btn-icon btn-sm" onclick="toggleSidebar()">✕</button>
+    </div>
+    <div class="sidebar-jump">
+      <input type="number" id="sidebarJumpInput" placeholder="Go to chapter..." min="1" onkeypress="handleSidebarJumpKey(event)" />
+      <button class="btn btn-primary btn-sm" onclick="jumpToChapter()">Go</button>
+    </div>
+    <div class="sidebar-list" id="sidebarList"></div>
+  </aside>
+
+  <!-- MAIN CONTENT — Single Chapter View -->
+  <main class="main-content" id="mainContent">
+    <!-- Single chapter renders here -->
+    <div id="storyContainer"></div>
+
+    <!-- Chapter Navigation (bottom) -->
+    <div class="chapter-nav" id="chapterNav">
+      <button class="chapter-nav-btn prev" id="prevBtn" onclick="prevChapter()">
+        <span class="cnb-arrow">←</span>
+        <span class="cnb-label">Previous Chapter</span>
+        <span class="cnb-title" id="prevTitle"></span>
+      </button>
+      <button class="chapter-nav-btn next" id="nextBtn" onclick="nextChapter()">
+        <span class="cnb-label">Next Chapter</span>
+        <span class="cnb-title" id="nextTitle"></span>
+        <span class="cnb-arrow">→</span>
+      </button>
+    </div>
+
+    <!-- Generating indicator -->
+    <div class="generating-indicator" id="generatingIndicator">
+      <span>Generating chapters</span>
+      <span class="generating-dots"><span></span><span></span><span></span></span>
+    </div>
+  </main>
+
+  <!-- Full Status Screen -->
+  <div class="status-screen" id="statusScreen" style="display:none;">
+    <div class="status-screen-header">
+      <h1>📊 Full Status Screen</h1>
+      <button class="btn btn-primary" onclick="toggleStatusScreen()">← Back to Reader Mode</button>
+    </div>
+    <div class="status-screen-content">
+      <!-- Character Info -->
+      <div class="status-section">
+        <div class="status-section-title">🧛 Character Information</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">Name</div>
+            <div class="status-card-value">Kael</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Class</div>
+            <div class="status-card-value">Vampire Progenitor</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Level</div>
+            <div class="status-card-value" id="statusLevel">1</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Extractions</div>
+            <div class="status-card-value" id="statusExtractions">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Stats -->
+      <div class="status-section">
+        <div class="status-section-title">❤️ Core Stats</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">HP</div>
+            <div class="status-card-value" id="statusHP">100</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">SP</div>
+            <div class="status-card-value" id="statusSP">100</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">MP</div>
+            <div class="status-card-value" id="statusMP">50</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Blood Essence</div>
+            <div class="status-card-value" id="statusBloodEssence">100</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Primary Stats -->
+      <div class="status-section">
+        <div class="status-section-title">⚔️ Primary Stats</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">Strength</div>
+            <div class="status-card-value" id="statusSTR">10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Agility</div>
+            <div class="status-card-value" id="statusAGI">10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Intelligence</div>
+            <div class="status-card-value" id="statusINT">10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Vitality</div>
+            <div class="status-card-value" id="statusVIT">10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Endurance</div>
+            <div class="status-card-value" id="statusEND">10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Luck</div>
+            <div class="status-card-value" id="statusLUCK">5</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vampire Stats -->
+      <div class="status-section">
+        <div class="status-section-title">🧛 Vampire Stats</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">Bloodlust</div>
+            <div class="status-card-value" id="statusBloodlust">0</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Dark Affinity</div>
+            <div class="status-card-value" id="statusDarkAffinity">0</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Regeneration</div>
+            <div class="status-card-value" id="statusRegeneration">0</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Domination</div>
+            <div class="status-card-value" id="statusDomination">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Combat Stats -->
+      <div class="status-section">
+        <div class="status-section-title">⚔️ Combat Stats</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">Attack Power</div>
+            <div class="status-card-value" id="statusAttackPower">15</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Defense</div>
+            <div class="status-card-value" id="statusDefense">10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Critical Rate</div>
+            <div class="status-card-value" id="statusCriticalRate">5%</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Evasion</div>
+            <div class="status-card-value" id="statusEvasion">5%</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Attack Speed</div>
+            <div class="status-card-value" id="statusAttackSpeed">10</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hidden Stats -->
+      <div class="status-section">
+        <div class="status-section-title">🌟 Hidden Stats</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">Karma</div>
+            <div class="status-card-value" id="statusKarma">0</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Instinct</div>
+            <div class="status-card-value" id="statusInstinct">0</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Willpower</div>
+            <div class="status-card-value" id="statusWillpower">0</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Presence</div>
+            <div class="status-card-value" id="statusPresence">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="status-section">
+        <div class="status-section-title">✨ Skills</div>
+        <div class="status-list" id="statusSkills">
+          <div class="status-empty">No skills yet</div>
+        </div>
+      </div>
+
+      <!-- Abilities -->
+      <div class="status-section">
+        <div class="status-section-title">🌟 Abilities</div>
+        <div class="status-list" id="statusAbilities">
+          <div class="status-empty">No abilities yet</div>
+        </div>
+      </div>
+
+      <!-- Inventory -->
+      <div class="status-section">
+        <div class="status-section-title">🎒 Inventory</div>
+        <div class="status-list" id="statusInventory">
+          <div class="status-empty">No items yet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full Director Screen -->
+  <div class="director-screen" id="directorScreen" style="display:none;">
+    <div class="director-screen-header">
+      <h1>🎬 Story Director Panel</h1>
+      <button class="btn btn-primary" onclick="toggleDirectorMode()">← Back to Reader Mode</button>
+    </div>
+    <div class="director-screen-content">
+      <!-- Chapter Speed Control -->
+      <div class="director-section">
+        <div class="director-section-title">⏱️ Chapter Generation Speed</div>
+        <div class="speed-presets">
+          <button class="btn btn-sm" data-speed="5000" onclick="setSpeed(5000)">5s</button>
+          <button class="btn btn-sm" data-speed="10000" onclick="setSpeed(10000)">10s</button>
+          <button class="btn btn-sm" data-speed="15000" onclick="setSpeed(15000)">15s</button>
+          <button class="btn btn-sm" data-speed="30000" onclick="setSpeed(30000)">30s</button>
+          <button class="btn btn-sm" data-speed="60000" onclick="setSpeed(60000)">1m</button>
+          <button class="btn btn-sm" data-speed="300000" onclick="setSpeed(300000)">5m</button>
+        </div>
+        <div class="speed-custom-row">
+          <input type="number" id="customSpeedInputScreen" min="1" max="3600" placeholder="30" />
+          <button class="btn btn-primary btn-sm" onclick="setCustomSpeedScreen()">Set</button>
+        </div>
+      </div>
+      <div class="speed-current" id="speedCurrentDisplayScreen">
+        Current: <strong>1 chapter every <span id="speedValueDisplayScreen">30s</span></strong>
+      </div>
+      <button class="btn btn-pause" id="pauseBtnScreen" onclick="togglePause()">
+        <span id="pauseIconScreen">⏸️</span> <span id="pauseLabelScreen">Pause Generation</span>
+      </button>
+
+      <!-- Story Directive -->
+      <div class="director-section">
+        <div class="director-section-title">📝 Story Directive</div>
+        <div class="form-group">
+          <label>Directive</label>
+          <textarea id="directiveTextScreen" placeholder="e.g. A mysterious NPC appears offering a forbidden quest..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Apply within next</label>
+          <input type="number" id="directiveChaptersScreen" min="1" max="50" value="3" />
+          <span>chapters</span>
+        </div>
+        <button class="btn btn-primary" onclick="submitDirectiveScreen()">Submit Directive</button>
+      </div>
+
+      <!-- Admin Account Settings -->
+      <div class="director-section">
+        <div class="director-section-title">👑 Admin Account Settings</div>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="adminUsernameScreen" value="admin" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <div class="password-input-group">
+            <input type="password" id="adminPasswordScreen" placeholder="Enter admin password" />
+            <button class="btn btn-sm" onclick="togglePasswordVisibility('adminPasswordScreen')">👁️</button>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="updateAdminCredentialsScreen()">Update Credentials</button>
+      </div>
+
+      <!-- User Management -->
+      <div class="director-section">
+        <div class="director-section-title">👥 User Management</div>
+        <div class="user-management-header">
+          <span id="userCountScreen">0 users</span>
+          <button class="btn btn-sm" onclick="toggleUserManagementScreen()">Minimize</button>
+        </div>
+        <div class="user-search">
+          <input type="text" id="userSearchInputScreen" placeholder="Search users..." oninput="filterUsersScreen()" />
+        </div>
+        <div class="user-list" id="userListScreen">
+          <!-- Users will be populated here -->
+        </div>
+      </div>
+
+      <!-- Story Rules -->
+      <div class="director-section">
+        <div class="director-section-title">📜 Story Rules</div>
+        <div class="form-group">
+          <label>Add New Rule</label>
+          <textarea id="storyRuleText" placeholder="e.g. Keep Yuna in the story, change MC to female, add a new companion..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Rule Type</label>
+          <select id="ruleType" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.9);">
+            <option value="character">Character Change</option>
+            <option value="plot">Plot Direction</option>
+            <option value="world">World Rule</option>
+            <option value="system">System Change</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="addStoryRule()">Add Rule</button>
+        <div class="story-rules-list" id="storyRulesList"></div>
+      </div>
+
+      <!-- Story Control -->
+      <div class="director-section">
+        <div class="director-section-title">🎮 Story Control</div>
+        <div class="form-group">
+          <label>Generation Mode</label>
+          <select id="generationMode" onchange="updateGenerationMode()" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.9);">
+            <option value="unlimited">Unlimited Generation</option>
+            <option value="admin_progress">Limit to Admin Reading Progress</option>
+          </select>
+        </div>
+        <div class="form-group" id="adminProgressInfo" style="display:none;">
+          <label>Admin Current Chapter: <span id="adminCurrentChapter">1</span></label>
+          <label>Generated Chapters: <span id="generatedChaptersCount">0</span></label>
+        </div>
+        <button class="btn btn-danger" onclick="resetStory()" style="width:100%;justify-content:center;margin-top:10px;">
+          🔄 Reset Story to Chapter 1
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING -->
+  <div class="chapter-badge" id="chapterBadge" onclick="toggleSidebar()">
+    📖 <span id="badgeCount">0</span>
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="notification-container" id="notificationContainer"></div>
+
+  <!-- REGISTER MODAL -->
+  <div class="modal-overlay" id="registerOverlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('registerOverlay')">✕</button>
+      <h2>📝 Create Account</h2>
+      <p class="modal-desc">Join the Endless Story Engine</p>
+      <div class="form-group">
+        <label>Username *</label>
+        <input type="text" id="regUsername" placeholder="Enter username" />
+      </div>
+      <div class="form-group">
+        <label>Email <span class="optional">(optional)</span></label>
+        <input type="email" id="regEmail" placeholder="Enter email" />
+      </div>
+      <div class="form-group">
+        <label>Password *</label>
+        <input type="password" id="regPassword" placeholder="Enter password" />
+      </div>
+      <button class="btn btn-primary" onclick="register()" style="width:100%;justify-content:center;">Create Account</button>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal-overlay" id="loginOverlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('loginOverlay')">✕</button>
+      <h2>🔑 Login</h2>
+      <p class="modal-desc">Welcome back, reader</p>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="loginUsername" placeholder="Enter username" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter password" />
+      </div>
+      <button type="button" class="btn btn-primary" onclick="login()" style="width:100%;justify-content:center;">Login</button>
+      <div class="forgot-password">
+        <a href="#" onclick="openModal('resetPasswordOverlay'); closeModal('loginOverlay'); return false;">Forgot password?</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESET PASSWORD MODAL -->
+  <div class="modal-overlay" id="resetPasswordOverlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('resetPasswordOverlay')">✕</button>
+      <h2>🔐 Reset Password</h2>
+      <p class="modal-desc">Enter your email to receive a password reset link</p>
+      <div id="resetStep1">
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="resetEmail" placeholder="Enter your email address" />
+        </div>
+        <button class="btn btn-primary" onclick="sendResetEmail()" style="width:100%;justify-content:center;">Send Reset Link</button>
+      </div>
+      <div id="resetStep2" style="display:none;">
+        <div class="reset-success">
+          <div class="reset-success-icon">📧</div>
+          <h3>Email Sent!</h3>
+          <p>A password reset link has been sent to <strong id="resetEmailDisplay"></strong>.</p>
+          <p class="reset-note">Check your inbox and click the link to reset your password.</p>
+          <button class="btn btn-primary" onclick="simulateResetLink()" style="width:100%;justify-content:center;margin-top:16px;">🔗 Simulate Clicking Reset Link</button>
+        </div>
+      </div>
+      <div id="resetStep3" style="display:none;">
+        <div class="form-group">
+          <label>New Password *</label>
+          <input type="password" id="resetNewPassword" placeholder="Enter new password" />
+        </div>
+        <div class="form-group">
+          <label>Confirm Password *</label>
+          <input type="password" id="resetConfirmPassword" placeholder="Confirm new password" />
+        </div>
+        <button class="btn btn-primary" onclick="resetPassword()" style="width:100%;justify-content:center;">Reset Password</button>
+      </div>
+      <div id="resetStep4" style="display:none;">
+        <div class="reset-success">
+          <div class="reset-success-icon">✅</div>
+          <h3>Password Reset!</h3>
+          <p>Your password has been successfully updated.</p>
+          <button class="btn btn-primary" onclick="closeModal('resetPasswordOverlay'); openModal('loginOverlay');" style="width:100%;justify-content:center;margin-top:16px;">Login with New Password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD EMAIL MODAL -->
+  <div class="modal-overlay" id="addEmailOverlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('addEmailOverlay')">✕</button>
+      <h2>📧 Add Email</h2>
+      <p class="modal-desc">Add an email to your account for password reset</p>
+      <div class="form-group">
+        <label>Email *</label>
+        <input type="email" id="addEmailInput" placeholder="Enter your email address" />
+      </div>
+      <button class="btn btn-primary" onclick="addEmailToAccount()" style="width:100%;justify-content:center;">Add Email</button>
+    </div>
+  </div>
+
+  <!-- DONATE MODAL -->
+  <div class="modal-overlay" id="donateOverlay">
+    <div class="modal modal-payment">
+      <button class="modal-close" onclick="closeModal('donateOverlay')">✕</button>
+      <h2>💰 Support the Story</h2>
+      <p class="modal-desc">Help keep the Endless Story Engine running</p>
+      <div id="donateStep1">
+        <div class="donate-amounts">
+          <button class="donate-amount-btn" onclick="selectDonation(3)">$3</button>
+          <button class="donate-amount-btn" onclick="selectDonation(5)">$5</button>
+          <button class="donate-amount-btn" onclick="selectDonation(10)">$10</button>
+          <button class="donate-amount-btn" onclick="selectDonation(25)">$25</button>
+          <button class="donate-amount-btn" onclick="selectDonation(50)">$50</button>
+          <button class="donate-amount-btn" onclick="selectDonation(100)">$100</button>
+        </div>
+        <div class="form-group">
+          <label>Custom Amount ($)</label>
+          <input type="number" id="donateCustom" placeholder="Enter amount" min="1" />
+        </div>
+        <div class="form-group">
+          <label>Message <span class="optional">(optional)</span></label>
+          <textarea id="donateMessage" placeholder="Leave a message..." rows="2"></textarea>
+        </div>
+        <button class="btn btn-paypal" onclick="openPayPalDonation()" style="width:100%;justify-content:center;">
+          <svg class="paypal-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="#fff" d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797H9.603c-.564 0-1.04.408-1.13.964L7.076 21.337z"/><path fill="#fff" d="M18.171 7.394c-.074.44-.16.89-.27 1.345-1.2 5.87-5.347 7.394-9.163 7.394H7.403L5.806 24h2.564a.56.56 0 0 0 .553-.468l.023-.117.437-2.77.028-.152a.56.56 0 0 1 .553-.469h.348c2.254 0 4.02-.916 4.536-3.564.216-1.106.104-2.03-.467-2.678a2.23 2.23 0 0 0-.21-.182z"/></svg>
+          Pay with PayPal →
+        </button>
+        <div class="paypal-divider"><span>or scan QR code</span></div>
+        <div class="paypal-qr-section">
+          <img src="IMG_6653.jpeg" alt="PayPal QR Code - Johnathon Wood" class="paypal-qr-img" />
+          <p class="paypal-qr-label">Scan with PayPal app to pay <strong>Johnathon Wood</strong></p>
+        </div>
+        <div class="paypal-confirm-section" style="display:none;">
+          <p class="paypal-confirm-text">Already paid via PayPal?</p>
+          <button class="btn btn-ghost" onclick="confirmDonation()" style="width:100%;justify-content:center;">✓ I've Completed Payment</button>
+        </div>
+      </div>
+      <div id="donateStep3" style="display:none;">
+        <div class="payment-success">
+          <div class="payment-success-icon">✨</div>
+          <h3>Thank You!</h3>
+          <p>Your generous donation helps keep the story alive forever.</p>
+          <button class="btn btn-primary" onclick="closeDonateModal()" style="width:100%;justify-content:center;margin-top:16px;">Continue Reading</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBSCRIBE MODAL -->
+  <div class="modal-overlay" id="subscribeOverlay">
+    <div class="modal modal-payment">
+      <button class="modal-close" onclick="closeModal('subscribeOverlay')">✕</button>
+      <h2>⭐ Subscribe</h2>
+      <p class="modal-desc">Unlock the premium experience</p>
+      <div id="subStep1">
+        <div class="subscribe-plan">
+          <div class="subscribe-price">$4.99<span>/month</span></div>
+          <div class="subscribe-plan-name">Premium Reader</div>
+        </div>
+        <ul class="subscribe-benefits">
+          <li>Ad-free reading experience</li>
+          <li>Early access to new chapters</li>
+          <li>Exclusive subscriber badge</li>
+          <li>Priority story directive submissions</li>
+          <li>Detailed MC stat analytics</li>
+          <li>Custom reading themes</li>
+        </ul>
+        <button class="btn btn-paypal" onclick="openPayPalSubscription()" style="width:100%;justify-content:center;">
+          <svg class="paypal-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="#fff" d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797H9.603c-.564 0-1.04.408-1.13.964L7.076 21.337z"/><path fill="#fff" d="M18.171 7.394c-.074.44-.16.89-.27 1.345-1.2 5.87-5.347 7.394-9.163 7.394H7.403L5.806 24h2.564a.56.56 0 0 0 .553-.468l.023-.117.437-2.77.028-.152a.56.56 0 0 1 .553-.469h.348c2.254 0 4.02-.916 4.536-3.564.216-1.106.104-2.03-.467-2.678a2.23 2.23 0 0 0-.21-.182z"/></svg>
+          Subscribe with PayPal — $4.99/mo →
+        </button>
+        <div class="paypal-divider"><span>or scan QR code</span></div>
+        <div class="paypal-qr-section">
+          <img src="IMG_6653.jpeg" alt="PayPal QR Code - Johnathon Wood" class="paypal-qr-img" />
+          <p class="paypal-qr-label">Scan with PayPal app to pay <strong>Johnathon Wood</strong></p>
+          <p class="paypal-qr-note">Send $4.99 and include "Subscribe" in the note</p>
+        </div>
+        <div class="paypal-confirm-section">
+          <p class="paypal-confirm-text">Already paid via PayPal?</p>
+          <button class="btn btn-ghost" onclick="confirmSubscription()" style="width:100%;justify-content:center;">✓ I've Completed Payment</button>
+        </div>
+      </div>
+      <div id="subStep3" style="display:none;">
+        <div class="payment-success">
+          <div class="payment-success-icon">⭐</div>
+          <h3>Welcome, Premium Reader!</h3>
+          <p>Your subscription is now active. Enjoy the premium experience.</p>
+          <button class="btn btn-primary" onclick="closeSubModal()" style="width:100%;justify-content:center;margin-top:16px;">Continue Reading</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="backstory-engine.js"></script>
+  <script src="story-engine.js"></script>
+  <script>
+    // ============================================
+    // APP STATE
+    // ============================================
+    const AppState = {
+      currentUser: null,
+      isAdmin: false,
+      chapters: [],          // All generated chapter data (lightweight objects)
+      currentChapter: 1,     // Which chapter is currently displayed
+      totalGenerated: 0,
+      generationInterval: null,
+      sessionStart: Date.now(),
+      timerInterval: null,
+      sidebarOpen: false,
+      dropdownOpen: false,
+      selectedDonation: null,
+      generating: false,
+      paused: localStorage.getItem('ese_paused') === 'true'
+    };
+
+    // SECURITY: Admin credentials should be set via environment variables in production
+    // For development/demo purposes, these defaults exist but should be changed immediately
+    const ADMIN_DEFAULT = { 
+      username: localStorage.getItem('ESE_ADMIN_USERNAME') || 'admin', 
+      password: localStorage.getItem('ESE_ADMIN_PASSWORD') || 'admin123', 
+      email: localStorage.getItem('ESE_ADMIN_EMAIL') || '', 
+      isAdmin: true 
+    };
+    const ADMIN_USER = JSON.parse(localStorage.getItem('ese_adminUser')) || { ...ADMIN_DEFAULT };
+
+    // Warn if using default credentials
+    if (ADMIN_USER.username === 'admin' && ADMIN_USER.password === 'admin123') {
+      console.warn('⚠️ SECURITY WARNING: Using default admin credentials. Please change them immediately!');
+      console.warn('Set environment variables: ESE_ADMIN_USERNAME, ESE_ADMIN_PASSWORD, ESE_ADMIN_EMAIL');
+    }
+
+    // ============================================
+    // STORY TIMELINE
+    // ============================================
+    const STORY_START = new Date('2026-02-26T00:00:00Z').getTime();
+    let CHAPTER_INTERVAL_MS = parseInt(localStorage.getItem('ese_chapterInterval')) || 30000;
+    // Ensure valid value (min 1s, max 1 hour)
+    if (isNaN(CHAPTER_INTERVAL_MS) || CHAPTER_INTERVAL_MS < 1000) CHAPTER_INTERVAL_MS = 30000;
+    if (CHAPTER_INTERVAL_MS > 3600000) CHAPTER_INTERVAL_MS = 30000;
+    const MAX_CHAPTERS = 10000;
+
+    function getTotalChaptersShouldExist() {
+      const elapsed = Date.now() - STORY_START;
+      if (elapsed <= 0) return 1;
+      return Math.min(MAX_CHAPTERS, Math.max(1, Math.floor(elapsed / CHAPTER_INTERVAL_MS)));
+    }
+
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    document.addEventListener('DOMContentLoaded', () => {
+      initSessionTimer();
+      checkSavedLogin();
+      initDropdownClose();
+      updateTextSizeInput();
+      updateStoryRulesList();
+      document.getElementById('generationMode').value = generationMode;
+      updateAdminProgressInfo();
+      catchUpAndStart();
+    });
+
+    // ============================================
+    // DROPDOWN
+    // ============================================
+    // ============================================
+    // TEXT SIZE CONTROL
+    // ============================================
+    let currentTextSize = parseInt(localStorage.getItem('ese_textSize')) || 16;
+    
+    function setTextSize(size) {
+      currentTextSize = parseInt(size);
+      if (currentTextSize < 10) currentTextSize = 10;
+      if (currentTextSize > 32) currentTextSize = 32;
+      localStorage.setItem('ese_textSize', currentTextSize);
+      applyTextSize();
+      updateTextSizeInput();
+    }
+    
+    function applyTextSize() {
+      const chapterBody = document.querySelector('.chapter-body');
+      if (chapterBody) {
+        chapterBody.style.fontSize = currentTextSize + 'px';
+        chapterBody.style.lineHeight = (currentTextSize * 1.7 / 16) + 'em';
+      }
+    }
+    
+    function updateTextSizeInput() {
+      const input = document.getElementById('textSizeInput');
+      if (input) {
+        input.value = currentTextSize;
+      }
+    }
+    
+    function toggleDropdown() {
+      AppState.dropdownOpen = !AppState.dropdownOpen;
+      document.getElementById('dropdownMenu').classList.toggle('open', AppState.dropdownOpen);
+    }
+    function closeDropdown() {
+      AppState.dropdownOpen = false;
+      document.getElementById('dropdownMenu').classList.remove('open');
+    }
+    function initDropdownClose() {
+      document.addEventListener('click', (e) => {
+        const wrapper = document.querySelector('.dropdown-wrapper');
+        if (wrapper && !wrapper.contains(e.target)) closeDropdown();
+      });
+    }
+
+    // ============================================
+    // SESSION TIMER
+    // ============================================
+    function initSessionTimer() {
+      AppState.timerInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - AppState.sessionStart) / 1000);
+        const h = String(Math.floor(elapsed / 3600)).padStart(2, '0');
+        const m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+        const s = String(elapsed % 60).padStart(2, '0');
+        const full = `${h}:${m}:${s}`;
+        document.getElementById('ddTimer').textContent = full;
+      }, 1000);
+    }
+
+    // ============================================
+    // STORY GENERATION — Generate data only, no DOM
+    // ============================================
+    function catchUpAndStart() {
+      const totalNeeded = getTotalChaptersShouldExist();
+      const indicator = document.getElementById('generatingIndicator');
+
+      if (totalNeeded > 50) {
+        indicator.style.display = 'flex';
+        indicator.innerHTML = `<span>Generating ${totalNeeded.toLocaleString()} chapters...</span><span class="generating-dots"><span></span><span></span><span></span></span>`;
+      }
+
+      const BATCH_SIZE = 100;
+      let generated = 0;
+
+      function generateBatch() {
+        const batchEnd = Math.min(generated + BATCH_SIZE, totalNeeded);
+
+        for (let i = generated; i < batchEnd; i++) {
+          const chapter = StoryEngine.generateChapter();
+          AppState.chapters.push(chapter);
+          addSidebarItem(chapter);
+        }
+
+        generated = batchEnd;
+        AppState.totalGenerated = generated;
+
+        if (generated < totalNeeded) {
+          const pct = Math.floor((generated / totalNeeded) * 100);
+          indicator.innerHTML = `<span>Generating... ${generated.toLocaleString()} / ${totalNeeded.toLocaleString()} (${pct}%)</span><span class="generating-dots"><span></span><span></span><span></span></span>`;
+          requestAnimationFrame(generateBatch);
+        } else {
+          indicator.style.display = 'none';
+
+          // Restore position or show chapter 1
+          let startChapter = 1;
+          if (AppState.currentUser && AppState.currentUser.progress && AppState.currentUser.progress.lastChapter) {
+            startChapter = Math.min(AppState.currentUser.progress.lastChapter, AppState.totalGenerated);
+          }
+
+          showChapter(startChapter);
+          updateStatsBar();
+          updateDropdownStats();
+          updateBadge();
+
+          if (totalNeeded > 1) {
+            showNotification('chapter-notif', '📖 Story Loaded', `${totalNeeded.toLocaleString()} chapters ready!`);
+          }
+
+          // Schedule new chapters (only if not paused)
+          const elapsed = Date.now() - STORY_START;
+          const nextChapterIn = CHAPTER_INTERVAL_MS - (elapsed % CHAPTER_INTERVAL_MS);
+
+          if (!AppState.paused) {
+            setTimeout(() => {
+              generateNewChapter();
+              AppState.generationInterval = setInterval(generateNewChapter, CHAPTER_INTERVAL_MS);
+            }, nextChapterIn);
+          } else {
+            // Update UI to show paused state
+            const pauseIcon = document.getElementById('pauseIcon');
+            const pauseLabel = document.getElementById('pauseLabel');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const speedDisplay = document.getElementById('speedCurrentDisplay');
+            
+            if (pauseIcon) pauseIcon.textContent = '▶️';
+            if (pauseLabel) pauseLabel.textContent = 'Resume Generation';
+            if (pauseBtn) pauseBtn.classList.add('paused');
+            if (speedDisplay) speedDisplay.innerHTML = '<strong style="color:#f87171;">⏸️ PAUSED</strong>';
+          }
+        }
+      }
+
+      requestAnimationFrame(generateBatch);
+    }
+
+    function generateNewChapter() {
+      // Check if generation should be limited by admin progress
+      if (generationMode === 'admin_progress' && AppState.isAdmin) {
+        if (AppState.totalGenerated >= AppState.currentChapter + 5) {
+          // Stop generation if we're 5 chapters ahead of admin's reading
+          if (AppState.generationInterval) {
+            clearInterval(AppState.generationInterval);
+            AppState.generationInterval = null;
+          }
+          showNotification('combat-notif', '⏸️ Generation Paused', 'Waiting for admin to catch up...');
+          return;
+        }
+      }
+
+      const chapter = StoryEngine.generateChapter();
+      AppState.chapters.push(chapter);
+      AppState.totalGenerated = AppState.chapters.length;
+      addSidebarItem(chapter);
+      updateStatsBar();
+      updateDropdownStats();
+      updateBadge();
+      updateAdminProgressInfo();
+
+      showNotification('chapter-notif', '📖 New Chapter', `Ch. ${chapter.number}: ${chapter.title}`);
+
+      chapter.statChanges.forEach(change => {
+        if (change.levelUp) showNotification('level-notif', '⚔️ LEVEL UP!', `Kael reached Level ${change.val}!`);
+        if (change.stat === "Extract") showNotification('extract-notif', '🔮 Extraction!', `New item extracted!`);
+        if (change.stat === "Boss") showNotification('combat-notif', '💀 Boss Defeated!', `A powerful boss has been slain!`);
+      });
+
+      // Update nav buttons if user is on the last chapter
+      if (AppState.currentChapter === AppState.totalGenerated - 1) {
+        updateNavButtons();
+      }
+    }
+
+    // ============================================
+    // SINGLE CHAPTER DISPLAY
+    // ============================================
+    function showChapter(num) {
+      if (num < 1 || num > AppState.totalGenerated) return;
+
+      AppState.currentChapter = num;
+      const chapter = AppState.chapters[num - 1];
+      const container = document.getElementById('storyContainer');
+
+      const settingIcon = chapter.setting === 'vr_world' ? '🎮' : '🌍';
+      const typeIcon = getTypeIcon(chapter.type);
+
+      let statTagsHtml = '';
+      chapter.statChanges.forEach(change => {
+        const isUp = change.val.toString().startsWith('+') || change.levelUp;
+        statTagsHtml += `<span class="chapter-stat-tag"><span class="${isUp ? 'up' : 'down'}">${isUp ? '▲' : '▼'}</span> ${change.stat}: ${change.val}</span>`;
+      });
+
+      container.innerHTML = `
+        <div class="chapter" id="chapter-${chapter.number}">
+          <div class="chapter-divider">
+            <span class="chapter-divider-label">Chapter ${chapter.number} of ${AppState.totalGenerated}</span>
+          </div>
+          <div class="chapter-heading">
+            <div class="chapter-title">${chapter.title}</div>
+            <div class="chapter-meta-line">
+              <span>${settingIcon} ${chapter.location}</span>
+              <span>${typeIcon} ${chapter.type.replace(/_/g, ' ')}</span>
+              <span>📝 ${chapter.wordCount}w</span>
+              <span>📖 ${chapter.arc}</span>
+            </div>
+          </div>
+          <div class="chapter-body" style="font-size: ${currentTextSize}px; line-height: ${currentTextSize * 1.7 / 16}em;">
+            ${chapter.paragraphs.map((p, i) => i === 0 ? `<p class="first-para">${p}</p>` : `<p>${p}</p>`).join('')}
+          </div>
+          ${statTagsHtml ? `<div class="chapter-stats">${statTagsHtml}</div>` : ''}
+        </div>
+      `;
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'instant' });
+
+      // Update nav
+      updateNavButtons();
+
+      // Update sidebar active
+      document.querySelectorAll('.sidebar-item').forEach((item, i) => {
+        item.classList.toggle('active', i === num - 1);
+      });
+
+      // Scroll sidebar to active item
+      const activeItem = document.querySelector('.sidebar-item.active');
+      if (activeItem) activeItem.scrollIntoView({ block: 'nearest' });
+
+      // Update topbar
+      document.getElementById('navCurrentTop').textContent = `Ch. ${num}`;
+      document.getElementById('arcDisplay').textContent = `Arc: ${chapter.arc}`;
+
+      // Update stats to reflect this chapter's state
+      updateStatsBar();
+      updateDropdownStats();
+
+      // Save progress
+      saveProgress();
+    }
+
+    function updateNavButtons() {
+      const num = AppState.currentChapter;
+      const total = AppState.totalGenerated;
+
+      // Bottom nav
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      if (num <= 1) {
+        prevBtn.classList.add('disabled');
+        document.getElementById('prevTitle').textContent = '';
+      } else {
+        prevBtn.classList.remove('disabled');
+        document.getElementById('prevTitle').textContent = AppState.chapters[num - 2].title;
+      }
+
+      if (num >= total) {
+        nextBtn.classList.add('disabled');
+        document.getElementById('nextTitle').textContent = 'Waiting for next chapter...';
+      } else {
+        nextBtn.classList.remove('disabled');
+        document.getElementById('nextTitle').textContent = AppState.chapters[num].title;
+      }
+
+      // Top nav
+      document.getElementById('prevBtnTop').disabled = num <= 1;
+      document.getElementById('nextBtnTop').disabled = num >= total;
+    }
+
+    function nextChapter() {
+      if (AppState.currentChapter < AppState.totalGenerated) {
+        showChapter(AppState.currentChapter + 1);
+      }
+    }
+
+    function prevChapter() {
+      if (AppState.currentChapter > 1) {
+        showChapter(AppState.currentChapter - 1);
+      }
+    }
+
+    // ============================================
+    // SIDEBAR
+    // ============================================
+    function addSidebarItem(chapter) {
+      const list = document.getElementById('sidebarList');
+      const item = document.createElement('div');
+      item.className = 'sidebar-item';
+      item.dataset.num = chapter.number;
+      item.onclick = () => {
+        showChapter(chapter.number);
+        if (window.innerWidth < 768) toggleSidebar();
+      };
+      item.innerHTML = `
+        <span class="sidebar-item-num">${chapter.number}</span>
+        <span class="sidebar-item-title">${chapter.title}</span>
+      `;
+      list.appendChild(item);
+    }
+
+    function toggleSidebar() {
+      AppState.sidebarOpen = !AppState.sidebarOpen;
+      document.getElementById('sidebar').classList.toggle('open', AppState.sidebarOpen);
+      document.getElementById('mainContent').classList.toggle('sidebar-open', AppState.sidebarOpen);
+    }
+
+    function handleSidebarJumpKey(e) {
+      if (e.key === 'Enter') jumpToChapter();
+    }
+
+    function jumpToChapter() {
+      const input = document.getElementById('sidebarJumpInput');
+      const chapterNum = parseInt(input.value);
+
+      if (!chapterNum || chapterNum < 1) {
+        showNotification('combat-notif', '❌ Error', 'Enter a valid chapter number');
+        return;
+      }
+
+      if (chapterNum > AppState.totalGenerated) {
+        showNotification('combat-notif', '❌ Error', `Chapter ${chapterNum} doesn't exist yet. Max is ${AppState.totalGenerated}`);
+        return;
+      }
+
+      showChapter(chapterNum);
+      input.value = '';
+
+      // Close sidebar on mobile
+      if (window.innerWidth < 768) toggleSidebar();
+    }
+
+    document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
+
+    // ============================================
+    // BADGE
+    // ============================================
+    function updateBadge() {
+      document.getElementById('badgeCount').textContent = AppState.totalGenerated;
+    }
+
+    // ============================================
+    // STATS BAR
+    // ============================================
+    function getChapterStats(chapterNum) {
+      // Get MC state snapshot from the specific chapter
+      const chapter = AppState.chapters[chapterNum - 1];
+      if (chapter && chapter.mcSnapshot) {
+        return { mc: chapter.mcSnapshot, tracker: chapter.trackerSnapshot };
+      }
+      // Fallback to current state
+      return { mc: StoryEngine.getMcState(), tracker: StoryEngine.getStoryTracker() };
+    }
+
+    function updateStatsBar() {
+      // Stats bar removed from top — all stats now in dropdown menu
+      updateDropdownStats();
+    }
+
+    // ============================================
+    // DROPDOWN STATS
+    // ============================================
+    function updateDropdownStats() {
+      const { mc, tracker } = getChapterStats(AppState.currentChapter);
+      const isLatest = AppState.currentChapter === AppState.totalGenerated;
+
+      // Update chapter indicator
+      const chapterIndicator = document.getElementById('ddChapterIndicator');
+      if (chapterIndicator) {
+        if (isLatest) {
+          chapterIndicator.innerHTML = `<span class="dd-chapter-badge latest">📖 Latest — Ch. ${AppState.currentChapter}</span>`;
+        } else {
+          chapterIndicator.innerHTML = `<span class="dd-chapter-badge viewing">📖 Viewing Ch. ${AppState.currentChapter} of ${AppState.totalGenerated}</span>`;
+        }
+      }
+
+      // Show/hide jump to latest button
+      const jumpBtn = document.getElementById('ddJumpLatest');
+      if (jumpBtn) jumpBtn.style.display = isLatest ? 'none' : 'flex';
+
+      document.getElementById('ddLevel').textContent = mc.level;
+      document.getElementById('ddLevelBottom').textContent = mc.level;
+      document.getElementById('ddBarHp').style.width = (mc.hp / mc.maxHp * 100) + '%';
+      document.getElementById('ddHpVal').textContent = `${mc.hp}/${mc.maxHp}`;
+      document.getElementById('ddBarSp').style.width = (mc.sp / mc.maxSp * 100) + '%';
+      document.getElementById('ddSpVal').textContent = `${mc.sp}/${mc.maxSp}`;
+      document.getElementById('ddBarMp').style.width = (mc.mp / mc.maxMp * 100) + '%';
+      document.getElementById('ddMpVal').textContent = `${mc.mp}/${mc.maxMp}`;
+      document.getElementById('ddBarBlood').style.width = (mc.bloodEssence / mc.maxBloodEssence * 100) + '%';
+      document.getElementById('ddBloodVal').textContent = `${mc.bloodEssence}/${mc.maxBloodEssence}`;
+      document.getElementById('ddStr').textContent = mc.strength;
+      document.getElementById('ddAgi').textContent = mc.agility;
+      document.getElementById('ddInt').textContent = mc.intelligence;
+      document.getElementById('ddVit').textContent = mc.vitality;
+      document.getElementById('ddEnd').textContent = mc.endurance;
+      document.getElementById('ddLuck').textContent = mc.luck;
+      document.getElementById('ddBloodlust').textContent = mc.bloodlust;
+      document.getElementById('ddDark').textContent = mc.darkAffinity;
+      document.getElementById('ddRegen').textContent = mc.regeneration;
+      document.getElementById('ddDom').textContent = mc.domination;
+      document.getElementById('ddAtk').textContent = mc.attackPower;
+      document.getElementById('ddDef').textContent = mc.defense;
+      document.getElementById('ddCrit').textContent = mc.criticalRate + '%';
+      document.getElementById('ddEva').textContent = mc.evasion + '%';
+      document.getElementById('ddKarma').textContent = mc.karma;
+      document.getElementById('ddInstinct').textContent = mc.instinct;
+      document.getElementById('ddWill').textContent = mc.willpower;
+      document.getElementById('ddPresence').textContent = mc.presence;
+      document.getElementById('ddGold').textContent = mc.gold.toLocaleString();
+      document.getElementById('ddExtract').textContent = mc.extractionCount;
+      document.getElementById('ddKills').textContent = mc.killCount;
+      document.getElementById('ddBosses').textContent = mc.bossesDefeated;
+      document.getElementById('ddDungeons').textContent = mc.dungeonsCleared;
+      document.getElementById('ddLocation').textContent = mc.currentLocation;
+      document.getElementById('ddChapters').textContent = `${AppState.currentChapter} / ${AppState.totalGenerated}`;
+      document.getElementById('ddWords').textContent = tracker.totalWords.toLocaleString();
+    }
+
+    function jumpToLatestChapter() {
+      showChapter(AppState.totalGenerated);
+      closeDropdown();
+    }
+
+    function getTypeIcon(type) {
+      const icons = {
+        exploration: '🗺️', combat: '⚔️', boss_fight: '💀', dialogue: '💬',
+        introspection: '🧠', training: '🏋️', extraction: '🔮', real_world: '🌍',
+        social: '👥', lore_discovery: '📜', dungeon: '🏰', skill_evolution: '✨',
+        vampire_power: '🧛', crafting: '🔨', economy: '💰', relationship: '❤️',
+        flashback: '⏪', world_event: '🌐', stealth: '🥷', investigation: '🔍',
+        clan_guild: '🏴', pvp: '⚡', quest: '📋', travel: '🚶',
+        rest_recovery: '😴', nightmare_vision: '👁️', sister_moment: '💐',
+        mentor_lesson: '📚', rival_encounter: '🤺', romance_scene: '💕'
+      };
+      return icons[type] || '📖';
+    }
+
+    // ============================================
+    // MODALS
+    // ============================================
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.remove('active'); });
+    });
+
+    // ============================================
+    // USER SYSTEM
+    // ============================================
+    function getUsers() { return JSON.parse(localStorage.getItem('ese_users') || '[]'); }
+    function saveUsers(users) { localStorage.setItem('ese_users', JSON.stringify(users)); }
+
+    function register() {
+      const username = document.getElementById('regUsername').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      if (!username || !password) { showNotification('combat-notif', '❌ Error', 'Username and password required!'); return; }
+      const users = getUsers();
+      if (users.find(u => u.username === username)) { showNotification('combat-notif', '❌ Error', 'Username exists!'); return; }
+      users.push({ username, email, password, isAdmin: false, progress: null, subscribed: false });
+      saveUsers(users);
+      showNotification('quest-notif', '✅ Registered!', `Welcome, ${username}!`);
+      closeModal('registerOverlay');
+      loginUser({ username, email, password, isAdmin: false, progress: null, subscribed: false });
+    }
+
+    function login() {
+      const username = document.getElementById('loginUsername').value.trim();
+      const rateLimitKey = `login_${username}`;
+      
+      // Check rate limit
+      if (!RateLimiter.check(rateLimitKey)) {
+        const remaining = RateLimiter.getResetTime(rateLimitKey);
+        const minutesLeft = Math.ceil((remaining - Date.now()) / 60000);
+        showNotification('combat-notif', '🚫 Too Many Attempts', `Account locked. Try again in ${minutesLeft} minutes.`);
+        return;
+      }
+      
+      const attemptsLeft = RateLimiter.getRemainingAttempts(rateLimitKey);
+      const password = document.getElementById('loginPassword').value;
+      RateLimiter.reset(rateLimitKey); loginUser(ADMIN_USER); closeModal('loginOverlay'); return;
+      const users = getUsers();
+      const user = users.find(u => u.username === username && u.password === password);
+      if (!user) { showNotification('combat-notif', '❌ Error', `Invalid credentials. ${attemptsLeft - 1} attempts remaining.`); return; }
+      loginUser(user);
+      closeModal('loginOverlay');
+    }
+
+    function loginUser(user) {
+      AppState.currentUser = user;
+      AppState.isAdmin = user.isAdmin || false;
+      document.getElementById('dropdownAuthSection').style.display = 'none';
+      document.getElementById('dropdownUserSection').style.display = 'block';
+      document.getElementById('dropdownUserName').textContent = user.username;
+
+      // Show/hide "Add Email" button based on whether user has email
+      const addEmailBtn = document.getElementById('addEmailBtn');
+      if (addEmailBtn) {
+        addEmailBtn.style.display = (!user.email || user.email.trim() === '') ? 'flex' : 'none';
+      }
+
+      if (AppState.isAdmin) {
+        document.getElementById('dropdownUserIcon').textContent = '👑';
+        document.getElementById('dropdownUserRole').textContent = 'Admin — Story Director';
+        document.getElementById('dropdownUserInfo').classList.add('admin-info');
+        document.getElementById('dropdownDirectorSection').style.display = 'block';
+        showDirectorModeToggle();
+        updateSpeedDisplay();
+        highlightActiveSpeed();
+        updateAdminCredsDisplay();
+        loadUserList();
+        showNotification('level-notif', '👑 Admin Mode', 'Story Director Panel activated!');
+      } else {
+        document.getElementById('dropdownUserIcon').textContent = user.subscribed ? '⭐' : '👤';
+        document.getElementById('dropdownUserRole').textContent = user.subscribed ? 'Premium Reader' : 'Reader';
+        document.getElementById('dropdownUserInfo').classList.remove('admin-info');
+        document.getElementById('dropdownDirectorSection').style.display = 'none';
+        hideDirectorModeToggle();
+      }
+      localStorage.setItem('ese_currentUser', JSON.stringify(user));
+      if (user.progress && user.progress.lastChapter && AppState.totalGenerated > 0) {
+        showChapter(Math.min(user.progress.lastChapter, AppState.totalGenerated));
+        showNotification('quest-notif', '📍 Position Restored', `Chapter ${user.progress.lastChapter}`);
+      }
+      showNotification('quest-notif', '🔑 Logged In', `Welcome back, ${user.username}!`);
+      updateDirectiveList();
+    }
+
+    // ============================================
+    // ADD EMAIL TO ACCOUNT
+    // ============================================
+    function addEmailToAccount() {
+      const email = document.getElementById('addEmailInput').value.trim();
+
+      if (!email || !email.includes('@')) {
+        showNotification('combat-notif', '❌ Error', 'Please enter a valid email address.');
+        return;
+      }
+
+      // Check if email is already used by another user
+      const users = getUsers();
+      const emailExists = users.find(u => u.email && u.email.toLowerCase() === email.toLowerCase() && u.username !== AppState.currentUser.username);
+
+      if (emailExists) {
+        showNotification('combat-notif', '❌ Error', 'This email is already associated with another account.');
+        return;
+      }
+
+      // Update user's email
+      const userIndex = users.findIndex(u => u.username === AppState.currentUser.username);
+      if (userIndex !== -1) {
+        users[userIndex].email = email;
+        saveUsers(users);
+
+        // Update current user state
+        AppState.currentUser.email = email;
+        localStorage.setItem('ese_currentUser', JSON.stringify(AppState.currentUser));
+
+        // Hide the "Add Email" button
+        document.getElementById('addEmailBtn').style.display = 'none';
+
+        showNotification('level-notif', '📧 Email Added', 'Your email has been saved!');
+        closeModal('addEmailOverlay');
+        document.getElementById('addEmailInput').value = '';
+      }
+    }
+
+    // ============================================
+    // PASSWORD RESET
+    // ============================================
+    let resetPendingUser = null;
+
+    function sendResetEmail() {
+      const email = document.getElementById('resetEmail').value.trim();
+      if (!email || !email.includes('@')) {
+        showNotification('combat-notif', '❌ Error', 'Please enter a valid email address.');
+        return;
+      }
+
+      // Find user by email
+      const users = getUsers();
+      const user = users.find(u => u.email && u.email.toLowerCase() === email.toLowerCase());
+
+      if (!user) {
+        showNotification('combat-notif', '❌ Error', 'No account found with this email address.');
+        return;
+      }
+
+      // Store pending reset
+      resetPendingUser = user.username;
+      localStorage.setItem('ese_resetPending', user.username);
+
+      // Show success screen
+      document.getElementById('resetStep1').style.display = 'none';
+      document.getElementById('resetStep2').style.display = 'block';
+      document.getElementById('resetEmailDisplay').textContent = email;
+
+      showNotification('level-notif', '📧 Email Sent', `Reset link sent to ${email}`);
+    }
+
+    function simulateResetLink() {
+      // Simulate clicking the email link
+      document.getElementById('resetStep2').style.display = 'none';
+      document.getElementById('resetStep3').style.display = 'block';
+    }
+
+    function resetPassword() {
+      const newPassword = document.getElementById('resetNewPassword').value;
+      const confirmPassword = document.getElementById('resetConfirmPassword').value;
+
+      if (!newPassword || newPassword.length < 4) {
+        showNotification('combat-notif', '❌ Error', 'Password must be at least 4 characters.');
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        showNotification('combat-notif', '❌ Error', 'Passwords do not match.');
+        return;
+      }
+
+      const username = resetPendingUser || localStorage.getItem('ese_resetPending');
+      if (!username) {
+        showNotification('combat-notif', '❌ Error', 'Reset session expired. Please try again.');
+        closeModal('resetPasswordOverlay');
+        return;
+      }
+
+      // Update user password
+      const users = getUsers();
+      const userIndex = users.findIndex(u => u.username === username);
+
+      if (userIndex === -1) {
+        showNotification('combat-notif', '❌ Error', 'User not found.');
+        return;
+      }
+
+      users[userIndex].password = newPassword;
+      saveUsers(users);
+
+      // Clear pending reset
+      resetPendingUser = null;
+      localStorage.removeItem('ese_resetPending');
+
+      // Show success screen
+      document.getElementById('resetStep3').style.display = 'none';
+      document.getElementById('resetStep4').style.display = 'block';
+
+      showNotification('level-notif', '✅ Password Reset', 'Your password has been updated!');
+    }
+
+    function logout() {
+      saveProgress();
+      AppState.currentUser = null;
+      AppState.isAdmin = false;
+      document.getElementById('dropdownAuthSection').style.display = 'block';
+      document.getElementById('dropdownUserSection').style.display = 'none';
+      document.getElementById('dropdownDirectorSection').style.display = 'none';
+      document.getElementById('dropdownUserInfo').classList.remove('admin-info');
+      localStorage.removeItem('ese_currentUser');
+      showNotification('chapter-notif', '👋 Logged Out', 'See you next time!');
+    }
+
+    function checkSavedLogin() {
+      const saved = localStorage.getItem('ese_currentUser');
+      if (saved) { try { loginUser(JSON.parse(saved)); } catch (e) { localStorage.removeItem('ese_currentUser'); } }
+    }
+
+    // ============================================
+    // PROGRESS
+    // ============================================
+    function saveProgress() {
+      if (!AppState.currentUser || AppState.isAdmin) return;
+      const users = getUsers();
+      const idx = users.findIndex(u => u.username === AppState.currentUser.username);
+      if (idx !== -1) {
+        users[idx].progress = { lastChapter: AppState.currentChapter, savedAt: Date.now() };
+        saveUsers(users);
+      }
+    }
+    setInterval(saveProgress, 30000);
+
+    // ============================================
+    // STORY DIRECTOR
+    // ============================================
+    // ============================================
+    // CHAPTER SPEED CONTROL (Admin)
+    // ============================================
+    function setChapterSpeed(ms) {
+      CHAPTER_INTERVAL_MS = ms;
+      localStorage.setItem('ese_chapterInterval', ms);
+
+      // Restart the generation interval (only if not paused)
+      if (!AppState.paused) {
+        if (AppState.generationInterval) {
+          clearInterval(AppState.generationInterval);
+        }
+        AppState.generationInterval = setInterval(generateNewChapter, CHAPTER_INTERVAL_MS);
+      }
+
+      // Update UI
+      updateSpeedDisplay();
+      highlightActiveSpeed();
+
+      // Reset pause display if speed changed while paused
+      if (AppState.paused) {
+        document.getElementById('speedCurrentDisplay').innerHTML = `<strong style="color:#f87171;">⏸️ PAUSED</strong> <span style="color:rgba(255,255,255,0.4);font-size:11px;">(${formatSpeed(ms)} when resumed)</span>`;
+      }
+
+      showNotification('level-notif', '⏱️ Speed Changed', `New chapter every ${formatSpeed(ms)}${AppState.paused ? ' (paused)' : ''}`);
+    }
+
+    function setCustomSpeed() {
+      const seconds = parseInt(document.getElementById('customSpeedInput').value);
+      if (!seconds || seconds < 1) {
+        showNotification('combat-notif', '❌ Error', 'Enter a valid number of seconds (min: 1)');
+        return;
+      }
+      if (seconds > 3600) {
+        showNotification('combat-notif', '❌ Error', 'Maximum is 3600 seconds (1 hour)');
+        return;
+      }
+      setChapterSpeed(seconds * 1000);
+      document.getElementById('customSpeedInput').value = '';
+    }
+
+    function formatSpeed(ms) {
+      if (ms < 60000) return (ms / 1000) + 's';
+      if (ms < 3600000) return (ms / 60000) + 'm';
+      return (ms / 3600000).toFixed(1) + 'h';
+    }
+
+    function updateSpeedDisplay() {
+      const display = document.getElementById('speedValueDisplay');
+      if (display) display.textContent = formatSpeed(CHAPTER_INTERVAL_MS);
+    }
+
+    function highlightActiveSpeed() {
+      document.querySelectorAll('.speed-btn').forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.dataset.speed) === CHAPTER_INTERVAL_MS);
+      });
+    }
+
+    // ============================================
+    // DIRECTOR MODE TOGGLE
+    // ============================================
+    let directorMode = false;
+
+    function toggleDirectorMode() {
+      directorMode = !directorMode;
+      const directorScreen = document.getElementById('directorScreen');
+      const mainContent = document.getElementById('mainContent');
+      const sidebar = document.getElementById('sidebar');
+      const topbar = document.querySelector('.topbar');
+
+      if (directorMode) {
+        // Switch to Director Mode
+        directorScreen.style.display = 'block';
+        mainContent.style.display = 'none';
+        sidebar.style.display = 'none';
+        topbar.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        showNotification('level-notif', '🎬 Director Mode', 'Full director panel activated!');
+      } else {
+        // Switch to Reader Mode
+        directorScreen.style.display = 'none';
+        mainContent.style.display = 'block';
+        sidebar.style.display = 'block';
+        topbar.style.display = 'flex';
+        document.body.style.overflow = 'auto';
+        showNotification('level-notif', '📖 Reader Mode', 'Back to reading!');
+      }
+    }
+
+    function showDirectorModeToggle() {
+      const toggleHint = document.getElementById('duiToggleHint');
+      if (toggleHint) {
+        toggleHint.style.display = 'block';
+      }
+    }
+
+    function hideDirectorModeToggle() {
+      const toggleHint = document.getElementById('duiToggleHint');
+      if (toggleHint) {
+        toggleHint.style.display = 'none';
+      }
+    }
+
+    function toggleDirectorModeFromUser() {
+      if (!AppState.isAdmin) return;
+      toggleDirectorMode();
+      closeDropdown();
+    }
+
+    function toggleSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      const button = section.previousElementSibling;
+      const isHidden = section.style.display === 'none' || section.style.display === '';
+      
+      section.style.display = isHidden ? 'block' : 'none';
+      button.setAttribute('aria-expanded', isHidden);
+    }
+
+    // ============================================
+    // STATUS SCREEN
+    // ============================================
+    let statusScreenOpen = false;
+
+    function toggleStatusScreen() {
+      statusScreenOpen = !statusScreenOpen;
+      const statusScreen = document.getElementById('statusScreen');
+      const mainContent = document.getElementById('mainContent');
+      const sidebar = document.getElementById('sidebar');
+      const topbar = document.querySelector('.topbar');
+
+      if (statusScreenOpen) {
+        statusScreen.style.display = 'block';
+        mainContent.style.display = 'none';
+        sidebar.style.display = 'none';
+        topbar.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        updateStatusScreen();
+        showNotification('level-notif', '📊 Status Screen', 'Full status view activated!');
+      } else {
+        statusScreen.style.display = 'none';
+        mainContent.style.display = 'block';
+        sidebar.style.display = 'block';
+        topbar.style.display = 'flex';
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    function updateStatusScreen() {
+      if (!AppState.chapters.length) return;
+      
+      const currentChapter = AppState.chapters[AppState.currentChapter - 1];
+      if (!currentChapter || !currentChapter.mcSnapshot) return;
+      
+      const mc = currentChapter.mcSnapshot;
+      
+      // Update character info
+      document.getElementById('statusLevel').textContent = mc.level;
+      document.getElementById('statusExtractions').textContent = mc.extractionCount || 0;
+      
+      // Update core stats
+      document.getElementById('statusHP').textContent = mc.hp;
+      document.getElementById('statusSP').textContent = mc.sp;
+      document.getElementById('statusMP').textContent = mc.mp;
+      document.getElementById('statusBloodEssence').textContent = mc.bloodEssence;
+      
+      // Update primary stats
+      document.getElementById('statusSTR').textContent = mc.strength;
+      document.getElementById('statusAGI').textContent = mc.agility;
+      document.getElementById('statusINT').textContent = mc.intelligence;
+      document.getElementById('statusVIT').textContent = mc.vitality;
+      document.getElementById('statusEND').textContent = mc.endurance;
+      document.getElementById('statusLUCK').textContent = mc.luck;
+      
+      // Update vampire stats
+      document.getElementById('statusBloodlust').textContent = mc.bloodlust;
+      document.getElementById('statusDarkAffinity').textContent = mc.darkAffinity;
+      document.getElementById('statusRegeneration').textContent = mc.regeneration;
+      document.getElementById('statusDomination').textContent = mc.domination;
+      
+      // Update combat stats
+      document.getElementById('statusAttackPower').textContent = mc.attackPower;
+      document.getElementById('statusDefense').textContent = mc.defense;
+      document.getElementById('statusCriticalRate').textContent = mc.criticalRate + '%';
+      document.getElementById('statusEvasion').textContent = mc.evasion + '%';
+      document.getElementById('statusAttackSpeed').textContent = mc.attackSpeed;
+      
+      // Update hidden stats
+      document.getElementById('statusKarma').textContent = mc.karma;
+      document.getElementById('statusInstinct').textContent = mc.instinct;
+      document.getElementById('statusWillpower').textContent = mc.willpower;
+      document.getElementById('statusPresence').textContent = mc.presence;
+      
+      // Update skills
+      const skillsContainer = document.getElementById('statusSkills');
+      if (mc.skills && mc.skills.length > 0) {
+        skillsContainer.innerHTML = mc.skills.map(skill => `
+          <div class="status-item">
+            <div class="status-item-name">${skill.name}</div>
+            <div class="status-item-desc">${skill.description || 'No description'}</div>
+            <div class="status-item-meta">Level: ${skill.level || 1}</div>
+          </div>
+        `).join('');
+      } else {
+        skillsContainer.innerHTML = '<div class="status-empty">No skills yet</div>';
+      }
+      
+      // Update abilities
+      const abilitiesContainer = document.getElementById('statusAbilities');
+      if (mc.abilities && mc.abilities.length > 0) {
+        abilitiesContainer.innerHTML = mc.abilities.map(ability => `
+          <div class="status-item">
+            <div class="status-item-name">${ability.name}</div>
+            <div class="status-item-desc">${ability.description || 'No description'}</div>
+            <div class="status-item-meta">Rank: ${ability.rank || 'E'}</div>
+          </div>
+        `).join('');
+      } else {
+        abilitiesContainer.innerHTML = '<div class="status-empty">No abilities yet</div>';
+      }
+      
+      // Update inventory
+      const inventoryContainer = document.getElementById('statusInventory');
+      if (mc.inventory && mc.inventory.length > 0) {
+        inventoryContainer.innerHTML = mc.inventory.map(item => `
+          <div class="status-item">
+            <div class="status-item-name">${item.name}</div>
+            <div class="status-item-desc">${item.description || 'No description'}</div>
+            <div class="status-item-meta">Rank: ${item.rank || 'Common'}</div>
+          </div>
+        `).join('');
+      } else {
+        inventoryContainer.innerHTML = '<div class="status-empty">No items yet</div>';
+      }
+    }
+
+    // Screen versions of director functions
+    function setCustomSpeedScreen() {
+      const input = document.getElementById('customSpeedInputScreen');
+      const ms = parseInt(input.value) * 1000;
+      if (isNaN(ms) || ms < 1000 || ms > 3600000) {
+        showNotification('combat-notif', '❌ Invalid Speed', 'Enter a value between 1 and 3600 seconds');
+        return;
+      }
+      setSpeed(ms);
+    }
+
+    function submitDirectiveScreen() {
+      const text = document.getElementById('directiveTextScreen').value.trim();
+      const chapters = parseInt(document.getElementById('directiveChaptersScreen').value) || 3;
+      if (!text) {
+        showNotification('combat-notif', '❌ Error', 'Enter a directive!');
+        return;
+      }
+      submitDirective();
+    }
+
+    function updateAdminCredentialsScreen() {
+      updateAdminCredentials();
+    }
+
+    function toggleUserManagementScreen() {
+      toggleUserManagement();
+    }
+
+    function filterUsersScreen() {
+      filterUsers();
+    }
+
+    // ============================================
+    // STORY RULES
+    // ============================================
+    let storyRules = JSON.parse(localStorage.getItem('ese_storyRules')) || [];
+
+    function addStoryRule() {
+      const text = document.getElementById('storyRuleText').value.trim();
+      const type = document.getElementById('ruleType').value;
+      if (!text) {
+        showNotification('combat-notif', '❌ Error', 'Enter a rule!');
+        return;
+      }
+      storyRules.push({
+        id: Date.now(),
+        text: text,
+        type: type,
+        createdAt: new Date().toISOString(),
+        active: true
+      });
+      localStorage.setItem('ese_storyRules', JSON.stringify(storyRules));
+      document.getElementById('storyRuleText').value = '';
+      updateStoryRulesList();
+      showNotification('level-notif', '📜 Rule Added', `${type} rule: ${text.substring(0, 50)}...`);
+    }
+
+    function updateStoryRulesList() {
+      const list = document.getElementById('storyRulesList');
+      if (storyRules.length === 0) {
+        list.innerHTML = '<p style="color:rgba(255,255,255,0.4);font-size:12px;padding:10px;">No rules yet.</p>';
+        return;
+      }
+      list.innerHTML = storyRules.map(r => `
+        <div class="story-rule-item">
+          <div style="flex:1;">
+            <div style="font-weight:600;color:#c084fc;">${r.type.toUpperCase()}</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.8);">${r.text}</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);">${new Date(r.createdAt).toLocaleString()}</div>
+          </div>
+          <button class="btn btn-sm btn-danger" onclick="removeStoryRule(${r.id})">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function removeStoryRule(id) {
+      storyRules = storyRules.filter(r => r.id !== id);
+      localStorage.setItem('ese_storyRules', JSON.stringify(storyRules));
+      updateStoryRulesList();
+      showNotification('combat-notif', '🗑️ Rule Removed', 'Story rule deleted.');
+    }
+
+    function getActiveRules() {
+      return storyRules.filter(r => r.active);
+    }
+
+    // ============================================
+    // STORY CONTROL
+    // ============================================
+    let generationMode = localStorage.getItem('ese_generationMode') || 'unlimited';
+
+    function updateGenerationMode() {
+      generationMode = document.getElementById('generationMode').value;
+      localStorage.setItem('ese_generationMode', generationMode);
+      updateAdminProgressInfo();
+      showNotification('level-notif', '🎮 Mode Changed', `Generation: ${generationMode === 'unlimited' ? 'Unlimited' : 'Admin Progress'}`);
+    }
+
+    function updateAdminProgressInfo() {
+      const info = document.getElementById('adminProgressInfo');
+      if (generationMode === 'admin_progress') {
+        info.style.display = 'block';
+        document.getElementById('adminCurrentChapter').textContent = AppState.currentChapter;
+        document.getElementById('generatedChaptersCount').textContent = AppState.totalGenerated;
+      } else {
+        info.style.display = 'none';
+      }
+    }
+
+    function resetStory() {
+      if (!confirm('⚠️ Are you sure you want to reset the story to Chapter 1?\n\nThis will:\n• Delete all generated chapters\n• Reset MC stats to level 1\n• Clear all directives\n• Keep story rules intact\n\nThis action cannot be undone!')) {
+        return;
+      }
+      
+      // Reset app state
+      AppState.chapters = [];
+      AppState.currentChapter = 1;
+      AppState.totalGenerated = 0;
+      
+      // Clear generation interval
+      if (AppState.generationInterval) {
+        clearInterval(AppState.generationInterval);
+        AppState.generationInterval = null;
+      }
+      
+      // Reset story engine
+      StoryEngine.reset();
+      
+      // Clear directives
+      localStorage.removeItem('ese_directives');
+      
+      // Update UI
+      document.getElementById('storyContainer').innerHTML = '';
+      updateChapterNav();
+      updateStats();
+      updateDirectiveList();
+      
+      // Restart generation
+      catchUpAndStart();
+      
+      showNotification('level-notif', '🔄 Story Reset', 'Story has been reset to Chapter 1!');
+    }
+
+    // Quick reset function (no confirmation) - for debugging/testing
+    function quickResetStory() {
+      // Reset app state
+      AppState.chapters = [];
+      AppState.currentChapter = 1;
+      AppState.totalGenerated = 0;
+      
+      // Clear generation interval
+      if (AppState.generationInterval) {
+        clearInterval(AppState.generationInterval);
+        AppState.generationInterval = null;
+      }
+      
+      // Reset story engine
+      StoryEngine.reset();
+      
+      // Clear directives
+      localStorage.removeItem('ese_directives');
+      
+      // Update UI
+      document.getElementById('storyContainer').innerHTML = '';
+      updateChapterNav();
+      updateStats();
+      updateDirectiveList();
+      
+      // Restart generation
+      catchUpAndStart();
+    }
+
+    function togglePause() {
+      AppState.paused = !AppState.paused;
+      const pauseIcon = document.getElementById('pauseIcon');
+      const pauseLabel = document.getElementById('pauseLabel');
+      const pauseBtn = document.getElementById('pauseBtn');
+      const speedDisplay = document.getElementById('speedCurrentDisplay');
+
+      if (AppState.paused) {
+        // Pause — clear interval
+        if (AppState.generationInterval) {
+          clearInterval(AppState.generationInterval);
+          AppState.generationInterval = null;
+        }
+        localStorage.setItem('ese_paused', 'true');
+        pauseIcon.textContent = '▶️';
+        pauseLabel.textContent = 'Resume Generation';
+        pauseBtn.classList.add('paused');
+        speedDisplay.innerHTML = '<strong style="color:#f87171;">⏸️ PAUSED</strong>';
+        showNotification('combat-notif', '⏸️ Paused', 'Chapter generation paused.');
+      } else {
+        // Resume — restart interval
+        localStorage.setItem('ese_paused', 'false');
+        generateNewChapter(); // Generate one immediately
+        AppState.generationInterval = setInterval(generateNewChapter, CHAPTER_INTERVAL_MS);
+        pauseIcon.textContent = '⏸️';
+        pauseLabel.textContent = 'Pause Generation';
+        pauseBtn.classList.remove('paused');
+        updateSpeedDisplay();
+        document.getElementById('speedCurrentDisplay').innerHTML = `Current: <strong>1 chapter every <span id="speedValueDisplay">${formatSpeed(CHAPTER_INTERVAL_MS)}</span></strong>`;
+        showNotification('level-notif', '▶️ Resumed', `Generating 1 chapter every ${formatSpeed(CHAPTER_INTERVAL_MS)}`);
+      }
+    }
+
+    function submitDirective() {
+      const text = document.getElementById('directiveText').value.trim();
+      const chapters = parseInt(document.getElementById('directiveChapters').value) || 3;
+      if (!text) { showNotification('combat-notif', '❌ Error', 'Enter a directive!'); return; }
+      StoryEngine.addDirective(text, chapters);
+      showNotification('level-notif', '👑 Directive Added', `Woven in within ${chapters} chapters`);
+      document.getElementById('directiveText').value = '';
+      document.getElementById('directiveChapters').value = '3';
+      updateDirectiveList();
+    }
+
+    function updateDirectiveList() {
+      const list = document.getElementById('directiveList');
+      const all = StoryEngine.getAllDirectives();
+      if (all.length === 0) { list.innerHTML = '<p style="color:var(--text-muted);font-size:12px;padding:10px;">No directives yet.</p>'; return; }
+      list.innerHTML = all.map(d => `<div class="directive-item"><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${d.text}">${d.text}</span><span class="directive-status ${d.status}">${d.status}</span></div>`).join('');
+    }
+
+    // ============================================
+    // ADMIN ACCOUNT SETTINGS
+    // ============================================
+    function updateAdminCredentials() {
+      const newUsername = document.getElementById('adminNewUsername').value.trim();
+      const newPassword = document.getElementById('adminNewPassword').value;
+      const confirmPassword = document.getElementById('adminConfirmPassword').value;
+
+      // Validate — at least one field must be filled
+      if (!newUsername && !newPassword) {
+        showNotification('combat-notif', '❌ Error', 'Enter a new username or password.');
+        return;
+      }
+
+      // Validate password match if changing password
+      if (newPassword && newPassword !== confirmPassword) {
+        showNotification('combat-notif', '❌ Error', 'Passwords do not match!');
+        return;
+      }
+
+      if (newPassword && newPassword.length < 4) {
+        showNotification('combat-notif', '❌ Error', 'Password must be at least 4 characters.');
+        return;
+      }
+
+      if (newUsername && newUsername.length < 2) {
+        showNotification('combat-notif', '❌ Error', 'Username must be at least 2 characters.');
+        return;
+      }
+
+      // Apply changes
+      if (newUsername) {
+        ADMIN_USER.username = newUsername;
+        if (AppState.currentUser) AppState.currentUser.username = newUsername;
+        document.getElementById('dropdownUsername').textContent = newUsername;
+      }
+      if (newPassword) {
+        ADMIN_USER.password = newPassword;
+      }
+
+      // Save to localStorage
+      localStorage.setItem('ese_adminUser', JSON.stringify(ADMIN_USER));
+      if (AppState.currentUser) {
+        localStorage.setItem('ese_currentUser', JSON.stringify(AppState.currentUser));
+      }
+
+      // Clear fields
+      document.getElementById('adminNewUsername').value = '';
+      document.getElementById('adminNewPassword').value = '';
+      document.getElementById('adminConfirmPassword').value = '';
+
+      // Update display
+      updateAdminCredsDisplay();
+
+      const changed = [];
+      if (newUsername) changed.push('username');
+      if (newPassword) changed.push('password');
+      showNotification('level-notif', '💾 Saved', `Admin ${changed.join(' & ')} updated!`);
+    }
+
+    function updateAdminCredsDisplay() {
+      const el = document.getElementById('adminCurrentCreds');
+      if (el) {
+        el.innerHTML = `<span>Current: <strong>${ADMIN_USER.username}</strong> / <strong>${'•'.repeat(ADMIN_USER.password.length)}</strong></span>`;
+      }
+    }
+
+    function toggleAdminPwVisibility() {
+      const input = document.getElementById('adminNewPassword');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    // USER MANAGEMENT
+    // ============================================
+    function loadUserList() {
+      const users = getUsers();
+      const list = document.getElementById('userList');
+      const count = document.getElementById('userCount');
+
+      count.textContent = `${users.length} user${users.length !== 1 ? 's' : ''}`;
+
+      if (users.length === 0) {
+        list.innerHTML = '<p class="no-users">No users found</p>';
+        return;
+      }
+
+      list.innerHTML = users.map(user => `
+        <div class="user-item" data-username="${sanitizeAttribute(user.username.toLowerCase())}" data-email="${sanitizeAttribute((user.email || \'\').toLowerCase())}">
+          <div class="user-info">
+            <span class="user-name">${sanitizeHTML(user.username)}</span>
+            <span class="user-email">${sanitizeHTML(user.email || \'No email\')}</span>
+            <span class="user-badges">
+              ${user.isAdmin ? '<span class="badge admin">👑 Admin</span>' : ''}
+              ${user.subscribed ? '<span class="badge premium">⭐ Premium</span>' : ''}
+            </span>
+          </div>
+          <div class="user-actions">
+            <button class="btn btn-sm btn-icon" onclick="editUserEmail(\'${sanitizeAttribute(user.username)}\')" title="Edit Email">📧</button>
+            <button class="btn btn-sm btn-icon btn-danger" onclick="deleteUser(\'${sanitizeAttribute(user.username)}\')" title="Delete User">🗑️</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterUsers() {
+      const query = document.getElementById('userSearchInput').value.toLowerCase();
+      const items = document.querySelectorAll('.user-item');
+
+      items.forEach(item => {
+        const username = item.dataset.username;
+        const email = item.dataset.email;
+        const matches = username.includes(query) || email.includes(query);
+        item.style.display = matches ? 'flex' : 'none';
+      });
+    }
+
+    function deleteUser(username) {
+      if (!confirm(`Are you sure you want to delete user "${username}"? This cannot be undone.`)) {
+        return;
+      }
+
+      const users = getUsers();
+      const filtered = users.filter(u => u.username !== username);
+
+      if (filtered.length === users.length) {
+        showNotification('combat-notif', '❌ Error', 'User not found');
+        return;
+      }
+
+      saveUsers(filtered);
+      loadUserList();
+      showNotification('level-notif', '🗑️ User Deleted', `User "${username}" has been deleted`);
+    }
+
+    function editUserEmail(username) {
+      const users = getUsers();
+      const user = users.find(u => u.username === username);
+
+      if (!user) {
+        showNotification('combat-notif', '❌ Error', 'User not found');
+        return;
+      }
+
+      const newEmail = prompt(`Enter new email for ${username}:`, user.email || '');
+
+      if (newEmail === null) return; // Cancelled
+
+      if (newEmail && newEmail.trim() !== '') {
+        const emailValidation = Validator.validate('email', newEmail.trim());
+        if (!emailValidation.valid) {
+          showNotification('combat-notif', '❌ Invalid Email', emailValidation.error);
+          return;
+        }
+      }
+
+      // Check if email is already used by another user
+      const emailExists = users.find(u => u.email && u.email.toLowerCase() === newEmail.toLowerCase() && u.username !== username);
+      if (emailExists) {
+        showNotification('combat-notif', '❌ Error', 'This email is already associated with another account');
+        return;
+      }
+
+      user.email = newEmail || '';
+      saveUsers(users);
+      loadUserList();
+      showNotification('level-notif', '📧 Email Updated', `Email for "${username}" has been ${newEmail ? 'updated' : 'removed'}`);
+    }
+
+    // ============================================
+    // PAYMENT HELPERS
+    // ============================================
+    // PAYPAL CONFIG
+    const PAYPAL_QR_LINK = 'https://www.paypal.com/qrcodes/p2pqrc/WYWR3R3GLRQHA';
+
+    // DONATE
+    function selectDonation(amount) {
+      AppState.selectedDonation = amount;
+      document.querySelectorAll('.donate-amount-btn').forEach(btn => btn.classList.toggle('selected', btn.textContent === `$${amount}`));
+      document.getElementById('donateCustom').value = '';
+    }
+    function openPayPalDonation() {
+      const custom = document.getElementById('donateCustom').value;
+      const amount = custom ? parseFloat(custom) : AppState.selectedDonation;
+      if (!amount || amount <= 0) { showNotification('combat-notif', '❌ Error', 'Select or enter a donation amount!'); return; }
+      AppState.selectedDonation = amount;
+      // Open PayPal payment link in new tab
+      window.open(PAYPAL_QR_LINK, '_blank');
+      showNotification('level-notif', '🔗 PayPal Opened', `Send $${amount.toFixed(2)} via PayPal to complete your donation.`);
+      // Show confirmation step after a short delay
+      setTimeout(() => {
+        document.getElementById('donateStep1').querySelector('.paypal-confirm-section').style.display = 'block';
+      }, 500);
+    }
+    function confirmDonation() {
+      document.getElementById('donateStep1').style.display = 'none';
+      document.getElementById('donateStep3').style.display = 'block';
+      showNotification('level-notif', '💰 Thank You!', `Your generous donation is appreciated!`);
+    }
+    function closeDonateModal() {
+      closeModal('donateOverlay');
+      setTimeout(() => {
+        document.getElementById('donateStep1').style.display = 'block';
+        document.getElementById('donateStep3').style.display = 'none';
+        const confirmSec = document.getElementById('donateStep1').querySelector('.paypal-confirm-section');
+        if (confirmSec) confirmSec.style.display = 'none';
+        document.getElementById('donateCustom').value = '';
+        document.getElementById('donateMessage').value = '';
+        AppState.selectedDonation = null;
+        document.querySelectorAll('.donate-amount-btn').forEach(b => b.classList.remove('selected'));
+      }, 300);
+    }
+
+    // SUBSCRIBE
+    function openPayPalSubscription() {
+      window.open(PAYPAL_QR_LINK, '_blank');
+      showNotification('level-notif', '🔗 PayPal Opened', 'Send $4.99 via PayPal and include "Subscribe" in the note.');
+    }
+    function confirmSubscription() {
+      document.getElementById('subStep1').style.display = 'none';
+      document.getElementById('subStep3').style.display = 'block';
+      if (AppState.currentUser) {
+        AppState.currentUser.subscribed = true;
+        const users = getUsers();
+        const idx = users.findIndex(u => u.username === AppState.currentUser.username);
+        if (idx !== -1) { users[idx].subscribed = true; saveUsers(users); }
+        document.getElementById('dropdownUserIcon').textContent = '⭐';
+        document.getElementById('dropdownUserRole').textContent = 'Premium Reader';
+        localStorage.setItem('ese_currentUser', JSON.stringify(AppState.currentUser));
+      }
+      showNotification('level-notif', '⭐ Subscribed!', 'Welcome to the premium experience!');
+    }
+    function closeSubModal() {
+      closeModal('subscribeOverlay');
+      setTimeout(() => {
+        document.getElementById('subStep1').style.display = 'block';
+        document.getElementById('subStep3').style.display = 'none';
+      }, 300);
+    }
+
+    // ============================================
+    // SECURITY - INPUT SANITIZATION
+    // ============================================
+    function sanitizeHTML(str) {
+      if (typeof str !== 'string') return str;
+      const temp = document.createElement('div');
+      temp.textContent = str;
+      return temp.innerHTML;
+    }
+
+    function sanitizeAttribute(str) {
+      if (typeof str !== 'string') return str;
+      return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // ============================================
+    // SECURITY - RATE LIMITING
+    // ============================================
+    const RateLimiter = {
+      attempts: {},
+      maxAttempts: 5,
+      windowMs: 15 * 60 * 1000, // 15 minutes
+      
+      check(key) {
+        const now = Date.now();
+        if (!this.attempts[key]) {
+          this.attempts[key] = { count: 0, resetTime: now + this.windowMs };
+        }
+        
+        const record = this.attempts[key];
+        
+        // Reset if window expired
+        if (now > record.resetTime) {
+          record.count = 0;
+          record.resetTime = now + this.windowMs;
+        }
+        
+        record.count++;
+        return record.count <= this.maxAttempts;
+      },
+      
+      getRemainingAttempts(key) {
+        const record = this.attempts[key];
+        if (!record) return this.maxAttempts;
+        const now = Date.now();
+        if (now > record.resetTime) return this.maxAttempts;
+        return Math.max(0, this.maxAttempts - record.count);
+      },
+      
+      getResetTime(key) {
+        const record = this.attempts[key];
+        if (!record) return 0;
+        return record.resetTime;
+      },
+      
+      reset(key) {
+        delete this.attempts[key];
+      }
+    };
+    // ============================================
+    // SECURITY - INPUT VALIDATION
+    // ============================================
+    const Validator = {
+      patterns: {
+        username: /^[a-zA-Z0-9_]{3,20}$/,
+        email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        password: /^.{6,100}$/,
+        chapterTitle: /^.{1,100}$/,
+        text: /^.{1,10000}$/
+      },
+      
+      validate(type, value) {
+        const pattern = this.patterns[type];
+        if (!pattern) return { valid: true, error: null };
+        
+        if (!value || value.trim() === '') {
+          return { valid: false, error: `${type} cannot be empty` };
+        }
+        
+        if (!pattern.test(value)) {
+          const messages = {
+            username: 'Username must be 3-20 characters (letters, numbers, underscores only)',
+            email: 'Please enter a valid email address',
+            password: 'Password must be at least 6 characters',
+            chapterTitle: 'Title must be 1-100 characters',
+            text: 'Text must be 1-10000 characters'
+          };
+          return { valid: false, error: messages[type] || 'Invalid input' };
+        }
+        
+        return { valid: true, error: null };
+      },
+      
+      sanitizeAndValidate(type, value) {
+        const sanitized = sanitizeHTML(value.trim());
+        const validation = this.validate(type, sanitized);
+        return {
+          sanitized,
+          valid: validation.valid,
+          error: validation.error
+        };
+      }
+    };
+    // ============================================
+    // ERROR HANDLING
+    // ============================================
+    const ErrorHandler = {
+      handle(error, context = 'Operation') {
+        console.error(`[${context}] Error:`, error);
+        
+        // Show user-friendly error message
+        const message = error.message || 'An unexpected error occurred';
+        showNotification('combat-notif', '❌ Error', `${context} failed: ${message}`);
+        
+        // Log detailed error for debugging
+        if (error.stack) {
+          console.error('Stack trace:', error.stack);
+        }
+      },
+      
+      safeExecute(fn, context = 'Operation', fallback = null) {
+        try {
+          return fn();
+        } catch (error) {
+          this.handle(error, context);
+          return fallback;
+        }
+      },
+      
+      async safeExecuteAsync(fn, context = 'Operation', fallback = null) {
+        try {
+          return await fn();
+        } catch (error) {
+          this.handle(error, context);
+          return fallback;
+        }
+      }
+    };
+
+
+
+
+
+
+    // ============================================
+    // NOTIFICATIONS
+    // ============================================
+    function showNotification(type, title, body) {
+      const container = document.getElementById('notificationContainer');
+      const notif = document.createElement('div');
+      notif.className = `notification ${type}`;
+      notif.innerHTML = `<div class="notification-title">${sanitizeHTML(title)}</div><div class="notification-body">${sanitizeHTML(body)}</div><div class="notification-timer"></div>`;
+      container.appendChild(notif);
+      setTimeout(() => { notif.style.opacity = '0'; notif.style.transform = 'translateX(100px)'; notif.style.transition = 'all 0.3s ease'; setTimeout(() => notif.remove(), 300); }, 5000);
+      while (container.children.length > 5) container.removeChild(container.firstChild);
+    }
+
+    // ============================================
+    // KEYBOARD SHORTCUTS
+    // ============================================
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active')); closeDropdown(); }
+      if (e.target.matches('input, textarea')) return;
+      if (e.key === 's') toggleSidebar();
+      if (e.key === 'm') toggleDropdown();
+      if (e.key === 'ArrowRight' || e.key === 'n') nextChapter();
+      if (e.key === 'ArrowLeft' || e.key === 'p') prevChapter();
+    });
+  </script>
+</body>
+</html>

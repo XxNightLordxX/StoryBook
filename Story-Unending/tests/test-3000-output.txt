@@ -1,0 +1,20 @@
+================================================================================
+COMPREHENSIVE TEST: 3000 CHAPTERS
+================================================================================
+Starting test at: 2026-02-27T02:49:49.599Z
+
+Generating 3000 chapters...
+/workspace/test-3000-simple.js:62
+    const chapter = generateChapter(i);
+                    ^
+
+ReferenceError: generateChapter is not defined
+    at Object.<anonymous> (/workspace/test-3000-simple.js:62:21)
+    at Module._compile (node:internal/modules/cjs/loader:1521:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+    at Module.load (node:internal/modules/cjs/loader:1266:32)
+    at Module._load (node:internal/modules/cjs/loader:1091:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:164:12)
+    at node:internal/main/run_main_module:28:49
+
+Node.js v20.20.0

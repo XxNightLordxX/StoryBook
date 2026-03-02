@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Manual Chapter Display</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-controls { margin: 20px 0; padding: 20px; background: #f0f0f0; border: 2px solid #333; }
+        #storyContainer { border: 2px solid #333; padding: 20px; margin: 20px 0; min-height: 200px; background: white; }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Test Manual Chapter Display</h1>
+    
+    <div class="test-controls">
+        <button onclick="testShowChapter1()">Test showChapter(1)</button>
+        <button onclick="testShowChapter2()">Test showChapter(2)</button>
+        <button onclick="testAppState()">Test AppState</button>
+        <button onclick="testStoryContainer()">Test storyContainer</button>
+    </div>
+    
+    <div id="results"></div>
+    
+    <main class="main-content" id="mainContent" role="main" aria-label="Story content">
+        <div id="storyContainer"></div>
+    </main>
+    
+    <script src="backstory-engine.js"></script>
+    <script src="story-engine.js"></script>
+    <script src="js/utils/security.js"></script>
+    <script src="js/utils/safe-html.js"></script>
+    <script src="js/utils/storage.js"></script>
+    <script src="js/utils/prompt-modal.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/utils/formatters.js"></script>
+    <script src="js/utils/ui-helpers.js"></script>
+    <script src="js/modules/app-state.js"></script>
+    <script src="js/modules/story-timeline.js"></script>
+    <script src="js/modules/auth.js"></script>
+    <script src="js/modules/navigation.js"></script>
+    <script src="js/modules/misc.js"></script>
+    <script src="js/modules/generation.js"></script>
+    <script src="js/modules/initialization.js"></script>
+    <script src="js/ui/sidebar.js"></script>
+    <script src="js/ui/stats.js"></script>
+    <script src="js/ui/dropdown.js"></script>
+    <script src="js/ui/text-size.js"></script>
+    <script src="js/ui/modals.js"></script>
+    <script src="js/ui/notifications.js"></script>
+    <script src="js/ui/keyboard-shortcuts.js"></script>
+    
+    <script>
+        const results = document.getElementById('results');
+        
+        function addResult(message, type) {
+            const div = document.createElement('div');
+            div.style.margin = '10px 0';
+            div.style.padding = '10px';
+            div.style.border = '1px solid #ccc';
+            div.style.background = type === 'error' ? '#f8d7da' : (type === 'success' ? '#d4edda' : '#d1ecf1');
+            div.textContent = message;
+            results.appendChild(div);
+        }
+        
+        function testShowChapter1() {
+            addResult('=== Testing showChapter(1) ===', 'info');
+            try {
+                if (typeof showChapter === 'function') {
+                    showChapter(1);
+                    addResult('✓ showChapter(1) called successfully', 'success');
+                } else {
+                    addResult('✗ showChapter function not found', 'error');
+                }
+            } catch (error) {
+                addResult(`✗ Error: ${error.message}`, 'error');
+                addResult(`Stack: ${error.stack}`, 'error');
+            }
+        }
+        
+        function testShowChapter2() {
+            addResult('=== Testing showChapter(2) ===', 'info');
+            try {
+                if (typeof showChapter === 'function') {
+                    showChapter(2);
+                    addResult('✓ showChapter(2) called successfully', 'success');
+                } else {
+                    addResult('✗ showChapter function not found', 'error');
+                }
+            } catch (error) {
+                addResult(`✗ Error: ${error.message}`, 'error');
+                addResult(`Stack: ${error.stack}`, 'error');
+            }
+        }
+        
+        function testAppState() {
+            addResult('=== Testing AppState ===', 'info');
+            if (typeof AppState !== 'undefined') {
+                addResult(`✓ AppState exists`, 'success');
+                addResult(`  totalGenerated: ${AppState.totalGenerated}`, 'info');
+                addResult(`  chapters.length: ${AppState.chapters.length}`, 'info');
+                addResult(`  currentChapter: ${AppState.currentChapter}`, 'info');
+                if (AppState.chapters.length > 0) {
+                    addResult(`  First chapter: ${AppState.chapters[0].title}`, 'info');
+                }
+            } else {
+                addResult(`✗ AppState not found`, 'error');
+            }
+        }
+        
+        function testStoryContainer() {
+            addResult('=== Testing storyContainer ===', 'info');
+            const container = document.getElementById('storyContainer');
+            if (container) {
+                addResult(`✓ storyContainer exists`, 'success');
+                addResult(`  InnerHTML length: ${container.innerHTML.length}`, 'info');
+                if (container.innerHTML.length > 0) {
+                    addResult(`  Content preview: ${container.innerHTML.substring(0, 200)}...`, 'info');
+                } else {
+                    addResult(`  storyContainer is EMPTY`, 'error');
+                }
+            } else {
+                addResult(`✗ storyContainer not found`, 'error');
+            }
+        }
+        
+        // Wait for initialization
+        setTimeout(() => {
+            addResult('=== Page loaded, waiting for initialization ===', 'info');
+            setTimeout(() => {
+                testAppState();
+                testStoryContainer();
+            }, 3000);
+        }, 1000);
+    </script>
+</body>
+</html>

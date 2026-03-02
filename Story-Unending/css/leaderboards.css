@@ -1,0 +1,775 @@
+/**
+ * Leaderboards Styles
+ */
+
+/* Modal Styles */
+.leaderboard-modal {
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.leaderboard-modal .modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 8px 8px 0 0;
+}
+
+.leaderboard-modal .modal-header h2 {
+    margin: 0;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-btn {
+    padding: 12px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    color: #667eea;
+    background: #f5f5f5;
+}
+
+.tab-btn.active {
+    color: #667eea;
+    border-bottom-color: #667eea;
+    font-weight: 600;
+}
+
+/* Filters */
+.leaderboard-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.filter-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.filter-group select,
+.filter-group input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    min-width: 150px;
+}
+
+.filter-group.search-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group.search-group input {
+    width: 100%;
+}
+
+/* Content Area */
+.leaderboard-content {
+    min-height: 400px;
+}
+
+/* Leaderboard Table */
+.leaderboard-table {
+    overflow-x: auto;
+}
+
+.leaderboard-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.leaderboard-table thead {
+    background: #f5f5f5;
+}
+
+.leaderboard-table th {
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.leaderboard-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.leaderboard-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.leaderboard-table tbody tr.current-user {
+    background: #e8f4fd;
+    font-weight: 600;
+}
+
+/* Column Styles */
+.rank-col {
+    width: 80px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.rank-col.rank-1 {
+    color: #ffd700;
+    font-size: 18px;
+}
+
+.rank-col.rank-2 {
+    color: #c0c0c0;
+    font-size: 16px;
+}
+
+.rank-col.rank-3 {
+    color: #cd7f32;
+    font-size: 16px;
+}
+
+.user-col {
+    width: 200px;
+}
+
+.username {
+    font-weight: 500;
+}
+
+.you-badge {
+    display: inline-block;
+    background: #667eea;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    margin-left: 8px;
+    font-weight: 600;
+}
+
+.achievements-col {
+    width: 100px;
+    text-align: center;
+}
+
+.points-col {
+    width: 100px;
+    text-align: center;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.streak-col {
+    width: 100px;
+    text-align: center;
+}
+
+.chapters-col {
+    width: 100px;
+    text-align: center;
+}
+
+.time-col {
+    width: 100px;
+    text-align: center;
+    color: #666;
+}
+
+/* Leaderboard Footer */
+.leaderboard-footer {
+    margin-top: 15px;
+    padding: 10px;
+    text-align: center;
+    color: #666;
+    font-size: 13px;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.empty-state p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.empty-hint {
+    font-size: 14px;
+    color: #bbb;
+}
+
+/* My Rank Container */
+.my-rank-container {
+    padding: 20px;
+}
+
+.user-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.user-header h3 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.user-subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+/* Rank Breakdown */
+.rank-breakdown {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.rank-breakdown h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.rank-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rank-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: white;
+    border-radius: 4px;
+}
+
+.rank-type {
+    font-weight: 500;
+    color: #666;
+}
+
+.rank-value {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.rank-value.rank-1 {
+    color: #ffd700;
+}
+
+.rank-value.rank-2 {
+    color: #c0c0c0;
+}
+
+.rank-value.rank-3 {
+    color: #cd7f32;
+}
+
+/* History Section */
+.history-section {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.history-section h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: white;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.history-date {
+    color: #666;
+}
+
+.history-points {
+    font-weight: 600;
+    color: #667eea;
+}
+
+.no-history {
+    color: #999;
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Statistics Container */
+.statistics-container {
+    padding: 20px;
+}
+
+.stats-overview {
+    margin-bottom: 30px;
+}
+
+.stats-overview h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.overview-item {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.overview-label {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.overview-value {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #667eea;
+}
+
+/* Top Users Section */
+.top-users-section {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.top-users-section h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.top-users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.top-user-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    background: white;
+    border-radius: 4px;
+}
+
+.top-user-rank {
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 50px;
+}
+
+.top-user-rank.rank-1 {
+    color: #ffd700;
+}
+
+.top-user-rank.rank-2 {
+    color: #c0c0c0;
+}
+
+.top-user-rank.rank-3 {
+    color: #cd7f32;
+}
+
+.top-user-name {
+    flex: 1;
+    font-weight: 500;
+}
+
+.top-user-points {
+    font-weight: 600;
+    color: #667eea;
+}
+
+/* Compare Container */
+.compare-container {
+    padding: 20px;
+}
+
+.compare-input {
+    margin-bottom: 20px;
+}
+
+.compare-input label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.compare-input input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.compare-input button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.compare-input button:hover {
+    opacity: 0.9;
+}
+
+.compare-hint {
+    color: #999;
+    font-style: italic;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+/* Comparison Results */
+.comparison-results {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.comparison-results h4 {
+    margin: 0 0 20px 0;
+    color: #333;
+}
+
+.comparison-table {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comparison-category {
+    background: white;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.comparison-category h5 {
+    margin: 0 0 15px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.comparison-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.comparison-bar {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.bar-label {
+    min-width: 120px;
+    font-weight: 500;
+    color: #333;
+}
+
+.bar-container {
+    flex: 1;
+    position: relative;
+    height: 30px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.5s ease;
+}
+
+.bar-value {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 600;
+    color: #333;
+    font-size: 13px;
+}
+
+/* Modal Footer */
+.leaderboard-modal .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .leaderboard-modal {
+        max-width: 95%;
+        margin: 10px;
+    }
+    
+    .tabs {
+        flex-wrap: wrap;
+    }
+    
+    .tab-btn {
+        flex: 1;
+        min-width: 120px;
+        font-size: 12px;
+        padding: 10px;
+    }
+    
+    .leaderboard-filters {
+        flex-direction: column;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+    
+    .filter-group select,
+    .filter-group input {
+        width: 100%;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .leaderboard-table {
+        font-size: 12px;
+    }
+    
+    .leaderboard-table th,
+    .leaderboard-table td {
+        padding: 8px 4px;
+    }
+    
+    .rank-col {
+        width: 50px;
+    }
+    
+    .user-col {
+        width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .leaderboard-table {
+        font-size: 11px;
+    }
+    
+    .you-badge {
+        display: block;
+        margin-left: 0;
+        margin-top: 5px;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .leaderboard-modal .modal-header {
+        background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    }
+    
+    .tab-btn {
+        color: #a0aec0;
+    }
+    
+    .tab-btn:hover {
+        color: #667eea;
+        background: #2d3748;
+    }
+    
+    .leaderboard-filters {
+        background: #2d3748;
+    }
+    
+    .filter-group label {
+        color: #a0aec0;
+    }
+    
+    .filter-group select,
+    .filter-group input {
+        background: #1a202c;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    .leaderboard-table thead {
+        background: #2d3748;
+    }
+    
+    .leaderboard-table th {
+        color: #e2e8f0;
+        border-bottom-color: #4a5568;
+    }
+    
+    .leaderboard-table td {
+        border-bottom-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    .leaderboard-table tbody tr:hover {
+        background: #2d3748;
+    }
+    
+    .leaderboard-table tbody tr.current-user {
+        background: #2c5282;
+    }
+    
+    .rank-breakdown,
+    .history-section,
+    .top-users-section,
+    .comparison-results {
+        background: #2d3748;
+    }
+    
+    .rank-item,
+    .history-item,
+    .top-user-item,
+    .overview-item {
+        background: #1a202c;
+        border-color: #4a5568;
+    }
+    
+    .rank-type,
+    .history-date {
+        color: #a0aec0;
+    }
+    
+    .compare-input input {
+        background: #1a202c;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    .comparison-category {
+        background: #1a202c;
+    }
+    
+    .bar-container {
+        background: #4a5568;
+    }
+    
+    .bar-value {
+        color: #e2e8f0;
+    }
+}

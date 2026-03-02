@@ -1,0 +1,31 @@
+{
+  "var_declarations": [],
+  "loose_equality_eq": [],
+  "loose_equality_neq": [],
+  "console_error": [],
+  "console_warn": [],
+  "console_log": [],
+  "console_debug": [],
+  "console_info": [],
+  "function_declarations": [
+    {
+      "file": "js/modules/performance-advanced.js",
+      "line": 345,
+      "text": "function debounce(func, wait = 300, immediate = false) {"
+    },
+    {
+      "file": "js/modules/performance-advanced.js",
+      "line": 347,
+      "text": "return function executedFunction(...args) {"
+    },
+    {
+      "file": "js/modules/performance-advanced.js",
+      "line": 366,
+      "text": "function throttle(func, wait = 300, options = {}) {"
+    }
+  ],
+  "deeply_nested": [],
+  "large_files": [],
+  "empty_catch": [],
+  "throw_without_catch": []
+}

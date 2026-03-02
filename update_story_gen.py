@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+import re
+
+def update_file(filepath):
+    with open(filepath, 'r') as f:
+        content = f.read()
+    
+    # Add comment at top
+    if '/**' in content and 'Updated to use DOM Helpers' not in content:
+        content = content.replace(
+            '/**',
+            '/**\n * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)\n */\n/**'
+        )
+    
+    # Pattern 1: document.getElementById('id').value
+    content = re.sub(
+        r"document\.getElementById\('([^']+)'\)\.value",
+        r"DOMHelpers.safeGetElement('\1').value",
+        content
+    )
+    
+    # Pattern 2: document.getElementById('id').textContent = value
+    content = re.sub(
+        r"document\.getElementById\('([^']+)'\)\.textContent\s*=\s*([^;]+);",
+        r"DOMHelpers.safeSetText('\1', \2);",
+        content
+    )
+    
+    # Pattern 3: document.getElementById('id').style.display = value
+    content = re.sub(
+        r"document\.getElementById\('([^']+)'\)\.style\.display\s*=\s*['&quot;]([^'&quot;]+)['&quot;];",
+        r"DOMHelpers.safeSetDisplay('\1', '\2');",
+        content
+    )
+    
+    # Pattern 4: document.getElementById('id').classList.add('class')
+    content = re.sub(
+        r"document\.getElementById\('([^']+)'\)\.classList\.add\('([^']+)'\)",
+        r"DOMHelpers.safeToggleClass('\1', '\2', true)",
+        content
+    )
+    
+    # Pattern 5: document.getElementById('id').classList.remove('class')
+    content = re.sub(
+        r"document\.getElementById\('([^']+)'\)\.classList\.remove\('([^']+)'\)",
+        r"DOMHelpers.safeToggleClass('\1', '\2', false)",
+        content
+    )
+    
+    # Pattern: const element = document.getElementById('id');
+    content = re.sub(
+        r"const\s+(\w+)\s*=\s*document\.getElementById\('([^']+)'\);",
+        r"const \1 = DOMHelpers.safeGetElement('\2');",
+        content
+    )
+    
+    # Pattern: let element = document.getElementById('id');
+    content = re.sub(
+        r"let\s+(\w+)\s*=\s*document\.getElementById\('([^']+)'\);",
+        r"let \1 = DOMHelpers.safeGetElement('\2');",
+        content
+    )
+    
+    with open(filepath, 'w') as f:
+        f.write(content)
+    
+    # Count remaining document.getElementById calls
+    remaining = len(re.findall(r"document\.getElementById", content))
+    print(f"Updated {filepath}. Remaining document.getElementById calls: {remaining}")
+
+if __name__ == '__main__':
+    update_file('Story-Unending/js/modules/story-generation-control.js')

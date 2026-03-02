@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Integration Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a2e;
+            color: #eee;
+        }
+        h1 {
+            color: #4ecca3;
+        }
+        .test-section {
+            background-color: #16213e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #0f3460;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .pass {
+            background-color: #2d6a4f;
+            color: #fff;
+        }
+        .fail {
+            background-color: #9b2226;
+            color: #fff;
+        }
+        .info {
+            background-color: #0f3460;
+            color: #fff;
+        }
+        button {
+            background-color: #4ecca3;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #3db892;
+        }
+        button:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+        .paragraph {
+            background-color: #0f3460;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 4px solid #4ecca3;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .stat-box {
+            background-color: #0f3460;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4ecca3;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #aaa;
+        }
+        #log {
+            background-color: #0f3460;
+            padding: 15px;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-bottom: 1px solid #1a1a2e;
+        }
+        .log-info { color: #4ecca3; }
+        .log-warn { color: #ffd700; }
+        .log-error { color: #ff6b6b; }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>AI Integration Test</h1>
+    
+    <div class="test-section">
+        <h2>Test Configuration</h2>
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-value" id="aiEnabled">Checking...</div>
+                <div class="stat-label">AI Enabled</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="aiPercentage">40%</div>
+                <div class="stat-label">AI Percentage</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="browserType">Checking...</div>
+                <div class="stat-label">Browser</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="webGPUSupport">Checking...</div>
+                <div class="stat-label">WebGPU Support</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test Actions</h2>
+        <button id="initAI" onclick="initializeAI()">Initialize AI</button>
+        <button id="testTemplate" onclick="testTemplateOnly()">Test Template Only</button>
+        <button id="testAI" onclick="testAIIntegration()" disabled>Test AI Integration</button>
+        <button id="test100" onclick="test100Chapters()" disabled>Test 100 Chapters</button>
+        <button id="clearLog" onclick="clearLog()">Clear Log</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Test Results</h2>
+        <div id="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Generated Paragraphs</h2>
+        <div id="paragraphs"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Log</h2>
+        <div id="log"></div>
+    </div>
+
+    <!-- Load required scripts -->
+    <script src="../../backstory-engine.js"></script>
+    <script src="../../story-engine.js"></script>
+    
+    <!-- WebLLM CDN -->
+    <script type="module">
+        import * as webllm from "https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.46/dist/web-llm.min.js";
+        window.WebLLM = webllm;
+        log('WebLLM loaded', 'info');
+        checkBrowserCapabilities();
+    </script>
+    
+    <!-- Transformers.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1/dist/transformers.min.js"></script>
+    <script>
+        log('Transformers.js loaded', 'info');
+    </script>
+    
+    <!-- AI Integration (Unified) -->
+    <script src="../../js/unified-ai-generator.js"></script>
+
+    <script>
+        let aiInitialized = false;
+        let testResults = {
+            templateOnly: null,
+            aiIntegration: null,
+            chapter100: null
+        };
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        function addResult(title, passed, message) {
+            const resultsDiv = document.getElementById('results');
+            const result = document.createElement('div');
+            result.className = `test-result ${passed ? 'pass' : 'fail'}`;
+            result.innerHTML = `<strong>${title}</strong>: ${passed ? '✅ PASS' : '❌ FAIL'} - ${message}`;
+            resultsDiv.appendChild(result);
+        }
+
+        function addParagraph(text, source) {
+            const paragraphsDiv = document.getElementById('paragraphs');
+            const paragraph = document.createElement('div');
+            paragraph.className = 'paragraph';
+            paragraph.innerHTML = `<strong>[${source}]</strong> ${text}`;
+            paragraphsDiv.appendChild(paragraph);
+        }
+
+        function checkBrowserCapabilities() {
+            const browser = navigator.userAgent;
+            let browserType = 'Unknown';
+            
+            if (browser.includes('Chrome')) {
+                browserType = 'Chrome';
+            } else if (browser.includes('Firefox')) {
+                browserType = 'Firefox';
+            } else if (browser.includes('Safari')) {
+                browserType = 'Safari';
+            } else if (browser.includes('Edge')) {
+                browserType = 'Edge';
+            }
+            
+            document.getElementById('browserType').textContent = browserType;
+            
+            // Check WebGPU support
+            const webGPUSupported = 'gpu' in navigator;
+            document.getElementById('webGPUSupport').textContent = webGPUSupported ? '✅ Yes' : '❌ No';
+            
+            // Check AI availability
+            const aiEnabled = typeof window.AIIntegration !== 'undefined';
+            document.getElementById('aiEnabled').textContent = aiEnabled ? '✅ Yes' : '❌ No';
+            
+            log(`Browser: ${browserType}`, 'info');
+            log(`WebGPU: ${webGPUSupported ? 'Supported' : 'Not supported'}`, webGPUSupported ? 'info' : 'warn');
+            log(`AI Integration: ${aiEnabled ? 'Available' : 'Not available'}`, aiEnabled ? 'info' : 'warn');
+        }
+
+        async function initializeAI() {
+            const btn = document.getElementById('initAI');
+            btn.disabled = true;
+            btn.textContent = 'Initializing...';
+            
+            log('Initializing AI Integration...', 'info');
+            
+            try {
+                if (typeof window.AIIntegration === 'undefined') {
+                    throw new Error('AIIntegration not available');
+                }
+                
+                await window.AIIntegration.initialize({
+                    webllmModel: 'Llama-2-7b-chat-hf-q4f16_1-MLC',
+                    transformersModel: 'Xenova/phi-2',
+                    maxTokens: 200,
+                    temperature: 0.8,
+                    aiPercentage: 40,
+                    enableParallelGeneration: true,
+                    enableEnsemble: true
+                });
+                
+                aiInitialized = true;
+                document.getElementById('testAI').disabled = false;
+                document.getElementById('test100').disabled = false;
+                
+                addResult('AI Initialization', true, 'AI initialized successfully');
+                log('AI initialized successfully', 'info');
+            } catch (error) {
+                addResult('AI Initialization', false, error.message);
+                log(`AI initialization failed: ${error.message}`, 'error');
+                console.error(error);
+            }
+            
+            btn.textContent = 'Initialize AI';
+            btn.disabled = false;
+        }
+
+        function testTemplateOnly() {
+            log('Testing template-only generation...', 'info');
+            
+            try {
+                const chapter = StoryEngine.generateChapter();
+                
+                addResult('Template Generation', true, `Generated chapter ${chapter.id} with ${chapter.paragraphs.length} paragraphs`);
+                log(`Generated chapter ${chapter.id} with ${chapter.paragraphs.length} paragraphs`, 'info');
+                
+                // Show first paragraph
+                if (chapter.paragraphs.length > 0) {
+                    addParagraph(chapter.paragraphs[0], 'Template');
+                }
+                
+                testResults.templateOnly = {
+                    success: true,
+                    chapterId: chapter.id,
+                    paragraphCount: chapter.paragraphs.length
+                };
+            } catch (error) {
+                addResult('Template Generation', false, error.message);
+                log(`Template generation failed: ${error.message}`, 'error');
+                console.error(error);
+                testResults.templateOnly = { success: false, error: error.message };
+            }
+        }
+
+        async function testAIIntegration() {
+            if (!aiInitialized) {
+                addResult('AI Integration Test', false, 'AI not initialized');
+                log('AI not initialized', 'error');
+                return;
+            }
+            
+            log('Testing AI integration...', 'info');
+            
+            try {
+                const chapter = await StoryEngine.generateChapterWithAI();
+                
+                addResult('AI Integration', true, `Generated chapter ${chapter.id} with ${chapter.paragraphs.length} paragraphs`);
+                log(`Generated chapter ${chapter.id} with ${chapter.paragraphs.length} paragraphs`, 'info');
+                
+                // Show first paragraph
+                if (chapter.paragraphs.length > 0) {
+                    addParagraph(chapter.paragraphs[0], 'AI/Template');
+                }
+                
+                // Get AI stats
+                const stats = StoryEngine.getAIStats();
+                log(`AI Stats: ${stats.generated} AI, ${stats.template} template, ${stats.errors} errors`, 'info');
+                
+                testResults.aiIntegration = {
+                    success: true,
+                    chapterId: chapter.id,
+                    paragraphCount: chapter.paragraphs.length,
+                    aiGenerated: stats.generated,
+                    templateGenerated: stats.template,
+                    aiErrors: stats.errors
+                };
+            } catch (error) {
+                addResult('AI Integration', false, error.message);
+                log(`AI integration test failed: ${error.message}`, 'error');
+                console.error(error);
+                testResults.aiIntegration = { success: false, error: error.message };
+            }
+        }
+
+        async function test100Chapters() {
+            if (!aiInitialized) {
+                addResult('100 Chapters Test', false, 'AI not initialized');
+                log('AI not initialized', 'error');
+                return;
+            }
+            
+            log('Testing 100 chapters with AI...', 'info');
+            
+            const startTime = Date.now();
+            const paragraphHashes = new Set();
+            const duplicateParagraphs = new Set();
+            let totalParagraphs = 0;
+            
+            try {
+                for (let i = 0; i < 100; i++) {
+                    const chapter = await StoryEngine.generateChapterWithAI();
+                    totalParagraphs += chapter.paragraphs.length;
+                    
+                    // Track paragraph hashes
+                    for (const paragraph of chapter.paragraphs) {
+                        const hash = paragraph.split('').reduce((a, b) => {
+                            a = ((a << 5) - a) + b.charCodeAt(0);
+                            return a & a;
+                        }, 0);
+                        
+                        if (paragraphHashes.has(hash)) {
+                            duplicateParagraphs.add(hash);
+                        } else {
+                            paragraphHashes.add(hash);
+                        }
+                    }
+                    
+                    if ((i + 1) % 10 === 0) {
+                        log(`Generated ${i + 1} chapters...`, 'info');
+                    }
+                }
+                
+                const endTime = Date.now();
+                const duration = (endTime - startTime) / 1000;
+                const speed = 100 / duration;
+                const uniqueParagraphs = paragraphHashes.size;
+                const duplicateCount = duplicateParagraphs.size;
+                const uniqueness = ((uniqueParagraphs / totalParagraphs) * 100).toFixed(2);
+                
+                const stats = StoryEngine.getAIStats();
+                
+                addResult('100 Chapters Test', true, 
+                    `${totalParagraphs} paragraphs, ${uniqueParagraphs} unique (${uniqueness}%), ` +
+                    `${stats.generated} AI, ${stats.template} template, ${stats.errors} errors, ` +
+                    `${speed.toFixed(2)} chapters/sec`);
+                
+                log(`Test completed in ${duration.toFixed(2)} seconds`, 'info');
+                log(`Total paragraphs: ${totalParagraphs}`, 'info');
+                log(`Unique paragraphs: ${uniqueParagraphs} (${uniqueness}%)`, 'info');
+                log(`Duplicate paragraphs: ${duplicateCount}`, 'info');
+                log(`AI generated: ${stats.generated}`, 'info');
+                log(`Template generated: ${stats.template}`, 'info');
+                log(`AI errors: ${stats.errors}`, 'info');
+                log(`Speed: ${speed.toFixed(2)} chapters/sec`, 'info');
+                
+                // Show sample paragraphs
+                const sampleChapter = await StoryEngine.generateChapterWithAI();
+                if (sampleChapter.paragraphs.length > 0) {
+                    addParagraph(sampleChapter.paragraphs[0], 'Sample');
+                }
+                
+                testResults.chapter100 = {
+                    success: true,
+                    totalParagraphs,
+                    uniqueParagraphs,
+                    duplicateCount,
+                    uniqueness,
+                    aiGenerated: stats.generated,
+                    templateGenerated: stats.template,
+                    aiErrors: stats.errors,
+                    speed
+                };
+            } catch (error) {
+                addResult('100 Chapters Test', false, error.message);
+                log(`100 chapters test failed: ${error.message}`, 'error');
+                console.error(error);
+                testResults.chapter100 = { success: false, error: error.message };
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            log('Page loaded', 'info');
+            checkBrowserCapabilities();
+        });
+    </script>
+</body>
+</html>

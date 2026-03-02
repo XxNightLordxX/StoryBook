@@ -1,0 +1,51 @@
+<!-- Story Generation Control -->
+      <div class="director-section">
+        <div class="director-section-title">🎮 Story Generation Control</div>
+        
+        <!-- Generation Mode -->
+        <div class="form-group">
+          <label>Generation Mode</label>
+          <select id="generationMode" onchange="updateGenerationMode()" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.9);">
+            <option value="unlimited">Unlimited Generation</option>
+            <option value="admin_progress">Limit to Admin Reading Progress</option>
+          </select>
+        </div>
+        
+        <!-- Admin Progress Info -->
+        <div class="form-group" id="adminProgressInfo" style="display:none;">
+          <label>Admin Current Chapter: <span id="adminCurrentChapter">1</span></label>
+          <label>Generated Chapters: <span id="generatedChaptersCount">0</span></label>
+        </div>
+        
+        <!-- Speed Controls -->
+        <div class="form-group">
+          <label>Chapter Generation Speed</label>
+          <div class="speed-presets">
+            <button aria-label="5s" class="btn btn-sm" data-speed="5000" onclick="setSpeed(5000)">5s</button>
+            <button aria-label="10s" class="btn btn-sm" data-speed="10000" onclick="setSpeed(10000)">10s</button>
+            <button aria-label="15s" class="btn btn-sm" data-speed="15000" onclick="setSpeed(15000)">15s</button>
+            <button aria-label="30s" class="btn btn-sm" data-speed="30000" onclick="setSpeed(30000)">30s</button>
+            <button aria-label="1m" class="btn btn-sm" data-speed="60000" onclick="setSpeed(60000)">1m</button>
+            <button aria-label="5m" class="btn btn-sm" data-speed="300000" onclick="setSpeed(300000)">5m</button>
+          </div>
+          <div class="speed-custom-row">
+            <input type="number" id="customSpeedInputScreen" min="1" max="3600" placeholder="30" / aria-label="30">
+            <button aria-label="Set" class="btn btn-primary btn-sm" onclick="setCustomSpeedScreen()">Set</button>
+          </div>
+        </div>
+        
+        <!-- Current Speed Display -->
+        <div class="speed-current" id="speedCurrentDisplayScreen">
+          Current: <strong>1 chapter every <span id="speedValueDisplayScreen">30s</span></strong>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="control-buttons">
+          <button aria-label="Pause Btn Screen" class="btn btn-pause" id="pauseBtnScreen" onclick="togglePause()">
+            <span id="pauseIconScreen">⏸️</span> <span id="pauseLabelScreen">Pause Generation</span>
+          </button>
+          <button aria-label="Button" class="btn btn-danger" onclick="resetStory()">
+            🔄 Reset Story to Chapter 1
+          </button>
+        </div>
+      </div>

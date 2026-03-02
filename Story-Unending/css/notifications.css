@@ -1,0 +1,648 @@
+/**
+ * Notification System Styles
+ */
+
+.notifications-modal {
+    z-index: 10000;
+}
+
+.notifications-modal-content {
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.notifications-modal .modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 8px 8px 0 0;
+}
+
+.notifications-modal .modal-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.notifications-modal .tabs {
+    display: flex;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.notifications-modal .tab-btn {
+    flex: 1;
+    padding: 15px 20px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.notifications-modal .tab-btn:hover {
+    background: #f5f5f5;
+    color: #333;
+}
+
+.notifications-modal .tab-btn.active {
+    color: #667eea;
+    border-bottom-color: #667eea;
+    background: #f8f9ff;
+}
+
+.notifications-modal .tab-btn .badge {
+    display: inline-block;
+    background: #f44336;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    margin-left: 5px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.notifications-modal .tab-content {
+    padding: 0 20px 20px;
+}
+
+.notifications-modal .tab-pane {
+    display: none;
+}
+
+.notifications-modal .tab-pane.active {
+    display: block;
+}
+
+.preferences-section h3 {
+    color: #333;
+    font-size: 18px;
+    margin: 20px 0 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #667eea;
+}
+
+.preferences-section .form-group {
+    margin: 15px 0;
+}
+
+.preferences-section label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 500;
+}
+
+.preferences-section input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.preferences-section input[type="text"],
+.preferences-section input[type="email"],
+.preferences-section input[type="number"],
+.preferences-section input[type="time"],
+.preferences-section select,
+.preferences-section textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.preferences-section input:focus,
+.preferences-section select:focus,
+.preferences-section textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.preferences-section .button-group {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+}
+
+.history-section .history-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9ff;
+    border-radius: 8px;
+}
+
+.history-section .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.history-section .filter-group label {
+    font-weight: 500;
+    color: #555;
+}
+
+.history-section .filter-group select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.history-section .history-stats {
+    display: flex;
+    gap: 20px;
+    padding: 10px 15px;
+    background: #e8eaf6;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-weight: 500;
+    color: #555;
+}
+
+.history-section .history-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.history-section .empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}
+
+.notification-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.notification-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.notification-card.unread {
+    border-left: 4px solid #667eea;
+    background: #f8f9ff;
+}
+
+.notification-card.read {
+    opacity: 0.7;
+}
+
+.notification-card.dismissed {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.notification-type {
+    display: inline-block;
+    padding: 3px 10px;
+    background: #667eea;
+    color: white;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.notification-time {
+    font-size: 12px;
+    color: #999;
+}
+
+.notification-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.notification-message {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.scheduled-section .scheduled-controls {
+    margin-bottom: 20px;
+}
+
+.scheduled-section .scheduled-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.scheduled-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.scheduled-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.scheduled-status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.scheduled-status.pending {
+    background: #ff9800;
+    color: white;
+}
+
+.scheduled-status.sent {
+    background: #4caf50;
+    color: white;
+}
+
+.scheduled-status.cancelled {
+    background: #f44336;
+    color: white;
+}
+
+.scheduled-time {
+    font-size: 12px;
+    color: #999;
+}
+
+.scheduled-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.scheduled-message {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.scheduled-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.schedule-form {
+    background: #f8f9ff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.schedule-form h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.schedule-form .form-group {
+    margin: 15px 0;
+}
+
+.schedule-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 500;
+}
+
+.schedule-form input[type="text"],
+.schedule-form input[type="datetime-local"],
+.schedule-form select,
+.schedule-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.schedule-form .button-group {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.templates-section .templates-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.template-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.template-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.template-type {
+    display: inline-block;
+    padding: 3px 10px;
+    background: #667eea;
+    color: white;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.template-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.template-field {
+    margin-bottom: 10px;
+}
+
+.template-field label {
+    display: block;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.template-value {
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #666;
+    font-family: monospace;
+}
+
+.template-form {
+    background: #f8f9ff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.template-form h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.template-form .form-group {
+    margin: 15px 0;
+}
+
+.template-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 500;
+}
+
+.template-form input[type="text"],
+.template-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.template-form .variables-list {
+    padding: 10px;
+    background: #e8eaf6;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+.template-form .variables-list code {
+    display: inline-block;
+    background: #c5cae9;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin: 2px;
+}
+
+.template-form .button-group {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #653a8f 100%);
+}
+
+.btn-secondary {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #d0d0d0;
+}
+
+.btn-danger {
+    background: #f44336;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #d32f2f;
+}
+
+.btn-small {
+    padding: 5px 12px;
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    .notifications-modal-content {
+        max-width: 95%;
+        margin: 20px;
+    }
+    
+    .notifications-modal .tabs {
+        flex-wrap: wrap;
+    }
+    
+    .notifications-modal .tab-btn {
+        flex: 1 1 50%;
+        min-width: 120px;
+        font-size: 12px;
+        padding: 12px 10px;
+    }
+    
+    .history-section .history-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .history-section .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .notification-actions,
+    .scheduled-actions,
+    .template-actions {
+        flex-direction: column;
+    }
+    
+    .preferences-section .button-group {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .notifications-modal .modal-header h2 {
+        font-size: 20px;
+    }
+    
+    .notifications-modal .tab-btn {
+        flex: 1 1 100%;
+    }
+    
+    .notification-card,
+    .scheduled-card,
+    .template-card {
+        padding: 10px;
+    }
+    
+    .notification-title,
+    .scheduled-title {
+        font-size: 14px;
+    }
+    
+    .notification-message,
+    .scheduled-message {
+        font-size: 13px;
+    }
+}
+
+.notifications-modal-content::-webkit-scrollbar,
+.history-section .history-list::-webkit-scrollbar,
+.scheduled-section .scheduled-list::-webkit-scrollbar,
+.templates-section .templates-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.notifications-modal-content::-webkit-scrollbar-track,
+.history-section .history-list::-webkit-scrollbar-track,
+.scheduled-section .scheduled-list::-webkit-scrollbar-track,
+.templates-section .templates-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.notifications-modal-content::-webkit-scrollbar-thumb,
+.history-section .history-list::-webkit-scrollbar-thumb,
+.scheduled-section .scheduled-list::-webkit-scrollbar-thumb,
+.templates-section .templates-list::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.notifications-modal-content::-webkit-scrollbar-thumb:hover,
+.history-section .history-list::-webkit-scrollbar-thumb:hover,
+.scheduled-section .scheduled-list::-webkit-scrollbar-thumb:hover,
+.templates-section .templates-list::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.notification-card,
+.scheduled-card,
+.template-card {
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.notification-card.unread {
+    animation: slideIn 0.3s ease, pulse 2s ease-in-out;
+}

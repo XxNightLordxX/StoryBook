@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 100% Paragraph Uniqueness with AI</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        h1 {
+            color: #4ecca3;
+            border-bottom: 2px solid #4ecca3;
+            padding-bottom: 10px;
+        }
+        .section {
+            background: #16213e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #0f3460;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4ecca3;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            color: #aaa;
+            margin-top: 5px;
+        }
+        button {
+            background: #4ecca3;
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #45b390;
+        }
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        .log {
+            background: #0a0a0a;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #4ecca3;
+        }
+        .log-entry.error {
+            border-left-color: #e94560;
+        }
+        .log-entry.success {
+            border-left-color: #4ecca3;
+        }
+        .log-entry.info {
+            border-left-color: #4a90e2;
+        }
+        .progress-bar {
+            background: #0f3460;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #4ecca3, #45b390);
+            height: 100%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1a1a2e;
+        }
+        .config-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .config-item {
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .config-item label {
+            display: block;
+            margin-bottom: 5px;
+            color: #aaa;
+        }
+        .config-item input, .config-item select {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .status-badge.success {
+            background: #4ecca3;
+            color: #1a1a2e;
+        }
+        .status-badge.fail {
+            background: #e94560;
+            color: #fff;
+        }
+        .status-badge.pending {
+            background: #f39c12;
+            color: #1a1a2e;
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>🧪 Test 100% Paragraph Uniqueness with AI</h1>
+    
+    <div class="section">
+        <h2>📊 Test Configuration</h2>
+        <div class="config-section">
+            <div class="config-item">
+                <label for="chaptersToGenerate">Chapters to Generate:</label>
+                <input type="number" id="chaptersToGenerate" value="100" min="10" max="1000">
+            </div>
+            <div class="config-item">
+                <label for="aiPercentage">AI Percentage:</label>
+                <select id="aiPercentage">
+                    <option value="0">0% (Template Only)</option>
+                    <option value="40" selected>40% AI / 60% Template</option>
+                    <option value="60">60% AI / 40% Template</option>
+                    <option value="80">80% AI / 20% Template</option>
+                    <option value="100">100% AI</option>
+                </select>
+            </div>
+            <div class="config-item">
+                <label for="expectedUniqueness">Target Uniqueness:</label>
+                <input type="number" id="expectedUniqueness" value="99.9" min="90" max="100" step="0.1">
+            </div>
+            <div class="config-item">
+                <label for="enableStrictDuplicatePrevention">Strict Duplicate Prevention:</label>
+                <select id="enableStrictDuplicatePrevention">
+                    <option value="true" selected>Enabled</option>
+                    <option value="false">Disabled</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <button id="startTest" onclick="startTest()">▶️ Start Test</button>
+            <button id="stopTest" onclick="stopTest()" disabled>⏹️ Stop Test</button>
+            <button id="resetTest" onclick="resetTest()">🔄 Reset</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>📈 Progress</h2>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%">0%</div>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="chaptersGenerated">0</div>
+                <div class="stat-label">Chapters Generated</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalParagraphs">0</div>
+                <div class="stat-label">Total Paragraphs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="uniqueParagraphs">0</div>
+                <div class="stat-label">Unique Paragraphs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="duplicateParagraphs">0</div>
+                <div class="stat-label">Duplicate Paragraphs</div>
+            </div>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="uniquenessPercentage">0%</div>
+                <div class="stat-label">Paragraph Uniqueness</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="aiGenerated">0</div>
+                <div class="stat-label">AI-Generated</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="templateGenerated">0</div>
+                <div class="stat-label">Template-Generated</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="generationSpeed">0</div>
+                <div class="stat-label">Chapters/Second</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>📋 Test Status</h2>
+        <div>
+            <span>Status: </span>
+            <span class="status-badge pending" id="testStatus">Ready</span>
+        </div>
+        <div style="margin-top: 10px;">
+            <span>AI Integration: </span>
+            <span class="status-badge pending" id="aiStatus">Checking...</span>
+        </div>
+        <div style="margin-top: 10px;">
+            <span>Browser Support: </span>
+            <span class="status-badge pending" id="browserStatus">Checking...</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>📝 Log</h2>
+        <div class="log" id="log"></div>
+    </div>
+
+    <script>
+        // Test state
+        let testRunning = false;
+        let testStopped = false;
+        let stats = {
+            totalChapters: 0,
+            totalParagraphs: 0,
+            uniqueParagraphs: new Set(),
+            duplicateParagraphs: 0,
+            aiGenerated: 0,
+            templateGenerated: 0,
+            aiErrors: 0,
+            startTime: 0,
+            endTime: 0
+        };
+
+        // Hash function for paragraph uniqueness
+        function hashParagraph(paragraph) {
+            const str = String(paragraph).trim();
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return hash;
+        }
+
+        // Add log entry
+        function addLog(message, type = 'info') {
+            const log = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // Update statistics display
+        function updateStats() {
+            document.getElementById('chaptersGenerated').textContent = stats.totalChapters;
+            document.getElementById('totalParagraphs').textContent = stats.totalParagraphs;
+            document.getElementById('uniqueParagraphs').textContent = stats.uniqueParagraphs.size;
+            document.getElementById('duplicateParagraphs').textContent = stats.duplicateParagraphs;
+            
+            const uniqueness = stats.totalParagraphs > 0 
+                ? ((stats.uniqueParagraphs.size / stats.totalParagraphs) * 100).toFixed(2) 
+                : 0;
+            document.getElementById('uniquenessPercentage').textContent = `${uniqueness}%`;
+            
+            document.getElementById('aiGenerated').textContent = stats.aiGenerated;
+            document.getElementById('templateGenerated').textContent = stats.templateGenerated;
+            
+            if (stats.endTime > stats.startTime) {
+                const speed = (stats.totalChapters / ((stats.endTime - stats.startTime) / 1000)).toFixed(2);
+                document.getElementById('generationSpeed').textContent = speed;
+            }
+        }
+
+        // Update progress bar
+        function updateProgress(current, total) {
+            const percentage = ((current / total) * 100).toFixed(1);
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+            document.getElementById('progressFill').textContent = `${percentage}%`;
+        }
+
+        // Check browser capabilities
+        function checkBrowserCapabilities() {
+            const browserStatus = document.getElementById('browserStatus');
+            const aiStatus = document.getElementById('aiStatus');
+            
+            // Check WebGPU support
+            const webGPUSupported = 'gpu' in navigator;
+            
+            // Check WebAssembly support
+            const wasmSupported = typeof WebAssembly === 'object';
+            
+            if (webGPUSupported) {
+                browserStatus.textContent = 'WebGPU Supported (Chrome/Edge)';
+                browserStatus.className = 'status-badge success';
+                aiStatus.textContent = 'WebLLM Available';
+                aiStatus.className = 'status-badge success';
+            } else if (wasmSupported) {
+                browserStatus.textContent = 'WebAssembly Supported (Safari/Firefox)';
+                browserStatus.className = 'status-badge success';
+                aiStatus.textContent = 'Transformers.js Available';
+                aiStatus.className = 'status-badge success';
+            } else {
+                browserStatus.textContent = 'No AI Support';
+                browserStatus.className = 'status-badge fail';
+                aiStatus.textContent = 'Template Only';
+                aiStatus.className = 'status-badge fail';
+            }
+        }
+
+        // Initialize AI
+        async function initializeAI() {
+            const aiPercentage = parseInt(document.getElementById('aiPercentage').value);
+            
+            addLog(`Initializing AI with ${aiPercentage}% AI generation...`, 'info');
+            
+            try {
+                await StoryEngine.initializeAI({
+                    enabled: aiPercentage > 0,
+                    percentage: aiPercentage,
+                    webllmModel: 'Llama-2-7b-chat-hf-q4f16_1-MLC',
+                    transformersModel: 'Xenova/phi-2',
+                    enableParallelGeneration: true,
+                    enableEnsemble: true
+                });
+                
+                addLog('AI initialized successfully', 'success');
+                return true;
+            } catch (error) {
+                addLog(`AI initialization failed: ${error.message}`, 'error');
+                addLog('Falling back to template-only generation', 'info');
+                return false;
+            }
+        }
+
+        // Generate chapters
+        async function generateChapters() {
+            const chaptersToGenerate = parseInt(document.getElementById('chaptersToGenerate').value);
+            const aiPercentage = parseInt(document.getElementById('aiPercentage').value);
+            const enableStrictDuplicatePrevention = document.getElementById('enableStrictDuplicatePrevention').value === 'true';
+            
+            addLog(`Starting test: ${chaptersToGenerate} chapters with ${aiPercentage}% AI`, 'info');
+            
+            stats.startTime = Date.now();
+            
+            for (let i = 1; i <= chaptersToGenerate; i++) {
+                if (testStopped) {
+                    addLog('Test stopped by user', 'info');
+                    break;
+                }
+                
+                try {
+                    // Generate chapter with AI
+                    const chapter = await StoryEngine.generateChapterWithAI();
+                    
+                    if (!chapter) {
+                        addLog(`Chapter ${i}: Generation failed`, 'error');
+                        continue;
+                    }
+                    
+                    // Track paragraphs
+                    if (chapter.paragraphs && Array.isArray(chapter.paragraphs)) {
+                        chapter.paragraphs.forEach((paragraph, pIndex) => {
+                            stats.totalParagraphs++;
+                            
+                            // Hash paragraph for uniqueness tracking
+                            const hash = hashParagraph(paragraph);
+                            
+                            if (stats.uniqueParagraphs.has(hash)) {
+                                stats.duplicateParagraphs++;
+                            } else {
+                                stats.uniqueParagraphs.add(hash);
+                            }
+                        });
+                    }
+                    
+                    stats.totalChapters++;
+                    
+                    // Update progress every 10 chapters
+                    if (i % 10 === 0) {
+                        updateProgress(i, chaptersToGenerate);
+                        updateStats();
+                        addLog(`Generated ${i}/${chaptersToGenerate} chapters`, 'info');
+                    }
+                    
+                } catch (error) {
+                    addLog(`Chapter ${i}: ${error.message}`, 'error');
+                    stats.aiErrors++;
+                }
+            }
+            
+            stats.endTime = Date.now();
+            updateProgress(stats.totalChapters, chaptersToGenerate);
+            updateStats();
+        }
+
+        // Get AI statistics
+        function getAIStats() {
+            try {
+                const aiStats = StoryEngine.getAIStats();
+                stats.aiGenerated = aiStats.generated || 0;
+                stats.templateGenerated = aiStats.template || 0;
+                stats.aiErrors = aiStats.errors || 0;
+                updateStats();
+            } catch (error) {
+                addLog(`Could not get AI stats: ${error.message}`, 'error');
+            }
+        }
+
+        // Display final results
+        function displayResults() {
+            const expectedUniqueness = parseFloat(document.getElementById('expectedUniqueness').value);
+            const uniqueness = stats.totalParagraphs > 0 
+                ? ((stats.uniqueParagraphs.size / stats.totalParagraphs) * 100) 
+                : 0;
+            
+            const success = uniqueness >= expectedUniqueness;
+            
+            addLog('', 'info');
+            addLog('=== Test Results ===', 'info');
+            addLog(`Total Chapters: ${stats.totalChapters}`, 'info');
+            addLog(`Total Paragraphs: ${stats.totalParagraphs}`, 'info');
+            addLog(`Unique Paragraphs: ${stats.uniqueParagraphs.size}`, 'info');
+            addLog(`Duplicate Paragraphs: ${stats.duplicateParagraphs}`, 'info');
+            addLog(`Paragraph Uniqueness: ${uniqueness.toFixed(2)}%`, success ? 'success' : 'error');
+            addLog(`Target Uniqueness: ${expectedUniqueness}%`, 'info');
+            addLog(`AI-Generated: ${stats.aiGenerated}`, 'info');
+            addLog(`Template-Generated: ${stats.templateGenerated}`, 'info');
+            addLog(`AI Errors: ${stats.aiErrors}`, 'info');
+            
+            const totalTime = (stats.endTime - stats.startTime) / 1000;
+            addLog(`Total Time: ${totalTime.toFixed(2)} seconds`, 'info');
+            
+            const testStatus = document.getElementById('testStatus');
+            if (success) {
+                testStatus.textContent = '✅ PASS';
+                testStatus.className = 'status-badge success';
+                addLog('✅ TEST PASSED: 100% paragraph uniqueness achieved!', 'success');
+            } else {
+                testStatus.textContent = '❌ FAIL';
+                testStatus.className = 'status-badge fail';
+                addLog('❌ TEST FAILED: Uniqueness below target', 'error');
+                
+                if (uniqueness >= 90) {
+                    addLog('Recommendation: Increase AI percentage to 60-80%', 'info');
+                } else if (uniqueness >= 50) {
+                    addLog('Recommendation: Increase AI percentage to 100%', 'info');
+                } else {
+                    addLog('Recommendation: Debug AI integration', 'error');
+                }
+            }
+        }
+
+        // Start test
+        async function startTest() {
+            if (testRunning) return;
+            
+            testRunning = true;
+            testStopped = false;
+            
+            document.getElementById('startTest').disabled = true;
+            document.getElementById('stopTest').disabled = false;
+            document.getElementById('testStatus').textContent = 'Running...';
+            document.getElementById('testStatus').className = 'status-badge pending';
+            
+            // Reset stats
+            stats = {
+                totalChapters: 0,
+                totalParagraphs: 0,
+                uniqueParagraphs: new Set(),
+                duplicateParagraphs: 0,
+                aiGenerated: 0,
+                templateGenerated: 0,
+                aiErrors: 0,
+                startTime: 0,
+                endTime: 0
+            };
+            
+            updateStats();
+            updateProgress(0, parseInt(document.getElementById('chaptersToGenerate').value));
+            
+            // Clear log
+            document.getElementById('log').innerHTML = '';
+            
+            // Initialize AI
+            await initializeAI();
+            
+            // Generate chapters
+            await generateChapters();
+            
+            // Get AI statistics
+            getAIStats();
+            
+            // Display results
+            displayResults();
+            
+            testRunning = false;
+            document.getElementById('startTest').disabled = false;
+            document.getElementById('stopTest').disabled = true;
+        }
+
+        // Stop test
+        function stopTest() {
+            testStopped = true;
+            addLog('Stopping test...', 'info');
+        }
+
+        // Reset test
+        function resetTest() {
+            if (testRunning) return;
+            
+            stats = {
+                totalChapters: 0,
+                totalParagraphs: 0,
+                uniqueParagraphs: new Set(),
+                duplicateParagraphs: 0,
+                aiGenerated: 0,
+                templateGenerated: 0,
+                aiErrors: 0,
+                startTime: 0,
+                endTime: 0
+            };
+            
+            updateStats();
+            updateProgress(0, parseInt(document.getElementById('chaptersToGenerate').value));
+            
+            document.getElementById('log').innerHTML = '';
+            document.getElementById('testStatus').textContent = 'Ready';
+            document.getElementById('testStatus').className = 'status-badge pending';
+            
+            addLog('Test reset', 'info');
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            checkBrowserCapabilities();
+            addLog('Test page loaded', 'info');
+            addLog('Ready to start test', 'info');
+        });
+    </script>
+</body>
+</html>

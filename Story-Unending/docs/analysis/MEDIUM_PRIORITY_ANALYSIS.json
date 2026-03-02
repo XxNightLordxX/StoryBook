@@ -1,0 +1,1714 @@
+{
+  "security_eval": [
+    {
+      "file": "./tests/test-3000-simple.js",
+      "line": 33,
+      "text": "eval(storyEngineCode);"
+    },
+    {
+      "file": "./tests/test_engine_direct.js",
+      "line": 7,
+      "text": "eval(backstoryCode);"
+    },
+    {
+      "file": "./tests/test_engine_direct.js",
+      "line": 11,
+      "text": "eval(storyCode);"
+    },
+    {
+      "file": "./utils/run-comprehensive-test.js",
+      "line": 31,
+      "text": "eval(storyEngineCode);"
+    }
+  ],
+  "security_document_write": [],
+  "security_innerhtml_concat": [
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 444,
+      "text": "filter.innerHTML = '<option value=\"\">Select Experiment</option>' +"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 444,
+      "text": "filter.innerHTML = '<option value=\"\">Select Experiment</option>' +"
+    }
+  ],
+  "security_localstorage_user": [
+    {
+      "file": "./js/modules/ab-testing.js",
+      "line": 29,
+      "text": "let userId = localStorage.getItem(USER_ID_KEY);"
+    },
+    {
+      "file": "./js/modules/ab-testing.js",
+      "line": 32,
+      "text": "localStorage.setItem(USER_ID_KEY, userId);"
+    },
+    {
+      "file": "./js/modules/ab-testing.js",
+      "line": 51,
+      "text": "const data = localStorage.getItem(STORAGE_KEY);"
+    },
+    {
+      "file": "./js/modules/ab-testing.js",
+      "line": 65,
+      "text": "localStorage.setItem(STORAGE_KEY, JSON.stringify(experiments));"
+    },
+    {
+      "file": "./js/modules/app-state.js",
+      "line": 32,
+      "text": "password: localStorage.getItem('ESE_ADMIN_PASSWORD') || 'admin123',"
+    },
+    {
+      "file": "./js/modules/backup.js",
+      "line": 28,
+      "text": "const value = localStorage.getItem(key);"
+    },
+    {
+      "file": "./js/modules/backup.js",
+      "line": 81,
+      "text": "localStorage.setItem(BACKUP_KEY, JSON.stringify(backups));"
+    },
+    {
+      "file": "./js/modules/backup.js",
+      "line": 97,
+      "text": "const backupsJson = localStorage.getItem(BACKUP_KEY);"
+    },
+    {
+      "file": "./js/modules/backup.js",
+      "line": 143,
+      "text": "localStorage.setItem(key, value);"
+    },
+    {
+      "file": "./js/modules/backup.js",
+      "line": 164,
+      "text": "localStorage.setItem(BACKUP_KEY, JSON.stringify(filteredBackups));"
+    },
+    {
+      "file": "./js/modules/bookmarks.js",
+      "line": 32,
+      "text": "const bookmarks = JSON.parse(localStorage.getItem(BOOKMARKS_KEY) || '[]');"
+    },
+    {
+      "file": "./js/modules/bookmarks.js",
+      "line": 43,
+      "text": "localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));"
+    },
+    {
+      "file": "./js/modules/leaderboards.js",
+      "line": 135,
+      "text": "const stored = localStorage.getItem(STORAGE_KEY);"
+    },
+    {
+      "file": "./js/modules/leaderboards.js",
+      "line": 167,
+      "text": "localStorage.setItem(STORAGE_KEY, JSON.stringify(data));"
+    },
+    {
+      "file": "./js/modules/performance-advanced.js",
+      "line": 571,
+      "text": "const value = localStorage.getItem(key);"
+    },
+    {
+      "file": "./js/modules/performance-advanced.js",
+      "line": 624,
+      "text": "localStorage.setItem(key, JSON.stringify(value));"
+    },
+    {
+      "file": "./js/modules/performance-advanced.js",
+      "line": 678,
+      "text": "totalSize += localStorage.getItem(key).length;"
+    },
+    {
+      "file": "./js/modules/reading-history.js",
+      "line": 119,
+      "text": "localStorage.setItem(HISTORY_KEY, JSON.stringify(history));"
+    },
+    {
+      "file": "./js/modules/reading-history.js",
+      "line": 131,
+      "text": "const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');"
+    },
+    {
+      "file": "./js/modules/reading-history.js",
+      "line": 142,
+      "text": "const stats = JSON.parse(localStorage.getItem(STATS_KEY) || '{}');"
+    },
+    {
+      "file": "./js/modules/reading-history.js",
+      "line": 191,
+      "text": "localStorage.setItem(STATS_KEY, JSON.stringify(stats));"
+    },
+    {
+      "file": "./js/modules/save-load.js",
+      "line": 38,
+      "text": "const slots = JSON.parse(localStorage.getItem(SAVE_SLOTS_KEY) || '[]');"
+    },
+    {
+      "file": "./js/modules/save-load.js",
+      "line": 49,
+      "text": "localStorage.setItem(SAVE_SLOTS_KEY, JSON.stringify(slots));"
+    },
+    {
+      "file": "./js/modules/screenshot-capture.js",
+      "line": 50,
+      "text": "const cached = localStorage.getItem(SCREENSHOT_CACHE_KEY);"
+    },
+    {
+      "file": "./js/modules/screenshot-capture.js",
+      "line": 74,
+      "text": "localStorage.setItem(SCREENSHOT_CACHE_KEY, JSON.stringify(screenshotCache));"
+    },
+    {
+      "file": "./js/modules/search-suggestions.js",
+      "line": 58,
+      "text": "const cached = localStorage.getItem(SUGGESTION_CACHE_KEY);"
+    },
+    {
+      "file": "./js/modules/search-suggestions.js",
+      "line": 91,
+      "text": "localStorage.setItem(SUGGESTION_CACHE_KEY, JSON.stringify(suggestionCache));"
+    },
+    {
+      "file": "./js/modules/search-suggestions.js",
+      "line": 102,
+      "text": "const history = localStorage.getItem(SUGGESTION_HISTORY_KEY);"
+    },
+    {
+      "file": "./js/modules/search-suggestions.js",
+      "line": 122,
+      "text": "localStorage.setItem(SUGGESTION_HISTORY_KEY, JSON.stringify(suggestionHistory));"
+    },
+    {
+      "file": "./js/modules/search.js",
+      "line": 162,
+      "text": "const history = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');"
+    },
+    {
+      "file": "./js/modules/search.js",
+      "line": 194,
+      "text": "localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));"
+    },
+    {
+      "file": "./js/modules/social-sharing.js",
+      "line": 37,
+      "text": "const history = localStorage.getItem(SHARE_HISTORY_KEY);"
+    },
+    {
+      "file": "./js/modules/social-sharing.js",
+      "line": 57,
+      "text": "localStorage.setItem(SHARE_HISTORY_KEY, JSON.stringify(shareHistory));"
+    },
+    {
+      "file": "./js/ui/screenshot-ui.js",
+      "line": 247,
+      "text": "localStorage.setItem(saveKey, window.currentScreenshot);"
+    },
+    {
+      "file": "./tests/integration.test.js",
+      "line": 18,
+      "text": "localStorage.setItem('adminPassword', 'admin123');"
+    },
+    {
+      "file": "./tests/integration.test.js",
+      "line": 22,
+      "text": "const password = localStorage.getItem('adminPassword');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 16,
+      "text": "localStorage.setItem('testKey', 'testValue');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 17,
+      "text": "const result = localStorage.getItem('testKey');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 23,
+      "text": "localStorage.setItem('testKey', JSON.stringify(testObj));"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 24,
+      "text": "const retrieved = JSON.parse(localStorage.getItem('testKey'));"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 30,
+      "text": "localStorage.setItem('testKey', JSON.stringify(testArray));"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 31,
+      "text": "const retrieved = JSON.parse(localStorage.getItem('testKey'));"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 36,
+      "text": "localStorage.setItem('testKey', '42');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 37,
+      "text": "expect(localStorage.getItem('testKey')).toBe('42');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 41,
+      "text": "localStorage.setItem('testKey', 'true');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 42,
+      "text": "expect(localStorage.getItem('testKey')).toBe('true');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 46,
+      "text": "const result = localStorage.getItem('nonExistentKey');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 51,
+      "text": "localStorage.setItem('testKey', 'testValue');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 53,
+      "text": "expect(localStorage.getItem('testKey')).toBeNull();"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 57,
+      "text": "localStorage.setItem('key1', 'value1');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 58,
+      "text": "localStorage.setItem('key2', 'value2');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 59,
+      "text": "localStorage.setItem('key3', 'value3');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 63,
+      "text": "expect(localStorage.getItem('key1')).toBeNull();"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 64,
+      "text": "expect(localStorage.getItem('key2')).toBeNull();"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 65,
+      "text": "expect(localStorage.getItem('key3')).toBeNull();"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 105,
+      "text": "localStorage.setItem(specialKey, 'value');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 106,
+      "text": "expect(localStorage.getItem(specialKey)).toBe('value');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 111,
+      "text": "localStorage.setItem('testKey', unicodeValue);"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 112,
+      "text": "expect(localStorage.getItem('testKey')).toBe(unicodeValue);"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 120,
+      "text": "localStorage.setItem('testKey', JSON.stringify(largeObj));"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 121,
+      "text": "const result = JSON.parse(localStorage.getItem('testKey'));"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 128,
+      "text": "localStorage.setItem('testKey', 'invalid json{');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 129,
+      "text": "const result = localStorage.getItem('testKey');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 134,
+      "text": "localStorage.setItem('testKey', '');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 135,
+      "text": "expect(localStorage.getItem('testKey')).toBe('');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 139,
+      "text": "localStorage.setItem('testKey', 'null');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 140,
+      "text": "expect(localStorage.getItem('testKey')).toBe('null');"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 166,
+      "text": "localStorage.setItem('stringKey', stringData);"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 167,
+      "text": "localStorage.setItem('numberKey', String(numberData));"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 168,
+      "text": "localStorage.setItem('booleanKey', String(booleanData));"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 169,
+      "text": "localStorage.setItem('arrayKey', JSON.stringify(arrayData));"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 170,
+      "text": "localStorage.setItem('objectKey', JSON.stringify(objectData));"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 172,
+      "text": "expect(localStorage.getItem('stringKey')).toBe(stringData);"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 173,
+      "text": "expect(localStorage.getItem('numberKey')).toBe(String(numberData));"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 174,
+      "text": "expect(localStorage.getItem('booleanKey')).toBe(String(booleanData));"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 175,
+      "text": "expect(JSON.parse(localStorage.getItem('arrayKey'))).toEqual(arrayData);"
+    },
+    {
+      "file": "./tests/storage.test.js",
+      "line": 176,
+      "text": "expect(JSON.parse(localStorage.getItem('objectKey'))).toEqual(objectData);"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 25,
+      "text": "password: localStorage.getItem('ESE_ADMIN_PASSWORD') || 'admin123',"
+    },
+    {
+      "file": "./js/ui/screenshot-ui.js",
+      "line": 247,
+      "text": "localStorage.setItem(saveKey, window.currentScreenshot);"
+    }
+  ],
+  "security_hardcoded_password": [
+    {
+      "file": "./js/utils/security.js",
+      "line": 164,
+      "text": "password: 'Password must be at least 6 characters',"
+    },
+    {
+      "file": "./tests/security.test.js",
+      "line": 85,
+      "text": "password: 'Password must be at least 6 characters',"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1532,
+      "text": "password: 'Password must be at least 6 characters',"
+    }
+  ],
+  "security_innerhtml_assign": [
+    {
+      "file": "./js/modules/misc.js",
+      "line": 12,
+      "text": "indicator.innerHTML = `<span>Generating ${totalNeeded.toLocaleString()} chapters...</span><span class=\"generating-dots\">"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 32,
+      "text": "indicator.innerHTML = `<span>Generating... ${generated.toLocaleString()} / ${totalNeeded.toLocaleString()} (${pct}%)</sp"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 71,
+      "text": "if (speedDisplay) speedDisplay.innerHTML = '<strong style=\"color:#f87171;\">\u23f8\ufe0f PAUSED</strong>';"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 130,
+      "text": "container.innerHTML = `"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 213,
+      "text": "chapterIndicator.innerHTML = `<span class=\"dd-chapter-badge latest\">\ud83d\udcd6 Latest \u2014 Ch. ${AppState.currentChapter}</span>`;"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 215,
+      "text": "chapterIndicator.innerHTML = `<span class=\"dd-chapter-badge viewing\">\ud83d\udcd6 Viewing Ch. ${AppState.currentChapter} of ${AppSt"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 394,
+      "text": "document.getElementById('speedCurrentDisplay').innerHTML = `<strong style=\"color:#f87171;\">\u23f8\ufe0f PAUSED</strong> <span styl"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 547,
+      "text": "skillsContainer.innerHTML = mc.skills.map(skill => `"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 555,
+      "text": "skillsContainer.innerHTML = '<div class=\"status-empty\">No skills yet</div>';"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 561,
+      "text": "abilitiesContainer.innerHTML = mc.abilities.map(ability => `"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 569,
+      "text": "abilitiesContainer.innerHTML = '<div class=\"status-empty\">No abilities yet</div>';"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 575,
+      "text": "inventoryContainer.innerHTML = mc.inventory.map(item => `"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 583,
+      "text": "inventoryContainer.innerHTML = '<div class=\"status-empty\">No items yet</div>';"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 626,
+      "text": "list.innerHTML = '<p style=\"color:rgba(255,255,255,0.4);font-size:12px;padding:10px;\">No rules yet.</p>';"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 629,
+      "text": "list.innerHTML = storyRules.map(r => `"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 688,
+      "text": "document.getElementById('storyContainer').innerHTML = '';"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 717,
+      "text": "document.getElementById('storyContainer').innerHTML = '';"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 742,
+      "text": "speedDisplay.innerHTML = '<strong style=\"color:#f87171;\">\u23f8\ufe0f PAUSED</strong>';"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 753,
+      "text": "document.getElementById('speedCurrentDisplay').innerHTML = `Current: <strong>1 chapter every <span id=\"speedValueDisplay"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 770,
+      "text": "if (all.length === 0) { list.innerHTML = '<p style=\"color:var(--text-muted);font-size:12px;padding:10px;\">No directives "
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 771,
+      "text": "list.innerHTML = all.map(d => `<div class=\"directive-item\"><span style=\"flex:1;overflow:hidden;text-overflow:ellipsis;wh"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 832,
+      "text": "el.innerHTML = `<span>Current: <strong>${ADMIN_USER.username}</strong> / <strong>${'\u2022'.repeat(ADMIN_USER.password.length"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 847,
+      "text": "list.innerHTML = '<p class=\"no-users\">No users found</p>';"
+    },
+    {
+      "file": "./js/modules/misc.js",
+      "line": 851,
+      "text": "list.innerHTML = users.map(user => `"
+    },
+    {
+      "file": "./js/modules/performance-advanced.js",
+      "line": 120,
+      "text": "container.innerHTML = '';"
+    },
+    {
+      "file": "./js/modules/performance-advanced.js",
+      "line": 179,
+      "text": "viewport.innerHTML = html;"
+    },
+    {
+      "file": "./js/modules/save-load.js",
+      "line": 197,
+      "text": "document.getElementById('chapter-content').innerHTML = chapterContent.content;"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 49,
+      "text": "modalElement.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 225,
+      "text": "container.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 236,
+      "text": "container.innerHTML = filteredExperiments.map(exp => `"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 409,
+      "text": "variantRow.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 458,
+      "text": "container.innerHTML = '<p class=\"ab-testing-empty-state\">Select an experiment to view results</p>';"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 465,
+      "text": "container.innerHTML = '<p class=\"ab-testing-empty-state\">No results available for this experiment</p>';"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 469,
+      "text": "container.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 557,
+      "text": "container.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 408,
+      "text": "tableBody.innerHTML = '<tr><td colspan=\"6\" class=\"no-data\">No daily data available</td></tr>';"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 412,
+      "text": "tableBody.innerHTML = summary.dailyStats.map(stat => `"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 589,
+      "text": "listContainer.innerHTML = '<p class=\"no-data\">No session data available</p>';"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 593,
+      "text": "listContainer.innerHTML = sessions.map(session => `"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 618,
+      "text": "listContainer.innerHTML = '<p class=\"no-data\">No chapter data available</p>';"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 622,
+      "text": "listContainer.innerHTML = chapters.map(([chapterNum, data]) => {"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 651,
+      "text": "listContainer.innerHTML = '<p class=\"no-data\">No action data available</p>';"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 655,
+      "text": "listContainer.innerHTML = actions.map(action => `"
+    },
+    {
+      "file": "./js/ui/backup-ui.js",
+      "line": 57,
+      "text": "modal.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/backup-ui.js",
+      "line": 125,
+      "text": "container.innerHTML = '';"
+    },
+    {
+      "file": "./js/ui/backup-ui.js",
+      "line": 129,
+      "text": "container.innerHTML = '<p class=\"no-backups\">No backups available</p>';"
+    },
+    {
+      "file": "./js/ui/backup-ui.js",
+      "line": 163,
+      "text": "item.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/bookmarks-ui.js",
+      "line": 103,
+      "text": "listContainer.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/bookmarks-ui.js",
+      "line": 235,
+      "text": "button.innerHTML = '\ud83d\udd16 Bookmarked';"
+    },
+    {
+      "file": "./js/ui/bookmarks-ui.js",
+      "line": 238,
+      "text": "button.innerHTML = '\ud83d\udd16 Bookmark';"
+    },
+    {
+      "file": "./js/ui/bookmarks-ui.js",
+      "line": 319,
+      "text": "listContainer.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/bookmarks-ui.js",
+      "line": 342,
+      "text": "listContainer.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 322,
+      "text": "chapterSelect.innerHTML = options;"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 323,
+      "text": "versionsChapterSelect.innerHTML = options;"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 388,
+      "text": "document.getElementById('version-select').innerHTML = '<option value=\"\">Current</option>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 402,
+      "text": "versionSelect.innerHTML = options;"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 574,
+      "text": "versionsList.innerHTML = '<p class=\"no-data\">Select a chapter to view versions</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 582,
+      "text": "versionsList.innerHTML = '<p class=\"no-data\">No versions found for this chapter</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 586,
+      "text": "versionsList.innerHTML = versions.map(version => `"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 607,
+      "text": "versionsList.innerHTML = '<p class=\"no-data\">Failed to load versions</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 644,
+      "text": "approvalList.innerHTML = '<p class=\"no-data\">No pending approvals</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 648,
+      "text": "approvalList.innerHTML = pending.map(request => `"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 675,
+      "text": "approvalList.innerHTML = '<p class=\"no-data\">Failed to load approval queue</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 746,
+      "text": "searchResults.innerHTML = '<p class=\"no-data\">Enter a search query to find content</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 754,
+      "text": "searchResults.innerHTML = '<p class=\"no-data\">No results found</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 758,
+      "text": "searchResults.innerHTML = results.map(result => `"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 774,
+      "text": "searchResults.innerHTML = '<p class=\"no-data\">Failed to search content</p>';"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 278,
+      "text": "leaderboardContent.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 335,
+      "text": "leaderboardContent.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 344,
+      "text": "leaderboardContent.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 437,
+      "text": "leaderboardContent.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 503,
+      "text": "leaderboardContent.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 528,
+      "text": "leaderboardContent.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 584,
+      "text": "document.getElementById('compare-results').innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/notifications-ui.js",
+      "line": 262,
+      "text": "tabContent.innerHTML = getPreferencesContent();"
+    },
+    {
+      "file": "./js/ui/notifications-ui.js",
+      "line": 388,
+      "text": "tabContent.innerHTML = getHistoryContent();"
+    },
+    {
+      "file": "./js/ui/notifications-ui.js",
+      "line": 493,
+      "text": "tabContent.innerHTML = getScheduledContent();"
+    },
+    {
+      "file": "./js/ui/notifications-ui.js",
+      "line": 625,
+      "text": "tabContent.innerHTML = getTemplatesContent();"
+    },
+    {
+      "file": "./js/ui/notifications-ui.js",
+      "line": 657,
+      "text": "tabContent.innerHTML = formHTML;"
+    },
+    {
+      "file": "./js/ui/notifications.js",
+      "line": 14,
+      "text": "notif.innerHTML = `<div class=\"notification-title\">${sanitizeHTML(title)}</div><div class=\"notification-body\">${sanitize"
+    },
+    {
+      "file": "./js/ui/performance-ui.js",
+      "line": 138,
+      "text": "pageMetrics.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/performance-ui.js",
+      "line": 189,
+      "text": "cacheMetrics.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/performance-ui.js",
+      "line": 241,
+      "text": "optimizationList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/reading-history-ui.js",
+      "line": 141,
+      "text": "statsGrid.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/reading-history-ui.js",
+      "line": 168,
+      "text": "historyList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/save-load-ui.js",
+      "line": 178,
+      "text": "container.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/search-ui-enhanced.js",
+      "line": 230,
+      "text": "suggestionsDiv.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/search-ui-enhanced.js",
+      "line": 349,
+      "text": "resultsList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/search-ui-enhanced.js",
+      "line": 406,
+      "text": "historyList.innerHTML = '<p class=\"no-history\">No recent searches</p>';"
+    },
+    {
+      "file": "./js/ui/search-ui-enhanced.js",
+      "line": 420,
+      "text": "historyList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/search-ui.js",
+      "line": 223,
+      "text": "resultsList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/search-ui.js",
+      "line": 267,
+      "text": "historyList.innerHTML = '<p class=\"no-history\">No recent searches</p>';"
+    },
+    {
+      "file": "./js/ui/search-ui.js",
+      "line": 281,
+      "text": "historyList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/sidebar.js",
+      "line": 19,
+      "text": "item.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/social-sharing-ui.js",
+      "line": 268,
+      "text": "historyList.innerHTML = '<p class=\"no-history\">No recent shares</p>';"
+    },
+    {
+      "file": "./js/ui/social-sharing-ui.js",
+      "line": 286,
+      "text": "historyList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 468,
+      "text": "document.getElementById('avatar-preview').innerHTML = `<img src=\"${profile.avatar}\" alt=\"Avatar\" class=\"avatar-image\">`;"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 470,
+      "text": "document.getElementById('avatar-preview').innerHTML = '<span class=\"avatar-placeholder\">\ud83d\udc64</span>';"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 653,
+      "text": "container.innerHTML = categoryAchievements.map(achievement => {"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 697,
+      "text": "usersList.innerHTML = '<p class=\"no-data\">Enter a search query</p>';"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 706,
+      "text": "usersList.innerHTML = '<p class=\"no-data\">No users found</p>';"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 710,
+      "text": "usersList.innerHTML = results.map(profile => {"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 736,
+      "text": "usersList.innerHTML = '<p class=\"no-data\">Failed to search users</p>';"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 799,
+      "text": "document.getElementById('conversations-list').innerHTML = '<p class=\"no-data\">No conversations yet</p>';"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 803,
+      "text": "document.getElementById('conversations-list').innerHTML = conversations.map(conv => {"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 844,
+      "text": "document.getElementById('messages-view').innerHTML = `"
+    },
+    {
+      "file": "./js/utils/prompt-modal.js",
+      "line": 23,
+      "text": "modal.innerHTML = `"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 137,
+      "text": "indicator.innerHTML = `<span>Generating ${totalNeeded.toLocaleString()} chapters...</span><span class=\"generating-dots\">"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 157,
+      "text": "indicator.innerHTML = `<span>Generating... ${generated.toLocaleString()} / ${totalNeeded.toLocaleString()} (${pct}%)</sp"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 196,
+      "text": "if (speedDisplay) speedDisplay.innerHTML = '<strong style=\"color:#f87171;\">\u23f8\ufe0f PAUSED</strong>';"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 260,
+      "text": "container.innerHTML = `"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 361,
+      "text": "item.innerHTML = `"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 437,
+      "text": "chapterIndicator.innerHTML = `<span class=\"dd-chapter-badge latest\">\ud83d\udcd6 Latest \u2014 Ch. ${AppState.currentChapter}</span>`;"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 439,
+      "text": "chapterIndicator.innerHTML = `<span class=\"dd-chapter-badge viewing\">\ud83d\udcd6 Viewing Ch. ${AppState.currentChapter} of ${AppSt"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 772,
+      "text": "document.getElementById('speedCurrentDisplay').innerHTML = `<strong style=\"color:#f87171;\">\u23f8\ufe0f PAUSED</strong> <span styl"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 946,
+      "text": "skillsContainer.innerHTML = mc.skills.map(skill => `"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 954,
+      "text": "skillsContainer.innerHTML = '<div class=\"status-empty\">No skills yet</div>';"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 960,
+      "text": "abilitiesContainer.innerHTML = mc.abilities.map(ability => `"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 968,
+      "text": "abilitiesContainer.innerHTML = '<div class=\"status-empty\">No abilities yet</div>';"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 974,
+      "text": "inventoryContainer.innerHTML = mc.inventory.map(item => `"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 982,
+      "text": "inventoryContainer.innerHTML = '<div class=\"status-empty\">No items yet</div>';"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1047,
+      "text": "list.innerHTML = '<p style=\"color:rgba(255,255,255,0.4);font-size:12px;padding:10px;\">No rules yet.</p>';"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1050,
+      "text": "list.innerHTML = storyRules.map(r => `"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1119,
+      "text": "document.getElementById('storyContainer').innerHTML = '';"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1150,
+      "text": "document.getElementById('storyContainer').innerHTML = '';"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1176,
+      "text": "speedDisplay.innerHTML = '<strong style=\"color:#f87171;\">\u23f8\ufe0f PAUSED</strong>';"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1187,
+      "text": "document.getElementById('speedCurrentDisplay').innerHTML = `Current: <strong>1 chapter every <span id=\"speedValueDisplay"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1206,
+      "text": "if (all.length === 0) { list.innerHTML = '<p style=\"color:var(--text-muted);font-size:12px;padding:10px;\">No directives "
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1207,
+      "text": "list.innerHTML = all.map(d => `<div class=\"directive-item\"><span style=\"flex:1;overflow:hidden;text-overflow:ellipsis;wh"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1273,
+      "text": "el.innerHTML = `<span>Current: <strong>${ADMIN_USER.username}</strong> / <strong>${'\u2022'.repeat(ADMIN_USER.password.length"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1292,
+      "text": "list.innerHTML = '<p class=\"no-users\">No users found</p>';"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1296,
+      "text": "list.innerHTML = users.map(user => `"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 1600,
+      "text": "notif.innerHTML = `<div class=\"notification-title\">${sanitizeHTML(title)}</div><div class=\"notification-body\">${sanitize"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 49,
+      "text": "modalElement.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 225,
+      "text": "container.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 236,
+      "text": "container.innerHTML = filteredExperiments.map(exp => `"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 409,
+      "text": "variantRow.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 458,
+      "text": "container.innerHTML = '<p class=\"ab-testing-empty-state\">Select an experiment to view results</p>';"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 465,
+      "text": "container.innerHTML = '<p class=\"ab-testing-empty-state\">No results available for this experiment</p>';"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 469,
+      "text": "container.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/ab-testing-ui.js",
+      "line": 557,
+      "text": "container.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 408,
+      "text": "tableBody.innerHTML = '<tr><td colspan=\"6\" class=\"no-data\">No daily data available</td></tr>';"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 412,
+      "text": "tableBody.innerHTML = summary.dailyStats.map(stat => `"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 589,
+      "text": "listContainer.innerHTML = '<p class=\"no-data\">No session data available</p>';"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 593,
+      "text": "listContainer.innerHTML = sessions.map(session => `"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 618,
+      "text": "listContainer.innerHTML = '<p class=\"no-data\">No chapter data available</p>';"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 622,
+      "text": "listContainer.innerHTML = chapters.map(([chapterNum, data]) => {"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 651,
+      "text": "listContainer.innerHTML = '<p class=\"no-data\">No action data available</p>';"
+    },
+    {
+      "file": "./js/ui/analytics-ui.js",
+      "line": 655,
+      "text": "listContainer.innerHTML = actions.map(action => `"
+    },
+    {
+      "file": "./js/ui/backup-ui.js",
+      "line": 57,
+      "text": "modal.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/backup-ui.js",
+      "line": 125,
+      "text": "container.innerHTML = '';"
+    },
+    {
+      "file": "./js/ui/backup-ui.js",
+      "line": 129,
+      "text": "container.innerHTML = '<p class=\"no-backups\">No backups available</p>';"
+    },
+    {
+      "file": "./js/ui/backup-ui.js",
+      "line": 163,
+      "text": "item.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/bookmarks-ui.js",
+      "line": 103,
+      "text": "listContainer.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/bookmarks-ui.js",
+      "line": 235,
+      "text": "button.innerHTML = '\ud83d\udd16 Bookmarked';"
+    },
+    {
+      "file": "./js/ui/bookmarks-ui.js",
+      "line": 238,
+      "text": "button.innerHTML = '\ud83d\udd16 Bookmark';"
+    },
+    {
+      "file": "./js/ui/bookmarks-ui.js",
+      "line": 319,
+      "text": "listContainer.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/bookmarks-ui.js",
+      "line": 342,
+      "text": "listContainer.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 322,
+      "text": "chapterSelect.innerHTML = options;"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 323,
+      "text": "versionsChapterSelect.innerHTML = options;"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 388,
+      "text": "document.getElementById('version-select').innerHTML = '<option value=\"\">Current</option>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 402,
+      "text": "versionSelect.innerHTML = options;"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 574,
+      "text": "versionsList.innerHTML = '<p class=\"no-data\">Select a chapter to view versions</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 582,
+      "text": "versionsList.innerHTML = '<p class=\"no-data\">No versions found for this chapter</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 586,
+      "text": "versionsList.innerHTML = versions.map(version => `"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 607,
+      "text": "versionsList.innerHTML = '<p class=\"no-data\">Failed to load versions</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 644,
+      "text": "approvalList.innerHTML = '<p class=\"no-data\">No pending approvals</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 648,
+      "text": "approvalList.innerHTML = pending.map(request => `"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 675,
+      "text": "approvalList.innerHTML = '<p class=\"no-data\">Failed to load approval queue</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 746,
+      "text": "searchResults.innerHTML = '<p class=\"no-data\">Enter a search query to find content</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 754,
+      "text": "searchResults.innerHTML = '<p class=\"no-data\">No results found</p>';"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 758,
+      "text": "searchResults.innerHTML = results.map(result => `"
+    },
+    {
+      "file": "./js/ui/content-management-ui.js",
+      "line": 774,
+      "text": "searchResults.innerHTML = '<p class=\"no-data\">Failed to search content</p>';"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 278,
+      "text": "leaderboardContent.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 335,
+      "text": "leaderboardContent.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 344,
+      "text": "leaderboardContent.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 437,
+      "text": "leaderboardContent.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 503,
+      "text": "leaderboardContent.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 528,
+      "text": "leaderboardContent.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/leaderboards-ui.js",
+      "line": 584,
+      "text": "document.getElementById('compare-results').innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/notifications-ui.js",
+      "line": 262,
+      "text": "tabContent.innerHTML = getPreferencesContent();"
+    },
+    {
+      "file": "./js/ui/notifications-ui.js",
+      "line": 388,
+      "text": "tabContent.innerHTML = getHistoryContent();"
+    },
+    {
+      "file": "./js/ui/notifications-ui.js",
+      "line": 493,
+      "text": "tabContent.innerHTML = getScheduledContent();"
+    },
+    {
+      "file": "./js/ui/notifications-ui.js",
+      "line": 625,
+      "text": "tabContent.innerHTML = getTemplatesContent();"
+    },
+    {
+      "file": "./js/ui/notifications-ui.js",
+      "line": 657,
+      "text": "tabContent.innerHTML = formHTML;"
+    },
+    {
+      "file": "./js/ui/notifications.js",
+      "line": 14,
+      "text": "notif.innerHTML = `<div class=\"notification-title\">${sanitizeHTML(title)}</div><div class=\"notification-body\">${sanitize"
+    },
+    {
+      "file": "./js/ui/performance-ui.js",
+      "line": 138,
+      "text": "pageMetrics.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/performance-ui.js",
+      "line": 189,
+      "text": "cacheMetrics.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/performance-ui.js",
+      "line": 241,
+      "text": "optimizationList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/reading-history-ui.js",
+      "line": 141,
+      "text": "statsGrid.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/reading-history-ui.js",
+      "line": 168,
+      "text": "historyList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/save-load-ui.js",
+      "line": 178,
+      "text": "container.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/search-ui-enhanced.js",
+      "line": 230,
+      "text": "suggestionsDiv.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/search-ui-enhanced.js",
+      "line": 349,
+      "text": "resultsList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/search-ui-enhanced.js",
+      "line": 406,
+      "text": "historyList.innerHTML = '<p class=\"no-history\">No recent searches</p>';"
+    },
+    {
+      "file": "./js/ui/search-ui-enhanced.js",
+      "line": 420,
+      "text": "historyList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/search-ui.js",
+      "line": 223,
+      "text": "resultsList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/search-ui.js",
+      "line": 267,
+      "text": "historyList.innerHTML = '<p class=\"no-history\">No recent searches</p>';"
+    },
+    {
+      "file": "./js/ui/search-ui.js",
+      "line": 281,
+      "text": "historyList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/sidebar.js",
+      "line": 19,
+      "text": "item.innerHTML = `"
+    },
+    {
+      "file": "./js/ui/social-sharing-ui.js",
+      "line": 268,
+      "text": "historyList.innerHTML = '<p class=\"no-history\">No recent shares</p>';"
+    },
+    {
+      "file": "./js/ui/social-sharing-ui.js",
+      "line": 286,
+      "text": "historyList.innerHTML = html;"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 468,
+      "text": "document.getElementById('avatar-preview').innerHTML = `<img src=\"${profile.avatar}\" alt=\"Avatar\" class=\"avatar-image\">`;"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 470,
+      "text": "document.getElementById('avatar-preview').innerHTML = '<span class=\"avatar-placeholder\">\ud83d\udc64</span>';"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 653,
+      "text": "container.innerHTML = categoryAchievements.map(achievement => {"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 697,
+      "text": "usersList.innerHTML = '<p class=\"no-data\">Enter a search query</p>';"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 706,
+      "text": "usersList.innerHTML = '<p class=\"no-data\">No users found</p>';"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 710,
+      "text": "usersList.innerHTML = results.map(profile => {"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 736,
+      "text": "usersList.innerHTML = '<p class=\"no-data\">Failed to search users</p>';"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 799,
+      "text": "document.getElementById('conversations-list').innerHTML = '<p class=\"no-data\">No conversations yet</p>';"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 803,
+      "text": "document.getElementById('conversations-list').innerHTML = conversations.map(conv => {"
+    },
+    {
+      "file": "./js/ui/user-features-ui.js",
+      "line": 844,
+      "text": "document.getElementById('messages-view').innerHTML = `"
+    }
+  ],
+  "security_xss_risk": [],
+  "accessibility_img_no_alt": [],
+  "accessibility_btn_no_aria": [
+    {
+      "file": "index.html",
+      "line": 46,
+      "text": "<button class=\"dropdown-btn purple-btn\" onclick=\"UIModals.openModal('loginOverlay'); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 65,
+      "text": "<button class=\"dropdown-btn blue-btn\" id=\"addEmailBtn\" onclick=\"UIModals.openModal('addEmailOverlay'); UIDropdown.closeD"
+    },
+    {
+      "file": "index.html",
+      "line": 69,
+      "text": "<button class=\"dropdown-btn green-btn\" onclick=\"SaveLoadUI.openModal(); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 73,
+      "text": "<button class=\"dropdown-btn blue-btn\" onclick=\"BookmarksUI.openModal(); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 77,
+      "text": "<button class=\"dropdown-btn purple-btn\" onclick=\"SearchUIEnhanced.openModal(); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 85,
+      "text": "<button class=\"dropdown-btn green-btn\" onclick=\"BackupUI.openModal(); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 88,
+      "text": "<button class=\"dropdown-btn blue-btn\" onclick=\"ScreenshotUI.openModal(); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 92,
+      "text": "<button class=\"dropdown-btn purple-btn\" onclick=\"SocialSharingUI.openModal(); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 109,
+      "text": "<button class=\"dropdown-btn\" onclick=\"ABTestingUI.openModal(); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 125,
+      "text": "<button class=\"dropdown-btn red-btn\" onclick=\"logout(); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 133,
+      "text": "<button class=\"dropdown-btn purple-btn\" onclick=\"toggleDirectorModeFromUser(); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 137,
+      "text": "<button class=\"dropdown-btn red-btn\" onclick=\"resetStory(); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 149,
+      "text": "<button class=\"btn btn-jump-latest\" id=\"ddJumpLatest\" onclick=\"jumpToLatestChapter()\" style=\"display:none;\">"
+    },
+    {
+      "file": "index.html",
+      "line": 205,
+      "text": "<button class=\"dropdown-btn purple-btn\" onclick=\"toggleSection('statusContent')\">"
+    },
+    {
+      "file": "index.html",
+      "line": 211,
+      "text": "<button class=\"dropdown-btn purple-btn\" onclick=\"toggleStatusScreen(); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 220,
+      "text": "<button class=\"dropdown-btn gold-btn\" onclick=\"toggleSection('supportContent')\">"
+    },
+    {
+      "file": "index.html",
+      "line": 226,
+      "text": "<button class=\"dropdown-btn gold-btn\" onclick=\"UIModals.openModal('donateOverlay'); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 230,
+      "text": "<button class=\"dropdown-btn purple-btn\" onclick=\"UIModals.openModal('subscribeOverlay'); UIDropdown.closeDropdown();\">"
+    },
+    {
+      "file": "index.html",
+      "line": 239,
+      "text": "<button class=\"dropdown-btn blue-btn\" onclick=\"toggleSection('sessionContent')\">"
+    },
+    {
+      "file": "index.html",
+      "line": 266,
+      "text": "<button class=\"btn btn-icon btn-sm\" onclick=\"UISidebar.toggleSidebar()\">\u2715</button>"
+    },
+    {
+      "file": "index.html",
+      "line": 282,
+      "text": "<button class=\"chapter-nav-btn prev\" id=\"prevBtn\" onclick=\"Navigation.prevChapter()\">"
+    },
+    {
+      "file": "index.html",
+      "line": 287,
+      "text": "<button class=\"chapter-nav-btn next\" id=\"nextBtn\" onclick=\"Navigation.nextChapter()\">"
+    },
+    {
+      "file": "index.html",
+      "line": 510,
+      "text": "<button class=\"btn btn-pause\" id=\"pauseBtnScreen\" onclick=\"togglePause()\">"
+    },
+    {
+      "file": "index.html",
+      "line": 595,
+      "text": "<button class=\"btn btn-danger\" onclick=\"resetStory()\" style=\"width:100%;justify-content:center;margin-top:10px;\">"
+    },
+    {
+      "file": "index.html",
+      "line": 613,
+      "text": "<button class=\"modal-close\" onclick=\"UIModals.closeModal('registerOverlay')\">\u2715</button>"
+    },
+    {
+      "file": "index.html",
+      "line": 635,
+      "text": "<button class=\"modal-close\" onclick=\"UIModals.closeModal('loginOverlay')\">\u2715</button>"
+    },
+    {
+      "file": "index.html",
+      "line": 700,
+      "text": "<button class=\"modal-close\" onclick=\"UIModals.closeModal('addEmailOverlay')\">\u2715</button>"
+    },
+    {
+      "file": "index.html",
+      "line": 714,
+      "text": "<button class=\"modal-close\" onclick=\"UIModals.closeModal('donateOverlay')\">\u2715</button>"
+    },
+    {
+      "file": "index.html",
+      "line": 734,
+      "text": "<button class=\"btn btn-paypal\" onclick=\"openPayPalDonation()\" style=\"width:100%;justify-content:center;\">"
+    },
+    {
+      "file": "index.html",
+      "line": 762,
+      "text": "<button class=\"modal-close\" onclick=\"UIModals.closeModal('subscribeOverlay')\">\u2715</button>"
+    },
+    {
+      "file": "index.html",
+      "line": 778,
+      "text": "<button class=\"btn btn-paypal\" onclick=\"openPayPalSubscription()\" style=\"width:100%;justify-content:center;\">"
+    }
+  ],
+  "accessibility_input_no_label": [],
+  "accessibility_no_role": [],
+  "accessibility_no_tabindex": [
+    {
+      "file": "index.html",
+      "line": 57,
+      "text": "<div class=\"dropdown-user-info\" id=\"dropdownUserInfo\" onclick=\"toggleDirectorModeFromUser()\" style=\"cursor:pointer;\">"
+    },
+    {
+      "file": "index.html",
+      "line": 603,
+      "text": "<div class=\"chapter-badge\" id=\"chapterBadge\" onclick=\"UISidebar.toggleSidebar()\">"
+    }
+  ],
+  "syntax_errors": [
+    {
+      "file": "./backstory-engine.js",
+      "line": 0,
+      "text": "/workspace/backstory-engine.js:37",
+      "full_error": "/workspace/backstory-engine.js:37\n      \"I found a wallet on the train once. Black leather, worn at the edges, containing a driver's license, credit cards, and three hundred dollars in cash. I turned it in to the station attendant, who looked at me like I was an idiot. \"Keep it,\" he said. \"Nobody would know.\" But I would know. That was the problem with being alone with your conscience\u2014there was nowhere to hide from it.\",\n                                                                           "
+    },
+    {
+      "file": "./utils/content-pools.js",
+      "line": 0,
+      "text": "/workspace/utils/content-pools.js:77",
+      "full_error": "/workspace/utils/content-pools.js:77\n    \"The other patients in the ward came and went. Some got better and went home. Some got worse and went to the ICU. Some died. I watched them all with a kind of detached fascination, like I was watching a nature documentary about survival. Yuna stayed the same. Day after day, week after week, month after month. She stayed the same, and I stayed the same, and the world moved on without us.\",\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "file": "./utils/embedded_js_temp.js",
+      "line": 0,
+      "text": "/workspace/utils/embedded_js_temp.js:1",
+      "full_error": "/workspace/utils/embedded_js_temp.js:1\n  <script>\n  ^\n\nSyntaxError: Unexpected token '<'\n    at wrapSafe (node:internal/modules/cjs/loader:1464:18)\n    at checkSyntax (node:internal/main/check_syntax:78:3)\n\nNode.js v20.20.0"
+    }
+  ],
+  "feature_test_failures": [
+    {
+      "file": "test_comprehensive_features.py",
+      "line": 0,
+      "text": "Feature test has failures - see output",
+      "output": "================================================================================\nCOMPREHENSIVE FEATURE TEST SUITE\n================================================================================\n\nTesting as GUEST user...\n--------------------------------------------------------------------------------\n\u2705 PASS | Server Running | Status: 200\n\u2705 PASS | Page Load - DOCTYPE html | \n\u2705 PASS | Page Load - Title | \n\u2705 PASS | Page Load - Stylesheet | \n\u2705 PASS | Page Load - JavaScript | \n\u2705 PASS | Page Load - Login Button | \n\u2705 PASS | Page Load - Register Button | \n\u2705 PASS | User Registration Form | Registration form available\n\u2705 PASS | User Login Form | Login form available\n\u2705 PASS | Story Generation Engine | Story engine loaded\n\u2705 PASS | Chapter Navigation | Navigation buttons present\n\u2705 PASS | Save/Load System | Save/Load functionality available\n\u2705 PASS | Bookmark System | Bookmark functionality available\n\u2705 PASS | Search Functionality | Search functionality available\n\u2705 PASS | Reading History | Reading history available\n\u2705 PASS | Analytics Dashboard | Analytics available\n\u2705 PASS | Content Management System | CMS available\n\u2705 PASS | User Features | User features available\n\u2705 PASS | Notification System | Notifications available\n\u2705 PASS | API Integration | API client loaded\n\u2705 PASS | Fuzzy Search | Fuzzy search available\n\u2705 PASS | Screenshot Capture | Screenshot capture available\n\u2705 PASS | Social Sharing | Social sharing available\n\u2705 PASS | Performance Optimizations | Performance optimizations loaded\n\u2705 PASS | A/B Testing Framework | A/B testing available\n\u2705 PASS | Achievement Leaderboards | Leaderboards available\n\u2705 PASS | Branching Narrative System | Branching narrative loaded\n\u2705 PASS | Dynamic Content Generation | Dynamic content loaded\n\u2705 PASS | Automated Backup System | Backup system available\n\u2705 PASS | Service Worker (PWA) | Service worker configured\n\u2705 PASS | Security Features | Security functions loaded\n\u2705 PASS | Error Tracking (Sentry) | Sentry integration available\n\n==============================="
+    }
+  ]
+}

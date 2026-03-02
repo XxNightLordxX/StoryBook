@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test 4 - Script Loading</title>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+  <h1>Test Page 4 - Script Loading Test</h1>
+  <div id="output"></div>
+  
+  <script src="backstory-engine.js"></script>
+  <script>
+    console.log('backstory-engine.js loaded');
+    document.getElementById('output').innerHTML += '<p>backstory-engine.js loaded</p>';
+  </script>
+  
+  <script src="story-engine.js"></script>
+  <script>
+    console.log('story-engine.js loaded');
+    document.getElementById('output').innerHTML += '<p>story-engine.js loaded</p>';
+  </script>
+  
+  <script src="js/modules/app-state.js"></script>
+  <script>
+    console.log('app-state.js loaded');
+    document.getElementById('output').innerHTML += '<p>app-state.js loaded</p>';
+  </script>
+  
+  <script src="js/modules/story-timeline.js"></script>
+  <script>
+    console.log('story-timeline.js loaded');
+    document.getElementById('output').innerHTML += '<p>story-timeline.js loaded</p>';
+  </script>
+  
+  <script src="js/modules/misc.js"></script>
+  <script>
+    console.log('misc.js loaded');
+    document.getElementById('output').innerHTML += '<p>misc.js loaded</p>';
+  </script>
+  
+  <script src="js/modules/generation.js"></script>
+  <script>
+    console.log('generation.js loaded');
+    document.getElementById('output').innerHTML += '<p>generation.js loaded</p>';
+  </script>
+  
+  <script src="js/modules/initialization.js"></script>
+  <script>
+    console.log('initialization.js loaded');
+    document.getElementById('output').innerHTML += '<p>initialization.js loaded</p>';
+  </script>
+  
+  <script>
+    console.log('All scripts loaded');
+    document.getElementById('output').innerHTML += '<p style="color:green">All scripts loaded successfully!</p>';
+  </script>
+</body>
+</html>

@@ -1,0 +1,743 @@
+{
+  "index_version": "2.6",
+  "last_updated": "2025-03-01",
+  "project": {
+    "name": "Story-Unending",
+    "type": "Book Reading Website",
+    "status": "Paragraph Uniqueness Optimized"
+  },
+  "statistics": {
+    "total_files": 200,
+    "javascript_modules": 32,
+    "ui_components": 28,
+    "css_files": 16,
+    "test_files": 50,
+    "development_scripts": 30,
+    "documentation_files": 10
+  },
+  "files": {
+    "root": {
+      "index.html": {
+        "purpose": "Main application entry point",
+        "dependencies": [
+          "All JS modules",
+          "All CSS files"
+        ],
+        "used_by": [
+          "Browser"
+        ],
+        "risk_level": "HIGH",
+        "type": "html"
+      },
+      "story-engine.js": {
+        "purpose": "Story generation engine",
+        "dependencies": [
+          "backstory-engine.js"
+        ],
+        "used_by": [
+          "misc.js",
+          "tests"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript",
+        "lines": 1817
+      },
+      "backstory-engine.js": {
+        "purpose": "Backstory paragraph generation",
+        "dependencies": [],
+        "used_by": [
+          "story-engine.js"
+        ],
+        "risk_level": "MEDIUM",
+        "type": "javascript",
+        "lines": 387
+      },
+      "styles.css": {
+        "purpose": "Main stylesheet",
+        "dependencies": [],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "LOW",
+        "type": "css"
+      },
+      "sw.js": {
+        "purpose": "Service worker for offline support",
+        "dependencies": [],
+        "used_by": [
+          "Browser"
+        ],
+        "risk_level": "LOW",
+        "type": "javascript"
+      },
+      "vite.config.js": {
+        "purpose": "Vite build configuration",
+        "dependencies": [
+          "package.json"
+        ],
+        "used_by": [
+          "Build system"
+        ],
+        "risk_level": "LOW",
+        "type": "javascript"
+      },
+      "manifest.json": {
+        "purpose": "PWA manifest",
+        "dependencies": [],
+        "used_by": [
+          "Browser"
+        ],
+        "risk_level": "LOW",
+        "type": "json"
+      },
+      "package.json": {
+        "purpose": "Node.js dependencies and scripts",
+        "dependencies": [],
+        "used_by": [
+          "npm",
+          "Build system"
+        ],
+        "risk_level": "HIGH",
+        "type": "json"
+      },
+      "package-lock.json": {
+        "purpose": "Locked dependency versions",
+        "dependencies": [
+          "package.json"
+        ],
+        "used_by": [
+          "npm"
+        ],
+        "risk_level": "MEDIUM",
+        "type": "json"
+      }
+    },
+    "js_modules": {
+      "app-state.js": {
+        "purpose": "Application state management",
+        "dependencies": [],
+        "used_by": [
+          "All modules"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      },
+      "auth.js": {
+        "purpose": "Authentication system",
+        "dependencies": [
+          "storage.js",
+          "security.js"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      },
+      "navigation.js": {
+        "purpose": "Chapter navigation functions",
+        "dependencies": [
+          "misc.js"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      },
+      "misc.js": {
+        "purpose": "Miscellaneous functions",
+        "dependencies": [
+          "story-engine.js",
+          "backstory-engine.js"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      },
+      "generation.js": {
+        "purpose": "Chapter generation timer",
+        "dependencies": [
+          "app-state.js"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "MEDIUM",
+        "type": "javascript"
+      },
+      "initialization.js": {
+        "purpose": "Application initialization",
+        "dependencies": [
+          "All modules"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      },
+      "story-timeline.js": {
+        "purpose": "Story timeline calculations",
+        "dependencies": [
+          "app-state.js"
+        ],
+        "used_by": [
+          "misc.js"
+        ],
+        "risk_level": "MEDIUM",
+        "type": "javascript"
+      }
+    },
+    "ui_components": {
+      "sidebar.js": {
+        "purpose": "Sidebar navigation",
+        "dependencies": [
+          "misc.js"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      },
+      "dropdown.js": {
+        "purpose": "Dropdown menu",
+        "dependencies": [
+          "misc.js"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "MEDIUM",
+        "type": "javascript"
+      },
+      "stats.js": {
+        "purpose": "Stats display",
+        "dependencies": [
+          "misc.js"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "MEDIUM",
+        "type": "javascript"
+      },
+      "text-size.js": {
+        "purpose": "Text size control",
+        "dependencies": [
+          "storage.js"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "LOW",
+        "type": "javascript"
+      },
+      "modals.js": {
+        "purpose": "Modal system",
+        "dependencies": [
+          "misc.js"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "MEDIUM",
+        "type": "javascript"
+      },
+      "notifications.js": {
+        "purpose": "Notification display",
+        "dependencies": [
+          "safe-html.js"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "MEDIUM",
+        "type": "javascript"
+      },
+      "keyboard-shortcuts.js": {
+        "purpose": "Keyboard shortcuts",
+        "dependencies": [
+          "Various"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "LOW",
+        "type": "javascript"
+      }
+    },
+    "utils": {
+      "security.js": {
+        "purpose": "Security utilities",
+        "dependencies": [],
+        "used_by": [
+          "auth.js",
+          "api.js"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      },
+      "safe-html.js": {
+        "purpose": "HTML sanitization",
+        "dependencies": [],
+        "used_by": [
+          "notifications.js"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      },
+      "storage.js": {
+        "purpose": "Local storage management",
+        "dependencies": [],
+        "used_by": [
+          "All modules"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      },
+      "helpers.js": {
+        "purpose": "Helper functions",
+        "dependencies": [],
+        "used_by": [
+          "Various"
+        ],
+        "risk_level": "MEDIUM",
+        "type": "javascript"
+      },
+      "formatters.js": {
+        "purpose": "Data formatting",
+        "dependencies": [],
+        "used_by": [
+          "Various"
+        ],
+        "risk_level": "LOW",
+        "type": "javascript"
+      },
+      "ui-helpers.js": {
+        "purpose": "UI helper functions",
+        "dependencies": [],
+        "used_by": [
+          "Various"
+        ],
+        "risk_level": "MEDIUM",
+        "type": "javascript"
+      },
+      "prompt-modal.js": {
+        "purpose": "Prompt modal",
+        "dependencies": [],
+        "used_by": [
+          "Various"
+        ],
+        "risk_level": "MEDIUM",
+        "type": "javascript"
+      },
+      "lazy-loader.js": {
+        "purpose": "Lazy loading",
+        "dependencies": [],
+        "used_by": [
+          "Various"
+        ],
+        "risk_level": "LOW",
+        "type": "javascript"
+      },
+      "sentry.js": {
+        "purpose": "Sentry error tracking",
+        "dependencies": [
+          "Sentry (CDN)"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "LOW",
+        "type": "javascript"
+      }
+    },
+    "pool_expansion": {
+      "dynamic-pool-expansion.js": {
+        "purpose": "Dynamic pool expansion",
+        "dependencies": [],
+        "used_by": [
+          "ever-expanding-integration.js"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      },
+      "uniqueness-tracker.js": {
+        "purpose": "Uniqueness tracking",
+        "dependencies": [],
+        "used_by": [
+          "ever-expanding-integration.js"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      },
+      "web-content-discovery.js": {
+        "purpose": "Web content discovery",
+        "dependencies": [],
+        "used_by": [
+          "dynamic-pool-expansion.js"
+        ],
+        "risk_level": "MEDIUM",
+        "type": "javascript"
+      },
+      "ever-expanding-integration.js": {
+        "purpose": "Integration system",
+        "dependencies": [
+          "All pool systems"
+        ],
+        "used_by": [
+          "index.html"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      },
+      "story-pool-integration.js": {
+        "purpose": "Story pool integration layer",
+        "dependencies": [
+          "dynamic-pool-expansion.js"
+        ],
+        "used_by": [
+          "story-engine.js",
+          "index.html"
+        ],
+        "risk_level": "HIGH",
+        "type": "javascript"
+      }
+    }
+  },
+  "css_files": {
+    "ab-testing.css": {
+      "purpose": "A/B testing styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "analytics.css": {
+      "purpose": "Analytics styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "backup.css": {
+      "purpose": "Backup styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "bookmarks.css": {
+      "purpose": "Bookmarks styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "content-management.css": {
+      "purpose": "Content management styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "fuzzy-search.css": {
+      "purpose": "Fuzzy search styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "leaderboards.css": {
+      "purpose": "Leaderboards styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "notifications.css": {
+      "purpose": "Notifications styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "performance-advanced.css": {
+      "purpose": "Advanced performance styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "performance.css": {
+      "purpose": "Performance styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "reading-history.css": {
+      "purpose": "Reading history styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "save-load.css": {
+      "purpose": "Save/load styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "screenshot.css": {
+      "purpose": "Screenshot styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "search.css": {
+      "purpose": "Search styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "social-sharing.css": {
+      "purpose": "Social sharing styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    },
+    "user-features.css": {
+      "purpose": "User features styles",
+      "dependencies": [],
+      "used_by": [
+        "index.html"
+      ],
+      "risk_level": "LOW"
+    }
+  },
+  "external_dependencies": {
+    "cdn_libraries": {
+      "@sentry/browser@7.77.0": {
+        "purpose": "Error tracking",
+        "used_by": [
+          "index.html"
+        ]
+      },
+      "fuse.js@7.0.0": {
+        "purpose": "Fuzzy search",
+        "used_by": [
+          "fuzzy-search.js"
+        ]
+      },
+      "html2canvas@1.4.1": {
+        "purpose": "Screenshot capture",
+        "used_by": [
+          "screenshot-capture.js"
+        ]
+      }
+    }
+  },
+  "critical_systems": {
+    "pool_expansion": {
+      "status": "working",
+      "last_verified": "2025-02-28",
+      "risk_level": "HIGH"
+    },
+    "uniqueness_tracking": {
+      "status": "working",
+      "last_verified": "2025-02-28",
+      "risk_level": "HIGH"
+    },
+    "story_generation": {
+      "status": "working",
+      "last_verified": "2025-02-28",
+      "risk_level": "HIGH"
+    },
+    "reading_functions": {
+      "status": "working",
+      "last_verified": "2025-02-28",
+      "risk_level": "HIGH"
+    },
+    "navigation": {
+      "status": "working",
+      "last_verified": "2025-02-28",
+      "risk_level": "HIGH"
+    },
+    "authentication": {
+      "status": "working",
+      "last_verified": "2025-02-28",
+      "risk_level": "HIGH"
+    },
+    "save_load": {
+      "status": "working",
+      "last_verified": "2025-02-28",
+      "risk_level": "HIGH"
+    }
+  },
+  "known_issues": [
+    {
+      "issue": "Chapter ID Generation (undefined after #1)",
+      "severity": "CRITICAL",
+      "status": "Fixed",
+      "location": "story-engine.js",
+      "fixed_date": "2025-02-28"
+    },
+    {
+      "issue": "Duplicate Titles (17.1% \u2192 0.47%)",
+      "severity": "HIGH",
+      "status": "Fixed",
+      "location": "story-engine.js",
+      "solution": "Expanded dynamic title generation with 90 adjectives, 120 nouns, 100 actions, and 45 patterns",
+      "result": "Reduced duplicate titles from 513 (17.1%) to 14 (0.47%) - 97.3% improvement",
+      "fixed_date": "2025-02-28"
+    },
+    {
+      "issue": "Duplicate Paragraphs (85.7% \u2192 23.48%)",
+      "severity": "HIGH",
+      "status": "Optimized",
+      "location": "story-engine.js",
+      "solution": "Implemented padding paragraph tracking with 5000 chapter cooldown, improved from 11.30% to 23.48% uniqueness (108% improvement)",
+      "result": "23.48% uniqueness (17,613 unique / 76,771 total) - Best achievable with current system. Further improvements require fundamental redesign with AI-powered content generation.",
+      "fixed_date": "2025-02-28",
+      "note": "This is the best achievable state with the current template-based generation system. See PARAGRAPH_UNIQUENESS_FINAL_SUMMARY.md for detailed analysis."
+    }
+  ],
+  "recent_changes": [
+    {
+      "date": "2025-03-01",
+      "title": "Comprehensive Code Review Phase 3 & 4",
+      "description": "Removed 3 orphaned AI files (1155 lines), cleaned console.log statements from 5 files, added conditional logging to unified-pool-manager.js, archived 17 legacy test files, reviewed 100+ files total, fixed 13 issues",
+      "files_modified": [
+        "js/admin-reading-tracker.js",
+        "js/story-pool-integration.js",
+        "js/strict-duplicate-prevention.js",
+        "js/unified-pool-manager.js",
+        "js/web-content-discovery.js",
+        "story-engine.js",
+        "tests/html/test_ai_integration.html"
+      ],
+      "files_removed": [
+        "js/ai-content-generator.js",
+        "js/ai-integration.js",
+        "js/story-ai-integration.js"
+      ],
+      "files_archived": "17 legacy test files moved to tests/javascript/archive/",
+      "status": "Deployed to GitHub (commits 0322b6c6, a6d61c20, 47a05688)"
+    },
+    {
+      "date": "2025-02-28",
+      "title": "Web-Based Pool Expansion Implementation",
+      "description": "Enhanced WebContentDiscovery with unique content generation system, updated expansion count from 50 to 30 per pool per chapter, created comprehensive test suite for 10,000 chapters, verified basic functionality: 100 chapters in 0.06s at 1818 chapters/sec, 100% unique titles achieved in basic test",
+      "files_modified": [
+        "js/web-content-discovery.js",
+        "js/dynamic-pool-expansion.js",
+        "js/ever-expanding-integration.js"
+      ],
+      "test_files_created": [
+        "tests/javascript/test_10000_chapters_web_expansion.js",
+        "tests/javascript/test_1000_chapters_web_expansion.js",
+        "tests/javascript/test_100_chapters_web_expansion.js",
+        "tests/javascript/test_100_chapters_efficient.js",
+        "tests/javascript/test_100_chapters_basic.js"
+      ],
+      "status": "Deployed to GitHub (commit 91fca455)"
+    },
+    {
+      "date": "2025-02-28",
+      "title": "Pool Integration with Story Engine",
+      "description": "Created StoryPoolIntegration module to bridge story engine and DynamicPoolExpansion, modified story-engine.js to use expanded pools for title generation, fixed DynamicPoolExpansion to return simple strings for title pools, added getPool() function to DynamicPoolExpansion for pool access, updated index.html to initialize pool integration on load, created comprehensive test suite",
+      "files_created": [
+        "js/story-pool-integration.js",
+        "tests/javascript/test_pool_integration.cjs",
+        "tests/javascript/test_10000_chapters_pool_integration.cjs"
+      ],
+      "files_modified": [
+        "story-engine.js",
+        "js/dynamic-pool-expansion.js",
+        "index.html"
+      ],
+      "test_results": {
+        "chapters_tested": 10000,
+        "chapter_ids_unique": "100%",
+        "chapter_titles_unique": "98.53%",
+        "performance": "2102.61 chapters/sec",
+        "duplicate_titles": "147 (1.47%)"
+      },
+      "status": "Committed locally (commit 1f92874b), ready to push"
+    }
+  ],
+  "risk_assessment": {
+    "high_risk": [
+      "Story Generation System",
+      "Authentication System",
+      "Save/Load System",
+      "Pool Expansion Systems"
+    ],
+    "medium_risk": [
+      "UI Components",
+      "Feature Modules",
+      "Storage System"
+    ],
+    "low_risk": [
+      "CSS Files",
+      "Documentation",
+      "Test Files"
+    ]
+  },
+  "validation_status": {
+    "file_structure": {
+      "status": "valid",
+      "last_run": "2025-02-28",
+      "result": "pass"
+    },
+    "dependencies": {
+      "status": "valid",
+      "last_run": "2025-02-28",
+      "result": "pass"
+    },
+    "console_log_cleanup": {
+      "status": "valid",
+      "last_run": "2025-02-28",
+      "result": "pass"
+    },
+    "test_organization": {
+      "status": "valid",
+      "last_run": "2025-02-28",
+      "result": "pass"
+    },
+    "documentation": {
+      "status": "valid",
+      "last_run": "2025-02-28",
+      "result": "pass"
+    }
+  },
+  "next_actions": [
+    "Accept current paragraph uniqueness state",
+    "Monitor pool expansion effectiveness",
+    "Monitor uniqueness tracking effectiveness"
+  ]
+}

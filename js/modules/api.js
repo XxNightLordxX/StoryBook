@@ -61,7 +61,6 @@
           VERSIONS: '/content/:id/versions',
           APPROVE: '/content/:id/approve'
         },
-        // Analytics
         ANALYTICS: {
           SESSIONS: '/analytics/sessions',
           CHAPTERS: '/analytics/chapters',
@@ -645,65 +644,30 @@
      * @param {Object} filters - Query filters
      * @returns {Promise<Object>} Sessions data
      */
-    const getAnalyticsSessions = async (filters = {}) => {
-        try {
-            return await request('GET', ENDPOINTS.ANALYTICS.SESSIONS + buildQueryString(filters));
-        } catch (error) {
-            throw new Error(`API getAnalyticsSessions failed: ${error.message}`);
-        }
-    }
 
     /**
      * Get analytics chapters
      * @param {Object} filters - Query filters
      * @returns {Promise<Object>} Chapters data
      */
-    const getAnalyticsChapters = async (filters = {}) => {
-        try {
-            return await request('GET', ENDPOINTS.ANALYTICS.CHAPTERS + buildQueryString(filters));
-        } catch (error) {
-            throw new Error(`API getAnalyticsChapters failed: ${error.message}`);
-        }
-    }
 
     /**
      * Get analytics actions
      * @param {Object} filters - Query filters
      * @returns {Promise<Object>} Actions data
      */
-    const getAnalyticsActions = async (filters = {}) => {
-        try {
-            return await request('GET', ENDPOINTS.ANALYTICS.ACTIONS + buildQueryString(filters));
-        } catch (error) {
-            throw new Error(`API getAnalyticsActions failed: ${error.message}`);
-        }
-    }
 
     /**
      * Get analytics daily stats
      * @param {Object} filters - Query filters
      * @returns {Promise<Object>} Daily stats
      */
-    const getAnalyticsDaily = async (filters = {}) => {
-        try {
-            return await request('GET', ENDPOINTS.ANALYTICS.DAILY + buildQueryString(filters));
-        } catch (error) {
-            throw new Error(`API getAnalyticsDaily failed: ${error.message}`);
-        }
-    }
 
     /**
      * Export analytics data
      * @param {Object} options - Export options
      * @returns {Promise<Object>} Export data
      */
-    const exportAnalytics = async (options = {}) => {
-        try {
-            return await request('GET', ENDPOINTS.ANALYTICS.EXPORT + buildQueryString(options));
-        } catch (error) {
-            throw new Error(`API exportAnalytics failed: ${error.message}`);
-        }
-    }
 
     // ==================== UTILITY FUNCTIONS ====================
     
@@ -800,21 +764,6 @@
         updateContent,
         deleteContent,
         
-        // Analytics
-        getAnalyticsSessions,
-        getAnalyticsChapters,
-        getAnalyticsActions,
-        getAnalyticsDaily,
-        exportAnalytics,
-        
-        // Utility
-        getRateLimitStatus,
-        updateConfig,
-        getConfig,
-        
-        // Error Class
-        APIError
-    };
 
     // Initialize on load
     if (document.readyState === 'loading') {

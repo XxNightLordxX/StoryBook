@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #storyContainer { 
+            margin-top: 20px; 
+            padding: 20px; 
+            border: 2px solid #333; 
+            min-height: 200px;
+            background: white;
+        }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Simple Test</h1>
+    <button onclick="testShowChapter()">Test showChapter(1)</button>
+    <button onclick="testAppState()">Test AppState</button>
+    <div id="output"></div>
+    <div id="storyContainer">No chapter selected</div>
+    
+    <script>
+        const output = document.getElementById('output');
+        
+        function log(msg) {
+            output.innerHTML += '<div>' + msg + '</div>';
+            console.log(msg);
+        }
+        
+        // Add error handler for script loading
+        window.addEventListener('error', function(e) {
+            log('JavaScript Error: ' + e.message);
+            log('File: ' + e.filename);
+            log('Line: ' + e.lineno);
+        });
+    </script>
+    
+    <script src="js/modules/app-state.js?v=4" onerror="log('ERROR loading app-state.js')" onload="log('app-state.js loaded successfully')"></script>
+    <script src="backstory-engine.js?v=4" onerror="log('ERROR loading backstory-engine.js')" onload="log('backstory-engine.js loaded successfully')"></script>
+    <script src="story-engine.js?v=4" onerror="log('ERROR loading story-engine.js')" onload="log('story-engine.js loaded successfully')"></script>
+    <script src="js/modules/misc.js?v=4" onerror="log('ERROR loading misc.js')" onload="log('misc.js loaded successfully')"></script>
+    <script src="js/ui/text-size.js?v=4" onerror="log('ERROR loading text-size.js')" onload="log('text-size.js loaded successfully')"></script>
+    
+    <script>
+        function testAppState() {
+            log('=== Testing AppState ===');
+            log('AppState type: ' + typeof AppState);
+            log('AppState.chapters: ' + (AppState.chapters ? AppState.chapters.length : 'undefined'));
+            log('AppState.totalGenerated: ' + AppState.totalGenerated);
+            log('AppState.currentChapter: ' + AppState.currentChapter);
+            
+            if (AppState.chapters && AppState.chapters.length > 0) {
+                log('First chapter: ' + JSON.stringify(AppState.chapters[0]));
+            }
+        }
+        
+        function testShowChapter() {
+            log('=== Testing showChapter ===');
+            log('showChapter type: ' + typeof showChapter);
+            
+            if (AppState.chapters && AppState.chapters.length > 0) {
+                log('Calling showChapter(1)...');
+                try {
+                    showChapter(1);
+                    log('showChapter(1) called successfully');
+                } catch (e) {
+                    log('ERROR: ' + e.message);
+                    console.error(e);
+                }
+            } else {
+                log('ERROR: No chapters available');
+            }
+        }
+        
+        // Initialize
+        setTimeout(() => {
+            // Define window.currentTextSize as a workaround
+            if (!window.currentTextSize) {
+                window.currentTextSize = 16;
+                log('Set window.currentTextSize to 16 (workaround)');
+            }
+            
+            log('Initializing...');
+            AppState.chapters = [];
+            AppState.totalGenerated = 0;
+            AppState.currentChapter = 1;
+            
+            log('Checking window.currentTextSize...');
+            log('window.currentTextSize: ' + window.currentTextSize);
+            
+            log('Checking if misc.js loaded...');
+            log('window.miscJsLoaded: ' + window.miscJsLoaded);
+            
+            log('Checking if showChapter is defined...');
+            log('typeof showChapter: ' + typeof showChapter);
+            log('typeof window.showChapter: ' + typeof window.showChapter);
+            
+            log('Generating test chapter...');
+            const testChapter = StoryEngine.generateChapter();
+            AppState.chapters.push(testChapter);
+            AppState.totalGenerated = 1;
+            
+            log('Test chapter generated: ' + testChapter.title);
+            log('Ready to test!');
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check Content Pools</title>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Content Pools Status</h1>
+    <div id="output"></div>
+    
+    <script>
+        // Try to load content-pools.js
+        fetch('content-pools.js')
+            .then(response => response.text())
+            .then(content => {
+                const lines = content.split('\n');
+                const output = document.getElementById('output');
+                
+                output.innerHTML = `<h2>Total lines: ${lines.length}</h2>`;
+                
+                // Find all const declarations
+                let constDeclarations = [];
+                for (let i = 0; i < lines.length; i++) {
+                    if (lines[i].trim().startsWith('const ')) {
+                        constDeclarations.push(`Line ${i+1}: ${lines[i].trim()}`);
+                    }
+                }
+                
+                output.innerHTML += `<h3>Const Declarations (${constDeclarations.length}):</h3>`;
+                output.innerHTML += '<ul>';
+                constDeclarations.forEach(decl => {
+                    output.innerHTML += `<li>${decl}</li>`;
+                });
+                output.innerHTML += '</ul>';
+                
+                // Show first 100 lines
+                output.innerHTML += '<h3>First 100 lines:</h3>';
+                output.innerHTML += '<pre>';
+                for (let i = 0; i < Math.min(100, lines.length); i++) {
+                    output.innerHTML += `${i+1}: ${lines[i].substring(0, 150)}\n`;
+                }
+                output.innerHTML += '</pre>';
+            })
+            .catch(error => {
+                document.getElementById('output').innerHTML = `<p>Error loading file: ${error}</p>`;
+            });
+    </script>
+</body>
+</html>

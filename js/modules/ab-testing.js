@@ -4,7 +4,6 @@
  * Provides comprehensive A/B testing capabilities including:
  * - Experiment management and tracking
  * - Variant assignment with consistent hashing
- * - Analytics integration
  * - Statistical significance calculation
  * - Experiment lifecycle management
  * 
@@ -381,9 +380,6 @@
     saveExperiments(experiments);
 
     // Send to analytics if available
-    if (window.Analytics) {
-      window.Analytics.trackEvent('ab_test_event', {
-        experimentId,
         variantId,
         eventType,
         ...metadata

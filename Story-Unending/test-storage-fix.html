@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storage Fix Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-section {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Storage Fix Test</h1>
+    
+    <div class="test-section">
+        <h2>Test: Check Storage.getAdminConfig()</h2>
+        <div id="testResult"></div>
+    </div>
+
+    <!-- Load only storage.js -->
+    <script src="js/utils/error-handler.js?v=3"></script>
+    <script src="js/utils/security.js?v=3"></script>
+    <script src="js/utils/safe-html.js?v=3"></script>
+    <script src="js/utils/storage.js?v=5"></script>
+
+    <script>
+        function runTest() {
+            const testDiv = document.getElementById('testResult');
+            let results = [];
+
+            // Clear localStorage first
+            localStorage.removeItem('ESE_ADMIN_USERNAME');
+            localStorage.removeItem('ESE_ADMIN_PASSWORD');
+            localStorage.removeItem('ESE_ADMIN_EMAIL');
+
+            // Test Storage.getAdminConfig()
+            if (typeof Storage !== 'undefined') {
+                results.push('<span class="success">✓ Storage module loaded</span>');
+                
+                try {
+                    const adminConfig = Storage.getAdminConfig();
+                    results.push('<span class="info">Storage.getAdminConfig() result:</span>');
+                    results.push(`<pre>${JSON.stringify(adminConfig, null, 2)}</pre>`);
+                    
+                    // Check if username is correct
+                    if (adminConfig.username === 'Admin') {
+                        results.push('<span class="success">✓ Username is "Admin" (capital A) - CORRECT!</span>');
+                    } else {
+                        results.push(`<span class="error">✗ Username is "${adminConfig.username}" - INCORRECT! Should be "Admin"</span>`);
+                    }
+                    
+                    // Check password
+                    if (adminConfig.password === 'admin123') {
+                        results.push('<span class="success">✓ Password is "admin123" - CORRECT!</span>');
+                    } else {
+                        results.push(`<span class="error">✗ Password is "${adminConfig.password}" - INCORRECT!</span>`);
+                    }
+                } catch (e) {
+                    results.push(`<span class="error">✗ Error calling Storage.getAdminConfig(): ${e.message}</span>`);
+                }
+            } else {
+                results.push('<span class="error">✗ Storage module NOT loaded</span>');
+            }
+
+            testDiv.innerHTML = results.join('');
+        }
+
+        // Run test when page loads
+        window.addEventListener('DOMContentLoaded', runTest);
+    </script>
+</body>
+</html>

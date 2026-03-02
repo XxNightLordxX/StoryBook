@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Chapter Display</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .info { background: #d1ecf1; border-color: #bee5eb; }
+        #storyContainer { border: 2px solid #333; padding: 20px; margin: 20px 0; min-height: 200px; }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Debug Chapter Display</h1>
+    <div id="results"></div>
+    <div id="storyContainer"></div>
+    
+    <script src="backstory-engine.js"></script>
+    <script src="story-engine.js"></script>
+    <script>
+        const results = document.getElementById('results');
+        const storyContainer = document.getElementById('storyContainer');
+        
+        function addResult(message, type) {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.textContent = message;
+            results.appendChild(div);
+        }
+        
+        // Test 1: Check if StoryEngine exists
+        if (typeof StoryEngine !== 'undefined') {
+            addResult('✓ StoryEngine is loaded', 'success');
+        } else {
+            addResult('✗ StoryEngine is NOT loaded', 'error');
+        }
+        
+        // Test 2: Generate a chapter
+        let chapter = null;
+        try {
+            if (typeof StoryEngine !== 'undefined' && typeof StoryEngine.generateChapter === 'function') {
+                chapter = StoryEngine.generateChapter();
+                addResult(`✓ Generated chapter: ${chapter.title}`, 'success');
+                addResult(`  Chapter number: ${chapter.number}`, 'info');
+                addResult(`  Word count: ${chapter.wordCount}`, 'info');
+                addResult(`  Paragraphs: ${chapter.paragraphs.length}`, 'info');
+            }
+        } catch (error) {
+            addResult(`✗ Error generating chapter: ${error.message}`, 'error');
+            addResult(`  Stack: ${error.stack}`, 'error');
+        }
+        
+        // Test 3: Create AppState
+        const AppState = {
+            chapters: [],
+            currentChapter: 1,
+            totalGenerated: 0
+        };
+        AppState.chapters.push(chapter);
+        AppState.totalGenerated = 1;
+        addResult('✓ AppState created and chapter added', 'success');
+        
+        // Test 4: Test showChapter function
+        const showChapter = (num) => {
+            addResult(`\n=== Testing showChapter(${num}) ===`, 'info');
+            
+            if (num < 1 || num > AppState.totalGenerated) {
+                addResult(`✗ Invalid chapter number: ${num}`, 'error');
+                return;
+            }
+            
+            AppState.currentChapter = num;
+            const chapter = AppState.chapters[num - 1];
+            
+            addResult(`✓ Chapter found: ${chapter.title}`, 'success');
+            addResult(`  Location: ${chapter.location}`, 'info');
+            addResult(`  Type: ${chapter.type}`, 'info');
+            addResult(`  Arc: ${chapter.arc}`, 'info');
+            
+            // Test rendering
+            try {
+                const settingIcon = chapter.setting === 'vr_world' ? '🎮' : '🌍';
+                const typeIcon = chapter.type;
+                
+                let statTagsHtml = '';
+                if (chapter.statChanges && chapter.statChanges.length > 0) {
+                    chapter.statChanges.forEach(change => {
+                        const isUp = change.val.toString().startsWith('+') || change.levelUp;
+                        statTagsHtml += `<span class="chapter-stat-tag"><span class="${isUp ? 'up' : 'down'}">${isUp ? '▲' : '▼'}</span> ${change.stat}: ${change.val}</span>`;
+                    });
+                }
+                
+                storyContainer.innerHTML = `
+                    <div class="chapter" id="chapter-${chapter.number}">
+                        <div class="chapter-divider">
+                            <span class="chapter-divider-label">Chapter ${chapter.number} of ${AppState.totalGenerated}</span>
+                        </div>
+                        <div class="chapter-heading">
+                            <div class="chapter-title">${chapter.title}</div>
+                            <div class="chapter-meta-line">
+                                <span>${settingIcon} ${chapter.location}</span>
+                                <span>${typeIcon} ${chapter.type.replace(/_/g, ' ')}</span>
+                                <span>📝 ${chapter.wordCount}w</span>
+                                <span>📖 ${chapter.arc}</span>
+                            </div>
+                        </div>
+                        <div class="chapter-body">
+                            ${chapter.paragraphs.map((p, i) => i === 0 ? `<p class="first-para">${p}</p>` : `<p>${p}</p>`).join('')}
+                        </div>
+                        ${statTagsHtml ? `<div class="chapter-stats">${statTagsHtml}</div>` : ''}
+                    </div>
+                `;
+                
+                addResult(`✓ Chapter rendered successfully`, 'success');
+                addResult(`  Container HTML length: ${storyContainer.innerHTML.length}`, 'info');
+            } catch (error) {
+                addResult(`✗ Error rendering chapter: ${error.message}`, 'error');
+                addResult(`  Stack: ${error.stack}`, 'error');
+            }
+        };
+        
+        // Test 5: Call showChapter
+        setTimeout(() => {
+            showChapter(1);
+        }, 100);
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{
+  "timestamp": "2026-02-27T07:40:20.084806",
+  "statistics": {
+    "total_paragraphs": 0,
+    "total_branches": 30,
+    "total_dynamic_elements": 113,
+    "consistency_issues": 0,
+    "coherence_issues": 0,
+    "quality_score": 85
+  },
+  "issues": [],
+  "warnings": [
+    {
+      "type": "short_paragraphs",
+      "generator": "Life",
+      "avg_length": 0,
+      "severity": "low"
+    },
+    {
+      "type": "short_paragraphs",
+      "generator": "Sister",
+      "avg_length": 0,
+      "severity": "low"
+    },
+    {
+      "type": "short_paragraphs",
+      "generator": "Parents",
+      "avg_length": 0,
+      "severity": "low"
+    },
+    {
+      "type": "short_paragraphs",
+      "generator": "Struggle",
+      "avg_length": 0,
+      "severity": "low"
+    },
+    {
+      "type": "short_paragraphs",
+      "generator": "VR Hype",
+      "avg_length": 0,
+      "severity": "low"
+    },
+    {
+      "type": "short_paragraphs",
+      "generator": "Headset",
+      "avg_length": 0,
+      "severity": "low"
+    },
+    {
+      "type": "missing_tracking",
+      "file": "js/modules/branching-narrative.js",
+      "severity": "medium"
+    },
+    {
+      "type": "missing_tracking",
+      "file": "js/modules/dynamic-content.js",
+      "severity": "medium"
+    },
+    {
+      "type": "missing_rng",
+      "file": "backstory-engine.js",
+      "severity": "high"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "medium",
+      "action": "Implement paragraph tracking",
+      "details": "Missing tracking in 2 files"
+    },
+    {
+      "priority": "high",
+      "action": "Implement seeded RNG",
+      "details": "Missing RNG in 1 files"
+    }
+  ]
+}

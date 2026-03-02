@@ -183,9 +183,6 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label>
-                    <input type="checkbox" id="pref-achievement" ${prefs.types.achievement ? 'checked' : ''}>
-                    Achievements
                     </label>
                 </div>
                 <div class="form-group">
@@ -326,7 +323,6 @@
                       <option value="chapter_update" ${historyFilter.type === 'chapter_update' ? 'selected' : ''}>Chapter Updates</option>
                       <option value="bookmark_reminder" ${historyFilter.type === 'bookmark_reminder' ? 'selected' : ''}>Bookmark Reminders</option>
                       <option value="achievement" ${historyFilter.type === 'achievement' ? 'selected' : ''}>Achievements</option>
-                      <option value="social" ${historyFilter.type === 'social' ? 'selected' : ''}>Social</option>
                       <option value="system" ${historyFilter.type === 'system' ? 'selected' : ''}>System</option>
                   </select>
               </div>

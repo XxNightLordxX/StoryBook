@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Initialization</title>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Test Initialization</h1>
+    <div id="output"></div>
+    
+    <script src="backstory-engine.js"></script>
+    <script src="story-engine.js"></script>
+    <script src="js/modules/app-state.js"></script>
+    <script src="js/modules/story-timeline.js"></script>
+    <script src="js/modules/auth.js"></script>
+    <script src="js/modules/navigation.js"></script>
+    <script src="js/modules/misc.js"></script>
+    <script src="js/modules/generation.js"></script>
+    <script src="js/modules/initialization.js"></script>
+    
+    <script>
+        const output = document.getElementById('output');
+        
+        function log(message) {
+            console.log(message);
+            output.innerHTML += `<p>${message}</p>`;
+        }
+        
+        // Test if functions are available
+        setTimeout(() => {
+            log('Testing initialization...');
+            
+            if (typeof StoryEngine !== 'undefined') {
+                log('✓ StoryEngine is available');
+            } else {
+                log('✗ StoryEngine is NOT available');
+            }
+            
+            if (typeof AppState !== 'undefined') {
+                log('✓ AppState is available');
+            } else {
+                log('✗ AppState is NOT available');
+            }
+            
+            if (typeof catchUpAndStart !== 'undefined') {
+                log('✓ catchUpAndStart is available');
+            } else {
+                log('✗ catchUpAndStart is NOT available');
+            }
+            
+            if (typeof initSessionTimer !== 'undefined') {
+                log('✓ initSessionTimer is available');
+            } else {
+                log('✗ initSessionTimer is NOT available');
+            }
+            
+            if (typeof checkSavedLogin !== 'undefined') {
+                log('✓ checkSavedLogin is available');
+            } else {
+                log('✗ checkSavedLogin is NOT available');
+            }
+            
+            if (typeof initDropdownClose !== 'undefined') {
+                log('✓ initDropdownClose is available');
+            } else {
+                log('✗ initDropdownClose is NOT available');
+            }
+            
+            if (typeof updateTextSizeInput !== 'undefined') {
+                log('✓ updateTextSizeInput is available');
+            } else {
+                log('✗ updateTextSizeInput is NOT available');
+            }
+            
+            if (typeof updateStoryRulesList !== 'undefined') {
+                log('✓ updateStoryRulesList is available');
+            } else {
+                log('✗ updateStoryRulesList is NOT available');
+            }
+            
+            if (typeof updateAdminProgressInfo !== 'undefined') {
+                log('✓ updateAdminProgressInfo is available');
+            } else {
+                log('✗ updateAdminProgressInfo is NOT available');
+            }
+            
+            // Check if DOMContentLoaded fired
+            log('Waiting for DOMContentLoaded event...');
+        }, 1000);
+    </script>
+</body>
+</html>

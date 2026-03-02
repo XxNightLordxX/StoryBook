@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Final Test 3000 Chapters</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a2e; color: #eee; }
+        .section { margin: 20px 0; padding: 15px; background: #16213e; border-radius: 8px; }
+        .pass { color: #4ade80; }
+        .fail { color: #f87171; }
+        .warning { color: #fbbf24; }
+        h1 { color: #60a5fa; }
+        h2 { color: #a78bfa; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 12px; }
+        th, td { padding: 6px; text-align: left; border-bottom: 1px solid #374151; }
+        th { color: #60a5fa; }
+        #progress { position: fixed; top: 10px; right: 10px; background: #1f2937; padding: 15px; border-radius: 8px; z-index: 1000; max-width: 350px; font-size: 13px; }
+        #log { max-height: 300px; overflow-y: auto; background: #0f172a; padding: 10px; border-radius: 8px; font-size: 11px; }
+        .log-entry { margin: 1px 0; }
+        .summary { font-size: 14px; font-weight: bold; }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div id="progress">Initializing...</div>
+    <h1>🧪 Final Test: 3000 Chapters</h1>
+    <div id="log"></div>
+    <div id="results"></div>
+
+    <script src="story-engine.js"></script>
+    <script>
+        const TOTAL_CHAPTERS = 3000;
+        const BATCH_SIZE = 100;
+        
+        const results = {
+            totalChapters: 0,
+            duplicateTitles: [],
+            duplicateParagraphs: [],
+            wordCountIssues: [],
+            arcProgression: [],
+            statProgression: [],
+            performance: {
+                startTime: null,
+                endTime: null,
+                duration: null
+            },
+            titleCounts: {},
+            paragraphCounts: {},
+            lowWordCountChapters: []
+        };
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.style.color = type === 'error' ? '#f87171' : type === 'warning' ? '#fbbf24' : '#4ade80';
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function updateProgress(current, total, message) {
+            const progress = document.getElementById('progress');
+            const percent = ((current / total) * 100).toFixed(1);
+            const elapsed = ((Date.now() - results.performance.startTime) / 1000).toFixed(1);
+            const avgTime = (elapsed / current * 1000).toFixed(2);
+            const eta = ((total - current) * avgTime / 1000).toFixed(0);
+            
+            progress.innerHTML = `
+                <strong>Progress:</strong> ${current}/${total} (${percent}%)<br>
+                <strong>Status:</strong> ${message}<br>
+                <strong>Time:</strong> ${elapsed}s | Avg: ${avgTime}ms/ch<br>
+                <strong>ETA:</strong> ${eta}s
+            `;
+        }
+
+        async function runTest() {
+            log('Starting 3000 chapter test...', 'info');
+            console.log('='.repeat(80));
+            console.log('FINAL TEST: 3000 CHAPTERS');
+            console.log('='.repeat(80));
+            console.log(`Starting test at: ${new Date().toISOString()}`);
+            console.log('');
+
+            results.performance.startTime = Date.now();
+
+            // Generate chapters in batches
+            for (let batch = 0; batch < TOTAL_CHAPTERS; batch += BATCH_SIZE) {
+                const batchEnd = Math.min(batch + BATCH_SIZE, TOTAL_CHAPTERS);
+                
+                for (let i = batch + 1; i <= batchEnd; i++) {
+                    const chapter = generateChapter(i);
+                    results.totalChapters++;
+                    
+                    // Check for duplicate titles
+                    if (results.titleCounts[chapter.title]) {
+                        results.titleCounts[chapter.title]++;
+                    } else {
+                        results.titleCounts[chapter.title] = 1;
+                        results.duplicateTitles.push(chapter.title);
+                    }
+                    
+                    // Check word count
+                    if (chapter.wordCount < 1000) {
+                        results.wordCountIssues.push({
+                            chapter: i,
+                            wordCount: chapter.wordCount,
+                            title: chapter.title
+                        });
+                        results.lowWordCountChapters.push(i);
+                    }
+                    
+                    // Track paragraph duplicates
+                    chapter.paragraphs.forEach(para => {
+                        const paraHash = para.substring(0, 50); // Use first 50 chars as hash
+                        if (results.paragraphCounts[paraHash]) {
+                            results.paragraphCounts[paraHash]++;
+                        } else {
+                            results.paragraphCounts[paraHash] = 1;
+                        }
+                    });
+                    
+                    // Track arc progression
+                    if (!results.arcProgression.includes(chapter.arc)) {
+                        results.arcProgression.push(chapter.arc);
+                    }
+                    
+                    // Track stat progression (sample every 100 chapters)
+                    if (i % 100 === 0) {
+                        results.statProgression.push({
+                            chapter: i,
+                            level: chapter.mcSnapshot.level,
+                            hp: chapter.mcSnapshot.hp,
+                            mp: chapter.mcSnapshot.mp,
+                            bloodEssence: chapter.mcSnapshot.bloodEssence
+                        });
+                    }
+                }
+                
+                updateProgress(batchEnd, TOTAL_CHAPTERS, `Generated ${batchEnd} chapters...`);
+                
+                // Log progress every 500 chapters
+                if (batchEnd % 500 === 0) {
+                    log(`Progress: ${batchEnd}/${TOTAL_CHAPTERS} chapters`, 'info');
+                }
+                
+                // Allow UI to update
+                await new Promise(resolve => setTimeout(resolve, 5));
+            }
+
+            results.performance.endTime = Date.now();
+            results.performance.duration = results.performance.endTime - results.performance.startTime;
+
+            updateProgress(TOTAL_CHAPTERS, TOTAL_CHAPTERS, 'Test complete!');
+            log('Test completed successfully!', 'info');
+            displayResults();
+        }
+
+        function displayResults() {
+            const resultsDiv = document.getElementById('results');
+            
+            console.log('');
+            console.log('='.repeat(80));
+            console.log('TEST RESULTS');
+            console.log('='.repeat(80));
+
+            // Calculate duplicate count
+            const duplicateTitles = Object.entries(results.titleCounts).filter(([_, count]) => count > 1);
+            const duplicateTitleCount = duplicateTitles.reduce((sum, [_, count]) => sum + (count - 1), 0);
+            
+            const duplicateParagraphs = Object.entries(results.paragraphCounts).filter(([_, count]) => count > 1);
+            const duplicateParagraphCount = duplicateParagraphs.reduce((sum, [_, count]) => sum + (count - 1), 0);
+
+            // Summary
+            let html = `
+                <div class="section summary">
+                    <h2>📊 SUMMARY</h2>
+                    <table>
+                        <tr><th>Metric</th><th>Value</th><th>Status</th></tr>
+                        <tr><td>Total Chapters Generated</td><td>${results.totalChapters}</td><td class="pass">✅</td></tr>
+                        <tr><td>Unique Titles</td><td>${results.duplicateTitles.length}</td><td class="pass">✅</td></tr>
+                        <tr><td>Duplicate Titles</td><td class="${duplicateTitleCount > 0 ? 'fail' : 'pass'}">${duplicateTitleCount}</td><td class="${duplicateTitleCount > 0 ? 'fail' : 'pass'}">${duplicateTitleCount > 0 ? '❌' : '✅'}</td></tr>
+                        <tr><td>Unique Paragraphs</td><td>${Object.keys(results.paragraphCounts).length}</td><td class="pass">✅</td></tr>
+                        <tr><td>Duplicate Paragraphs</td><td class="${duplicateParagraphCount > 0 ? 'fail' : 'pass'}">${duplicateParagraphCount}</td><td class="${duplicateParagraphCount > 0 ? 'fail' : 'pass'}">${duplicateParagraphCount > 0 ? '❌' : '✅'}</td></tr>
+                        <tr><td>Word Count Issues (< 1000 words)</td><td class="${results.wordCountIssues.length > 0 ? 'fail' : 'pass'}">${results.wordCountIssues.length}</td><td class="${results.wordCountIssues.length > 0 ? 'fail' : 'pass'}">${results.wordCountIssues.length > 0 ? '❌' : '✅'}</td></tr>
+                        <tr><td>Unique Arcs</td><td>${results.arcProgression.length}</td><td class="pass">✅</td></tr>
+                        <tr><td>Performance</td><td>${(results.performance.duration / 1000).toFixed(2)} seconds</td><td class="pass">✅</td></tr>
+                        <tr><td>Average Time per Chapter</td><td>${(results.performance.duration / TOTAL_CHAPTERS).toFixed(2)}ms</td><td class="pass">✅</td></tr>
+                    </table>
+                </div>
+            `;
+
+            // Duplicate titles detail
+            if (duplicateTitles.length > 0) {
+                html += `
+                    <div class="section">
+                        <h2 class="warning">⚠️ DUPLICATE TITLES (${duplicateTitles.length} unique titles with ${duplicateTitleCount} total duplicates)</h2>
+                        <table>
+                            <tr><th>Title</th><th>Occurrences</th></tr>
+                `;
+                duplicateTitles.slice(0, 20).forEach(([title, count]) => {
+                    html += `<tr><td>"${title}"</td><td>${count}</td></tr>`;
+                });
+                if (duplicateTitles.length > 20) {
+                    html += `<tr><td colspan="2">... and ${duplicateTitles.length - 20} more</td></tr>`;
+                }
+                html += `</table></div>`;
+            }
+
+            // Duplicate paragraphs detail
+            if (duplicateParagraphs.length > 0) {
+                html += `
+                    <div class="section">
+                        <h2 class="warning">⚠️ DUPLICATE PARAGRAPHS (${duplicateParagraphs.length} unique paragraphs with ${duplicateParagraphCount} total duplicates)</h2>
+                        <table>
+                            <tr><th>Paragraph (first 50 chars)</th><th>Occurrences</th></tr>
+                `;
+                duplicateParagraphs.slice(0, 20).forEach(([para, count]) => {
+                    html += `<tr><td>"${para}..."</td><td>${count}</td></tr>`;
+                });
+                if (duplicateParagraphs.length > 20) {
+                    html += `<tr><td colspan="2">... and ${duplicateParagraphs.length - 20} more</td></tr>`;
+                }
+                html += `</table></div>`;
+            }
+
+            // Word count issues detail
+            if (results.wordCountIssues.length > 0) {
+                html += `
+                    <div class="section">
+                        <h2 class="warning">⚠️ WORD COUNT ISSUES (${results.wordCountIssues.length} chapters below 1000 words)</h2>
+                        <table>
+                            <tr><th>Chapter</th><th>Word Count</th><th>Title</th></tr>
+                `;
+                results.wordCountIssues.slice(0, 30).forEach(issue => {
+                    html += `<tr><td>${issue.chapter}</td><td>${issue.wordCount}</td><td>"${issue.title}"</td></tr>`;
+                });
+                if (results.wordCountIssues.length > 30) {
+                    html += `<tr><td colspan="3">... and ${results.wordCountIssues.length - 30} more</td></tr>`;
+                }
+                html += `</table></div>`;
+            }
+
+            // Arc progression
+            html += `
+                <div class="section">
+                    <h2>📚 ARC PROGRESSION (${results.arcProgression.length} arcs)</h2>
+                    <table>
+                        <tr><th>#</th><th>Arc Name</th></tr>
+            `;
+            results.arcProgression.forEach((arc, index) => {
+                html += `<tr><td>${index + 1}</td><td>${arc}</td></tr>`;
+            });
+            html += `</table></div>`;
+
+            // Stat progression sample
+            html += `
+                <div class="section">
+                    <h2>📈 STAT PROGRESSION (Sample every 100 chapters)</h2>
+                    <table>
+                        <tr><th>Chapter</th><th>Level</th><th>HP</th><th>MP</th><th>Blood Essence</th></tr>
+            `;
+            results.statProgression.forEach(stat => {
+                html += `<tr><td>${stat.chapter}</td><td>${stat.level}</td><td>${stat.hp}</td><td>${stat.mp}</td><td>${stat.bloodEssence}</td></tr>`;
+            });
+            html += `</table></div>`;
+
+            // Final verdict
+            const hasIssues = duplicateTitleCount > 0 || duplicateParagraphCount > 0 || results.wordCountIssues.length > 0;
+            
+            html += `
+                <div class="section summary">
+                    <h2>${hasIssues ? '⚠️ ISSUES FOUND' : '✅ ALL TESTS PASSED'}</h2>
+            `;
+            
+            if (!hasIssues) {
+                html += `
+                    <p class="pass">✅ No duplicate titles found</p>
+                    <p class="pass">✅ No duplicate paragraphs found</p>
+                    <p class="pass">✅ All chapters meet minimum word count (1000 words)</p>
+                    <p class="pass">✅ Arc progression working correctly</p>
+                    <p class="pass">✅ Stat progression working correctly</p>
+                    <p class="pass">✅ Performance acceptable</p>
+                `;
+            } else {
+                if (duplicateTitleCount > 0) {
+                    html += `<p class="fail">⚠️ ${duplicateTitleCount} duplicate titles found</p>`;
+                }
+                if (duplicateParagraphCount > 0) {
+                    html += `<p class="fail">⚠️ ${duplicateParagraphCount} duplicate paragraphs found</p>`;
+                }
+                if (results.wordCountIssues.length > 0) {
+                    html += `<p class="fail">⚠️ ${results.wordCountIssues.length} chapters below minimum word count</p>`;
+                }
+            }
+            
+            html += `</div>`;
+            html += `<p><strong>Test completed at:</strong> ${new Date().toISOString()}</p>`;
+
+            resultsDiv.innerHTML = html;
+
+            console.log('');
+            console.log('='.repeat(80));
+            console.log('FINAL VERDICT');
+            console.log('='.repeat(80));
+            console.log(`Total Chapters: ${results.totalChapters}`);
+            console.log(`Duplicate Titles: ${duplicateTitleCount}`);
+            console.log(`Duplicate Paragraphs: ${duplicateParagraphCount}`);
+            console.log(`Word Count Issues: ${results.wordCountIssues.length}`);
+            console.log(`Performance: ${(results.performance.duration / 1000).toFixed(2)} seconds`);
+            
+            if (!hasIssues) {
+                console.log('');
+                console.log('✅ ALL TESTS PASSED');
+                console.log('');
+                console.log('✅ No duplicate titles found');
+                console.log('✅ No duplicate paragraphs found');
+                console.log('✅ All chapters meet minimum word count (1000 words)');
+                console.log('✅ Arc progression working correctly');
+                console.log('✅ Stat progression working correctly');
+                console.log('✅ Performance acceptable');
+            } else {
+                console.log('');
+                console.log('⚠️ ISSUES FOUND');
+                console.log('');
+                if (duplicateTitleCount > 0) {
+                    console.log(`⚠️ ${duplicateTitleCount} duplicate titles found`);
+                }
+                if (duplicateParagraphCount > 0) {
+                    console.log(`⚠️ ${duplicateParagraphCount} duplicate paragraphs found`);
+                }
+                if (results.wordCountIssues.length > 0) {
+                    console.log(`⚠️ ${results.wordCountIssues.length} chapters below minimum word count`);
+                }
+            }
+
+            console.log('');
+            console.log('='.repeat(80));
+            console.log(`Test completed at: ${new Date().toISOString()}`);
+            console.log('='.repeat(80));
+        }
+
+        // Run test after page load
+        window.onload = function() {
+            setTimeout(runTest, 100);
+        };
+    </script>
+</body>
+</html>

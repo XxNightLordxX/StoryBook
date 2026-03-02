@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Chapter Click</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .sidebar-item { 
+            padding: 10px; 
+            margin: 5px 0; 
+            background: #f0f0f0; 
+            cursor: pointer; 
+            border: 1px solid #ccc;
+        }
+        .sidebar-item:hover { background: #e0e0e0; }
+        #storyContainer { 
+            margin-top: 20px; 
+            padding: 20px; 
+            border: 2px solid #333; 
+            min-height: 200px;
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Test Chapter Click</h1>
+    <div id="sidebarList"></div>
+    <div id="storyContainer">No chapter selected</div>
+    
+    <script src="js/modules/app-state.js"></script>
+    <script src="backstory-engine.js"></script>
+    <script src="story-engine.js"></script>
+    <script src="js/modules/misc.js"></script>
+    
+    <script>
+        console.log('Test page loaded');
+        
+        // Initialize AppState
+        AppState.chapters = [];
+        AppState.totalGenerated = 0;
+        AppState.currentChapter = 1;
+        
+        // Generate a test chapter
+        console.log('Generating test chapter...');
+        const testChapter = StoryEngine.generateChapter();
+        AppState.chapters.push(testChapter);
+        AppState.totalGenerated = 1;
+        
+        console.log('Test chapter generated:', testChapter);
+        console.log('Chapter number:', testChapter.number);
+        console.log('Chapter title:', testChapter.title);
+        
+        // Add sidebar item
+        const list = document.getElementById('sidebarList');
+        const item = document.createElement('div');
+        item.className = 'sidebar-item';
+        item.dataset.num = testChapter.number;
+        item.onclick = () => {
+            console.log('=== Sidebar item clicked ===');
+            console.log('Chapter number:', testChapter.number);
+            console.log('Chapter title:', testChapter.title);
+            alert(`Clicked chapter ${testChapter.number}: ${testChapter.title}`);
+            showChapter(testChapter.number);
+        };
+        item.innerHTML = `
+            <span>Chapter ${testChapter.number}</span>
+            <span>${testChapter.title}</span>
+        `;
+        list.appendChild(item);
+        
+        console.log('Sidebar item added');
+        console.log('showChapter function:', typeof showChapter);
+    </script>
+</body>
+</html>

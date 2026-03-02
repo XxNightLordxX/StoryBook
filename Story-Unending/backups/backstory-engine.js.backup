@@ -1,0 +1,167 @@
+/* ============================================
+   BACKSTORY PARAGRAPH GENERATORS (Pre-VR)
+   ============================================ */
+
+const BackstoryEngine = (() => {
+
+  function generateBackstoryLifeParagraphs(randomFrom, randomInt) {
+    const paras = [];
+    const openings = [
+      "The alarm went off at 5:45 AM, the same time it had gone off every morning for the past two years. I reached for it without opening my eyes, muscle memory guiding my hand to the phone on the nightstand. The apartment was cold—I kept the heat low to save money—and the first breath of morning air tasted like dust and instant coffee from the pot I'd set to auto-brew the night before.",
+      "My apartment was small enough that I could stand in the center and almost touch both walls. A studio on the fourth floor of a building that had stopped being charming sometime in the nineties. The wallpaper peeled in the corners, the radiator clanked like a prisoner tapping messages through pipes, and the window faced another building's brick wall. But the rent was cheap, and cheap was the only language my bank account spoke.",
+      "The morning commute was forty minutes by train if the schedule held, which it rarely did. I stood in the same spot on the platform every day, earbuds in, hood up, watching the same faces pretend not to see each other. The city moved around me like a river around a stone—constant, indifferent, unstoppable.",
+      "I worked at a warehouse on the east side of the city. Twelve-hour shifts, four days a week, loading and unloading crates that contained things I'd never be able to afford. The pay was enough to cover rent, Yuna's hospital bills—barely—and food that came in packages designed to survive nuclear winters. It wasn't a career. It was a life support system for a life that had stopped feeling like living.",
+      "The convenience store on the corner knew my order before I said it. Two rice balls, a can of coffee, and whatever bento was marked down for quick sale. The woman behind the counter—Mrs. Tanaka, though I'd never asked her name, just read it on the tag—had stopped making small talk months ago. She'd learned that I wasn't rude, just empty. There's a difference, and people who work night shifts understand it."
+    ];
+    paras.push(randomFrom(openings));
+
+    const middles = [
+      "My days had a rhythm that was less like music and more like a heartbeat monitor—steady, predictable, and only interesting when something went wrong. Wake up. Train. Work. Train. Hospital. Home. Sleep. Repeat. The weekends were the same minus the work, plus longer hours sitting beside Yuna's bed, reading to her from books she used to love, pretending she could hear me. Maybe she could. The doctors said brain activity was present but unpredictable. I chose to believe the optimistic interpretation.",
+      "I didn't have friends, exactly. I had coworkers who nodded at me and a landlord who texted when rent was late. There was Hiro from the warehouse, who sometimes shared his lunch and talked about football with the enthusiasm of someone who needed another person to hear him. I listened. It cost me nothing, and his wife made incredible tamagoyaki that he always packed too much of. That was the closest thing to a social life I had—borrowed food and borrowed conversation.",
+      "The apartment had three photos on the wall. One of Mom and Dad, taken at a festival when I was six—Dad's arm around Mom's shoulders, both of them laughing at something I'd said that I couldn't remember. One of Yuna at her school recital, gap-toothed and proud in a dress she'd picked out herself. And one of all four of us, the last family photo, taken three months before the accident that took my parents and put my sister in a bed she hadn't left since. I didn't look at them often. But I couldn't take them down.",
+      "Money was a constant pressure, like gravity but meaner. Yuna's hospital bills arrived with the regularity of seasons, each one a reminder that keeping someone alive was expensive and that insurance had limits that felt like cruelty. I'd sold everything worth selling—Dad's watch, Mom's jewelry, the car, most of the furniture from the old apartment. What was left was what couldn't be converted to cash: memories, obligations, and a stubbornness that I'd inherited from both parents in equal measure.",
+      "I cooked the same three meals in rotation: rice with eggs, instant ramen with whatever vegetables were on sale, and curry from a box that cost less than a bus ticket. Nutrition was a concept I understood theoretically but practiced poorly. My body ran on caffeine, carbohydrates, and the kind of determination that looks a lot like exhaustion from the outside. I was twenty years old and I moved like someone who'd been carrying weight for much longer.",
+      "The nights were the hardest. Not because of loneliness—I'd made peace with that, or at least a ceasefire—but because the silence left room for thinking. And thinking, for me, always circled back to the same questions. Why did the car crash happen? Why did Mom and Dad die but Yuna survive? Why did surviving look so much like not living? The questions didn't have answers. They just had weight. And every night, I carried them to bed and set them on the pillow beside me."
+    ];
+    paras.push(randomFrom(middles));
+    paras.push(randomFrom(middles.filter(m => !paras.includes(m))));
+    paras.push(randomFrom(middles.filter(m => !paras.includes(m))));
+
+    return paras;
+  }
+
+  function generateBackstorySisterParagraphs(randomFrom, randomInt) {
+    const paras = [];
+    const openings = [
+      "Yuna was fourteen when the accident happened. Fourteen years old, with braces she hated and a laugh that could fill a room like sunlight fills a window—completely, effortlessly, without trying. She'd been in the backseat. Mom and Dad were in the front. The truck ran a red light at fifty miles per hour, and in the space between one heartbeat and the next, my family went from four people to one and a half.",
+      "The hospital called at 11:47 PM on a Tuesday. I remember the exact time because I was watching the clock on my phone, waiting for a text from Yuna about whether she wanted me to pick her up from her friend's house. The text never came. The call did. And the voice on the other end used words like 'accident' and 'critical condition' and 'you should come now' in a tone that was professionally calm and personally devastating.",
+      "Room 414 became the center of my universe. Not by choice—nothing about this was by choice—but by gravity. Yuna lay in the bed with tubes and wires connecting her to machines that beeped and hummed and breathed for her, and I sat in the chair beside her and tried to remember what her voice sounded like when it wasn't trapped inside a body that had forgotten how to wake up.",
+      "Before the accident, Yuna was the loud one. The brave one. The one who climbed trees and argued with teachers and declared, at age seven, that she was going to be an astronaut-chef who cooked meals in zero gravity. She had plans. She had opinions about everything. She had a future that stretched out in front of her like an open road. Now she had a hospital bed and a brother who visited every day and a prognosis that doctors delivered with carefully managed expectations."
+    ];
+    paras.push(randomFrom(openings));
+
+    const middles = [
+      "I read to her every visit. Sometimes novels—she'd been halfway through a fantasy series when the accident happened, and I finished it for her, then started the next one. Sometimes news articles, because she'd always been curious about the world. Sometimes I just talked. About my day, about the weather, about the weird guy at work who ate sardines for breakfast. Mundane things. Human things. The kind of things you share with someone you love, even when you're not sure they can hear you.",
+      "The doctors used the word 'coma' like it was a place—somewhere Yuna had gone, a room she'd locked herself in. They talked about brain activity and neural responses and the difference between persistent and permanent with the careful precision of people who'd learned that hope was a medicine they couldn't prescribe but couldn't withhold either. I listened to every word. I researched every term. I became an expert in a field I never wanted to study.",
+      "Her hand was always warm. That was the thing that kept me coming back, beyond love, beyond obligation, beyond the stubborn refusal to accept that this was permanent. Her hand was warm. Living. Present. Whatever had happened to her brain, her body was still here, still fighting, still maintaining a temperature that said 'I'm alive' in the most fundamental language biology knows. I held that hand and I believed in it.",
+      "The bills came monthly. ICU care, specialist consultations, physical therapy to prevent muscle atrophy, medications I couldn't pronounce for conditions I barely understood. Each envelope was a small violence—a reminder that love wasn't enough, that keeping someone alive required money I didn't have in quantities that felt designed to break me. I worked overtime. I sold things. I ate less. I did the math every night and the math never worked, but I made it work anyway, because the alternative was unthinkable.",
+      "Sometimes I dreamed about her waking up. Not the dramatic movie version—eyes flying open, gasping for breath, immediately asking what happened. The real version. Slow. Confused. A flutter of eyelids. A twitch of fingers. A sound that might be a word or might be nothing. In the dream, I was always there. Always holding her hand. Always the first thing she saw. I'd wake up from those dreams with wet cheeks and a chest that felt like it had been opened and closed without anesthesia.",
+      "Yuna's room had a window that faced east. Every morning, sunlight crept across the floor and climbed the bed and touched her face, and for a few minutes she looked like she was just sleeping. Just a girl, sleeping late on a weekend, about to wake up and complain about breakfast. Those minutes were the closest thing to peace I had. Then the machines would beep, and a nurse would come in, and the illusion would dissolve like sugar in rain."
+    ];
+    paras.push(randomFrom(middles));
+    paras.push(randomFrom(middles.filter(m => !paras.includes(m))));
+    paras.push(randomFrom(middles.filter(m => !paras.includes(m))));
+
+    return paras;
+  }
+
+  function generateBackstoryParentsParagraphs(randomFrom, randomInt) {
+    const paras = [];
+    const openings = [
+      "Mom was a translator. Japanese to English, English to Japanese, and occasionally French when the client paid enough. She worked from home, surrounded by dictionaries and coffee cups and sticky notes in three languages, and she hummed while she worked—always the same melody, something she said her grandmother taught her. I never learned the name of the song. I'd give anything to hear it again.",
+      "Dad was an engineer. The quiet kind—not the Silicon Valley type with hoodies and stock options, but the kind who designed bridges and water systems and infrastructure that people used every day without knowing his name. He had hands that were always slightly calloused and a mind that saw the world in load-bearing structures and stress tolerances. He built things that lasted. Except, apparently, himself.",
+      "They told me my parents died in the crash. The police, the hospital, the social worker who appeared with a clipboard and an expression that had been trained to convey sympathy without attachment. Dead on impact, they said. Instantaneous. No suffering. As if the speed of death was a consolation. As if 'at least it was quick' could fill the space where two people used to be.",
+      "I was eighteen when they died. Old enough to be legally responsible for myself and my sister. Young enough that the weight of it nearly crushed me. One day I was a high school senior worrying about college applications and whether Yuna had done her homework. The next day I was an orphan with a comatose sister and a stack of paperwork that treated the worst day of my life as an administrative event."
+    ];
+    paras.push(randomFrom(openings));
+
+    const middles = [
+      "Dad taught me to cook. Not well—his repertoire was limited to about six dishes, all of them involving rice—but with patience and a methodical approach that turned every meal into a small engineering project. 'Measure twice, cut once,' he'd say, which was a construction phrase, not a cooking one, but it worked for both. I still made his curry recipe every Sunday. It never tasted the same. Close, but not the same. The missing ingredient was him standing beside me, correcting my knife technique.",
+      "Mom had a way of knowing things before you said them. Not psychic—practical. She read people the way she read languages: fluently, instinctively, catching the subtext beneath the text. She knew when I was lying about homework. She knew when Yuna was scared but pretending to be brave. She knew when Dad was stressed about a project before he'd said a word. I inherited her observational skills but not her warmth. I could read people. I just couldn't reach them the way she could.",
+      "The last conversation I had with my father was about a leaky faucet. He'd promised to fix it that weekend. 'Saturday,' he said, 'after I drop your sister off at her friend's house.' Saturday never came. The faucet leaked for another month before I figured out how to fix it myself, following a YouTube tutorial with tears running down my face because the wrench kept slipping and Dad would have done it in five minutes and I couldn't even do this one simple thing without him.",
+      "There were things about my parents that didn't add up, but I was too young and too grief-stricken to notice at the time. The way Dad sometimes received phone calls he took in another room. The way Mom's translation work occasionally required her to travel to places that didn't seem to need translators. The locked drawer in Dad's desk that I'd never been allowed to open. Small things. Ordinary things, probably. But they accumulated in my memory like sediment, and sometimes, late at night, I wondered what picture they'd form if I ever brushed away the dust.",
+      "I kept their wedding photo on my nightstand. Mom in a simple white dress, Dad in a suit that was slightly too big in the shoulders, both of them looking at each other instead of the camera. The photographer had captured something private—a look that said 'you're the only person in this room' even though the room was full of guests. I studied that photo sometimes, trying to decode the people they'd been before they became my parents. Before they became memories. Before they became questions I couldn't answer.",
+      "The funeral was on a Thursday. It rained. I wore Dad's suit—the one from the wedding photo, which fit me better than it had fit him—and I stood between two coffins and tried to feel something appropriate. Grief, sadness, anger at the truck driver, anger at God, anger at the universe for its casual cruelty. What I actually felt was numb. Completely, thoroughly, medically numb. The feelings came later, in waves, over months, each one arriving without warning and leaving without resolution."
+    ];
+    paras.push(randomFrom(middles));
+    paras.push(randomFrom(middles.filter(m => !paras.includes(m))));
+    paras.push(randomFrom(middles.filter(m => !paras.includes(m))));
+
+    return paras;
+  }
+
+  function generateBackstoryStruggleParagraphs(randomFrom, randomInt) {
+    const paras = [];
+    const openings = [
+      "Learning to live alone at eighteen was like learning to swim by being thrown into the ocean. There was no gradual introduction, no shallow end, no instructor standing by with a flotation device. One day I had parents and a home and a future that someone else was responsible for shaping. The next day I had bills and a lease and a sister in the ICU and the terrifying realization that no one was coming to help.",
+      "The first month was the worst. Not because of the grief—the grief was constant, a background radiation that colored everything—but because of the logistics. Insurance forms. Hospital paperwork. Funeral costs. The apartment lease that was in Dad's name. The utilities. The bank accounts that required death certificates to access. Grief was emotional. This was mechanical. And the machine didn't care that I was eighteen and terrified.",
+      "I dropped out of college before I started. The acceptance letter from the university sat on my desk for two weeks before I called the admissions office and explained, in a voice that was steadier than I felt, that my circumstances had changed. The woman on the phone was kind. She said I could defer for a year. I said thank you and hung up and never called back. A year wasn't going to fix this. Nothing was going to fix this. I needed a job, not a degree.",
+      "The warehouse hired me because I was young and strong and willing to work hours that people with options wouldn't accept. Twelve-hour shifts, overnight, loading trucks with crates that weighed more than my future. The pay was fifteen dollars an hour, which sounded like a lot until you divided it by hospital bills and rent and food and the thousand small expenses that turned survival into a full-time accounting job."
+    ];
+    paras.push(randomFrom(openings));
+
+    const middles = [
+      "I learned to budget the way soldiers learn to field-strip weapons—through repetition, necessity, and the understanding that failure had consequences. Every dollar was assigned a purpose before it arrived. Rent: first priority. Hospital: second. Food: third. Everything else: nonexistent. I hadn't bought new clothes in a year. My shoes had holes that I covered with duct tape. My phone was two generations old and held together by a cracked screen protector and stubbornness.",
+      "The loneliness was a physical thing. It lived in the apartment with me, occupied the empty chairs, filled the silence that used to contain my mother's humming and my father's quiet laughter and Yuna's endless commentary on everything. I'd come home from work at 6 AM, and the apartment would be exactly as I'd left it—dishes in the sink, shoes by the door, the absence of other people pressed into every surface like fingerprints in dust.",
+      "I taught myself to fix things. The leaky faucet was first, then the radiator, then the window that wouldn't close properly, then the electrical outlet that sparked when you plugged something in. YouTube tutorials and trial and error and the quiet satisfaction of solving problems that would have cost money I didn't have. Dad would have been proud. Or maybe he would have just fixed them faster and made it look easy. Either way, the apartment slowly became mine—not through ownership, but through maintenance.",
+      "There were days when I considered giving up. Not in the dramatic sense—I wasn't suicidal, just exhausted in a way that sleep couldn't fix. The kind of tired that settles into your bones and whispers that maybe this is all there is. Work, hospital, sleep, repeat. Forever. Until the money runs out or the body gives up or Yuna—I couldn't finish that thought. I never finished that thought. Instead, I'd set the alarm for 5:45 AM and go to bed and do it all again, because giving up required a decision, and continuing only required inertia.",
+      "Hiro from the warehouse was the closest thing I had to a friend. He was thirty-five, divorced, and possessed the rare ability to talk without requiring responses. He'd sit beside me during breaks and narrate his life—his ex-wife's new boyfriend, his daughter's soccer games, the restaurant he dreamed of opening someday—and I'd listen and nod and occasionally contribute a word or two. It wasn't friendship in the traditional sense. It was more like two people standing near the same fire, sharing warmth without acknowledging the cold.",
+      "I visited Yuna every day without exception. Rain, snow, twelve-hour shifts, fever, exhaustion—nothing kept me from that hospital room. The nurses knew me by name. The security guard at the night entrance stopped checking my ID months ago. I had a routine: check her vitals on the monitor, adjust her blankets, sit in the chair, talk. Sometimes for an hour. Sometimes for ten minutes. The duration didn't matter. What mattered was showing up. What mattered was her knowing—if she could know anything—that she wasn't alone."
+    ];
+    paras.push(randomFrom(middles));
+    paras.push(randomFrom(middles.filter(m => !paras.includes(m))));
+    paras.push(randomFrom(middles.filter(m => !paras.includes(m))));
+
+    return paras;
+  }
+
+  function generateBackstoryVRHypeParagraphs(randomFrom, randomInt) {
+    const paras = [];
+    const openings = [
+      "The announcement came on a Tuesday, buried between celebrity gossip and political scandals on every news feed in the world. Nexus Corporation—the tech giant that had been quietly buying up VR patents for a decade—was launching a full-dive virtual reality game. Not the clunky headset-and-controller experience that had been disappointing gamers for years. Full dive. Neural interface. A world you didn't just see and hear, but felt, smelled, tasted. They called it Eclipsis Online, and they promised it would change everything.",
+      "I first heard about Eclipsis Online from Hiro, who heard about it from his daughter, who heard about it from the internet, which had collectively lost its mind. 'They're saying it's like actually being inside the game,' Hiro said during our lunch break, scrolling through his phone with the wide-eyed enthusiasm of a man who'd just discovered fire. 'Full sensory immersion. You can feel the wind. Taste the food. They say combat feels real.' I nodded and ate my rice ball and tried not to care.",
+      "The trailers were everywhere. On buses, on billboards, on every screen in every store window. Eclipsis Online. A world without limits. The footage showed impossible landscapes—floating mountains, crystal forests, cities built on the backs of sleeping giants—rendered in a fidelity that made reality look low-resolution by comparison. The internet dissected every frame. Forums exploded with speculation. Pre-orders crashed servers. The world wanted to escape, and Nexus Corporation was selling the door.",
+      "Social media became unbearable. Every feed, every timeline, every conversation eventually curved toward Eclipsis Online like light bending around a black hole. People who'd never played a game in their lives were pre-ordering headsets. News anchors who couldn't pronounce 'MMORPG' were doing segments on class systems and guild mechanics. The hype was a living thing, growing and feeding and consuming every other topic until the real world felt like the waiting room for the virtual one."
+    ];
+    paras.push(randomFrom(openings));
+
+    const middles = [
+      "I watched the hype from a distance, the way you watch a parade from a high window—aware of the excitement, disconnected from it. Games had been part of my life before the accident. Dad and I used to play together on weekends, side by side on the couch, arguing about strategy and laughing at glitches. After he died, I stopped playing. Not consciously—I just never picked up a controller again. The joy had been in the sharing, and there was no one left to share it with.",
+      "The headset cost four hundred dollars. Four hundred dollars that could cover two weeks of Yuna's medication, or a month of groceries, or the electricity bill that was already a week late. The math was simple and cruel: I couldn't afford to escape. The real world had me by the throat, and its grip was measured in dollars and cents and the relentless arithmetic of poverty. I closed the pre-order page and went to work.",
+      "But the game kept finding me. Coworkers talked about it. Ads played before every video. The hospital waiting room TV ran a feature on the neural interface technology, and I sat there watching while Yuna slept ten feet away, and something in my chest tightened. Not desire—I was too tired for desire. Something closer to recognition. Like the game was a door, and somewhere behind it was something I needed. Something that mattered. I couldn't explain the feeling. I couldn't afford to act on it. But I couldn't make it go away.",
+      "Hiro pre-ordered two headsets—one for himself, one for his daughter. He talked about it every break for three weeks straight, planning his character build, researching class options, joining a guild before the game even launched. His enthusiasm was infectious in the way that other people's happiness always is when you're standing outside it. I was happy for him. Genuinely. And underneath the genuine happiness was a layer of something I didn't want to name, because naming it would mean admitting I wanted something I couldn't have.",
+      "The launch date was set for three months out. The countdown was everywhere—on websites, on apps, on a giant digital clock in the city center that ticked down the seconds like the world was waiting for a new year. In a way, it was. Eclipsis Online wasn't just a game. It was a collective dream, a shared hallucination that seven billion people had agreed to believe in. And I was one of the few standing outside the dream, nose pressed against the glass, watching everyone else prepare to fall asleep.",
+      "Then the package arrived. Unmarked. No return address. Sitting outside my apartment door on a Wednesday evening when I came home from the hospital, exhausted and empty and not expecting anything from anyone. Inside was a VR headset—the Nexus NX-7, the same model that was sold out everywhere, the one that cost four hundred dollars I didn't have. No note. No explanation. Just the headset, nestled in foam packaging, waiting. I stood in my doorway holding it and felt, for the first time in two years, something that wasn't grief or exhaustion or the dull ache of survival. I felt curious."
+    ];
+    paras.push(randomFrom(middles));
+    paras.push(randomFrom(middles.filter(m => !paras.includes(m))));
+    paras.push(randomFrom(middles.filter(m => !paras.includes(m))));
+
+    return paras;
+  }
+
+  function generateBackstoryHeadsetParagraphs(randomFrom, randomInt) {
+    const paras = [];
+    const openings = [
+      "The headset sat on my desk for three days before I touched it again. It watched me from its foam cradle like an eye that never blinked, and I watched it back, and between us was a conversation conducted entirely in silence. Who sent it? Why? Was it a mistake—a misdelivered package meant for someone who'd actually ordered one? I checked the label again. My name. My address. No sender. No explanation.",
+      "On the third night, I picked up the headset and turned it over in my hands, studying it the way Dad used to study blueprints—methodically, looking for the story hidden in the structure. The Nexus NX-7 was lighter than I expected. Matte black, with a visor that reflected my face back at me in dark, distorted curves. The neural interface pads were soft against my fingertips, designed to read brainwaves through skin contact. Technology that shouldn't exist yet. Technology that was about to change the world.",
+      "I set up the headset on a Saturday morning. Not because I'd decided to play—I hadn't decided anything—but because the curiosity had grown from a whisper to a hum to a sound I couldn't ignore. The setup was simple: charge the device, download the Eclipsis Online client, create an account. Each step felt like walking deeper into a forest. Each step made it harder to turn back.",
+      "Launch day arrived like a holiday I hadn't planned to celebrate. The internet was a supernova of excitement—streams, countdowns, server status pages refreshing every second. Millions of people around the world were putting on their headsets simultaneously, diving into a shared dream. And I was sitting in my apartment, holding the mysterious headset that someone had sent me, trying to decide if I was brave enough—or desperate enough—to join them."
+    ];
+    paras.push(randomFrom(openings));
+
+    const middles = [
+      "I told Yuna about it during my evening visit. 'Someone sent me a VR headset,' I said, holding her hand in the quiet room. 'The new one. Eclipsis Online. Everyone's going crazy about it.' The machines beeped their steady rhythm. Her face was peaceful. 'I don't know if I should use it. It feels like... I don't know. Like I'd be escaping. And you can't escape. So it feels wrong for me to.' I squeezed her hand. 'But something about it feels right, too. And I can't explain that part.'",
+      "The decision came at 2 AM on a night when sleep refused to arrive. I was lying in bed, staring at the ceiling, running the same calculations I ran every night—bills, shifts, hospital visits, the shrinking distance between income and expenses. And somewhere in the middle of that familiar arithmetic, a new variable appeared: what if the game could help? Not escape. Help. What if there was something inside that digital world that could change something in this one? It was irrational. It was desperate. It was the first hopeful thought I'd had in two years.",
+      "I put the headset on at 3:17 AM. The apartment was dark. The city was quiet. The neural interface hummed against my temples, warm and alive, reading the electrical patterns of a brain that was equal parts terrified and excited. The visor displayed a single prompt: 'Welcome to Eclipsis Online. Close your eyes to begin.' I closed my eyes. And the world—the real world, with its bills and grief and hospital rooms and leaky faucets—disappeared. Replaced by something impossible. Something beautiful. Something that felt, against all logic and reason, like coming home.",
+      "The character creation screen materialized around me like a dream assembling itself. I was standing in a void of soft light, surrounded by floating panels that displayed races, classes, and customization options. My hands—virtual hands, rendered in perfect detail—trembled slightly. Not from fear. From the overwhelming sensation of being somewhere else. The neural interface didn't just show me the game. It put me inside it. I could feel the ambient temperature. I could hear the faint music. I could smell something like ozone and wildflowers. This wasn't a game. This was another world.",
+      "The class selection screen presented dozens of options, each one illustrated with dynamic previews. Warriors, mages, archers, healers—the standard fantasy archetypes, rendered with enough detail to make each one feel like a destiny rather than a choice. I scrolled through them slowly, reading descriptions, watching combat previews. And then the screen glitched. Just for a moment—a flicker, a stutter, like the game had hiccupped. When it stabilized, there was a new option at the bottom of the list. One that hadn't been there before. One that was grayed out for everyone else but glowing for me. Vampire Progenitor. A class with no description, no preview, no documentation. Just a name and a feeling—deep in my gut, irrational and undeniable—that this was meant for me.",
+      "I selected Vampire Progenitor. The screen went dark. Then red. Then a voice—not text, not a system notification, but an actual voice, ancient and resonant and speaking directly into my consciousness—said: 'The blood remembers. The blood chooses. The blood welcomes you home, Progenitor.' And the game began. Not with a tutorial or a starting village or a friendly NPC explaining the controls. It began with darkness, and hunger, and the sound of my own heartbeat echoing in a world that had been waiting for me longer than I'd been alive."
+    ];
+    paras.push(randomFrom(middles));
+    paras.push(randomFrom(middles.filter(m => !paras.includes(m))));
+    paras.push(randomFrom(middles.filter(m => !paras.includes(m))));
+
+    return paras;
+  }
+
+  // Public API
+  return {
+    generateBackstoryLifeParagraphs,
+    generateBackstorySisterParagraphs,
+    generateBackstoryParentsParagraphs,
+    generateBackstoryStruggleParagraphs,
+    generateBackstoryVRHypeParagraphs,
+    generateBackstoryHeadsetParagraphs
+  };
+})();

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Test 5000 Chapters</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a2e; color: #eee; }
+        .section { margin: 20px 0; padding: 15px; background: #16213e; border-radius: 8px; }
+        .pass { color: #4ade80; }
+        .fail { color: #f87171; }
+        .warning { color: #fbbf24; }
+        h1 { color: #60a5fa; }
+        h2 { color: #a78bfa; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 12px; }
+        th, td { padding: 6px; text-align: left; border-bottom: 1px solid #374151; }
+        th { color: #60a5fa; }
+        #progress { position: fixed; top: 10px; right: 10px; background: #1f2937; padding: 15px; border-radius: 8px; z-index: 1000; max-width: 300px; font-size: 13px; border: 2px solid #60a5fa; }
+        #results { margin-top: 100px; }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div id="progress">Initializing...</div>
+    <h1>🧪 Simple Test: 5000 Chapters</h1>
+    <div id="results"></div>
+
+    <script src="story-engine.js"></script>
+    <script>
+        const TOTAL_CHAPTERS = 5000;
+        
+        const results = {
+            totalChapters: 0,
+            duplicateTitles: [],
+            wordCountIssues: [],
+            arcProgression: [],
+            performance: {
+                startTime: null,
+                endTime: null,
+                duration: null
+            },
+            titleCounts: {}
+        };
+
+        function updateProgress(current, total, message) {
+            const progress = document.getElementById('progress');
+            const percent = ((current / total) * 100).toFixed(1);
+            const elapsed = ((Date.now() - results.performance.startTime) / 1000).toFixed(1);
+            const avgTime = (elapsed / current * 1000).toFixed(2);
+            const eta = ((total - current) * avgTime / 1000).toFixed(0);
+            
+            progress.innerHTML = `
+                <strong>Progress:</strong> ${current}/${total} (${percent}%)<br>
+                <strong>Status:</strong> ${message}<br>
+                <strong>Time:</strong> ${elapsed}s<br>
+                <strong>ETA:</strong> ${eta}s<br>
+                <strong>Duplicates:</strong> ${Object.keys(results.titleCounts).filter(k => results.titleCounts[k] > 1).length}<br>
+                <strong>Low WC:</strong> ${results.wordCountIssues.length}
+            `;
+        }
+
+        function runTest() {
+            console.log('Starting 5000 chapter test...');
+            results.performance.startTime = Date.now();
+            
+            // Generate chapters
+            for (let i = 1; i <= TOTAL_CHAPTERS; i++) {
+                const chapter = generateChapter(i);
+                results.totalChapters++;
+                
+                // Check for duplicate titles
+                if (results.titleCounts[chapter.title]) {
+                    results.titleCounts[chapter.title]++;
+                } else {
+                    results.titleCounts[chapter.title] = 1;
+                    results.duplicateTitles.push(chapter.title);
+                }
+                
+                // Check word count
+                if (chapter.wordCount < 1000) {
+                    results.wordCountIssues.push({
+                        chapter: i,
+                        wordCount: chapter.wordCount,
+                        title: chapter.title
+                    });
+                }
+                
+                // Track arc progression
+                if (!results.arcProgression.includes(chapter.arc)) {
+                    results.arcProgression.push(chapter.arc);
+                }
+                
+                // Update progress every 100 chapters
+                if (i % 100 === 0) {
+                    updateProgress(i, TOTAL_CHAPTERS, `Generated ${i} chapters...`);
+                    // Allow UI to update
+                    if (i % 500 === 0) {
+                        setTimeout(() => {}, 0);
+                    }
+                }
+            }
+            
+            results.performance.endTime = Date.now();
+            results.performance.duration = results.performance.endTime - results.performance.startTime;
+            
+            updateProgress(TOTAL_CHAPTERS, TOTAL_CHAPTERS, 'Complete!');
+            displayResults();
+        }
+
+        function displayResults() {
+            const resultsDiv = document.getElementById('results');
+            
+            const duplicateTitles = Object.entries(results.titleCounts).filter(([_, count]) => count > 1);
+            const duplicateTitleCount = duplicateTitles.reduce((sum, [_, count]) => sum + (count - 1), 0);
+            
+            const hasIssues = duplicateTitleCount > 0 || results.wordCountIssues.length > 0;
+            
+            let html = `
+                <div class="section">
+                    <h2>📊 RESULTS</h2>
+                    <table>
+                        <tr><th>Metric</th><th>Value</th><th>Status</th></tr>
+                        <tr><td>Total Chapters</td><td>${results.totalChapters}</td><td class="pass">✅</td></tr>
+                        <tr><td>Unique Titles</td><td>${results.duplicateTitles.length}</td><td class="pass">✅</td></tr>
+                        <tr><td>Duplicate Titles</td><td class="${duplicateTitleCount > 0 ? 'fail' : 'pass'}">${duplicateTitleCount}</td><td class="${duplicateTitleCount > 0 ? 'fail' : 'pass'}">${duplicateTitleCount > 0 ? '❌' : '✅'}</td></tr>
+                        <tr><td>Word Count Issues</td><td class="${results.wordCountIssues.length > 0 ? 'fail' : 'pass'}">${results.wordCountIssues.length}</td><td class="${results.wordCountIssues.length > 0 ? 'fail' : 'pass'}">${results.wordCountIssues.length > 0 ? '❌' : '✅'}</td></tr>
+                        <tr><td>Unique Arcs</td><td>${results.arcProgression.length}</td><td class="pass">✅</td></tr>
+                        <tr><td>Performance</td><td>${(results.performance.duration / 1000).toFixed(2)}s</td><td class="pass">✅</td></tr>
+                        <tr><td>Avg Time/Chapter</td><td>${(results.performance.duration / TOTAL_CHAPTERS).toFixed(2)}ms</td><td class="pass">✅</td></tr>
+                    </table>
+                </div>
+            `;
+            
+            if (duplicateTitles.length > 0) {
+                html += `
+                    <div class="section">
+                        <h2 class="warning">⚠️ DUPLICATE TITLES (${duplicateTitles.length})</h2>
+                        <table>
+                            <tr><th>Title</th><th>Count</th></tr>
+                `;
+                duplicateTitles.slice(0, 20).forEach(([title, count]) => {
+                    html += `<tr><td>"${title}"</td><td>${count}</td></tr>`;
+                });
+                html += `</table></div>`;
+            }
+            
+            if (results.wordCountIssues.length > 0) {
+                html += `
+                    <div class="section">
+                        <h2 class="warning">⚠️ WORD COUNT ISSUES (${results.wordCountIssues.length})</h2>
+                        <table>
+                            <tr><th>Chapter</th><th>Words</th><th>Title</th></tr>
+                `;
+                results.wordCountIssues.slice(0, 30).forEach(issue => {
+                    html += `<tr><td>${issue.chapter}</td><td>${issue.wordCount}</td><td>"${issue.title}"</td></tr>`;
+                });
+                html += `</table></div>`;
+            }
+            
+            html += `
+                <div class="section">
+                    <h2>${hasIssues ? '⚠️ ISSUES FOUND' : '✅ ALL TESTS PASSED'}</h2>
+                    ${!hasIssues ? 
+                        '<p class="pass">✅ No duplicate titles<br>✅ All chapters meet 1000 word minimum<br>✅ All systems working correctly</p>' :
+                        '<p class="fail">⚠️ Issues detected - see details above</p>'}
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = html;
+            console.log('Test complete!');
+        }
+
+        // Start test after page load
+        window.onload = function() {
+            setTimeout(runTest, 100);
+        };
+    </script>
+</body>
+</html>

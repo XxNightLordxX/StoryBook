@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Initialization Debug Test</title>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Initialization Debug Test</h1>
+    <div id="output"></div>
+    
+    <script>
+        const output = document.getElementById('output');
+        
+        function log(msg) {
+            output.innerHTML += `<p>${msg}</p>`;
+            console.log(msg);
+        }
+        
+        // Load AppState
+        log('Loading AppState...');
+        const AppState = {
+            currentUser: null,
+            isAdmin: false,
+            paused: false,
+            sessionStart: Date.now(),
+            timerInterval: null,
+            generationInterval: null,
+            currentChapter: 0,
+            totalGenerated: 0,
+            chapters: [],
+            generationMode: 'continuous'
+        };
+        
+        log(`AppState initialized: totalGenerated = ${AppState.totalGenerated}`);
+        
+        // Load StoryEngine
+        log('Loading StoryEngine...');
+        const StoryEngine = {
+            mcState: {
+                name: 'Kael',
+                level: 1,
+                hp: 100,
+                maxHp: 100,
+                mp: 50,
+                maxMp: 50,
+                stats: {
+                    strength: 10,
+                    agility: 10,
+                    intelligence: 10,
+                    vitality: 10,
+                    luck: 10
+                },
+                inventory: [],
+                skills: [],
+                extracted: []
+            },
+            storyTracker: {
+                currentArc: 'Awakening',
+                currentLocation: 'Unknown',
+                charactersMet: [],
+                bossesDefeated: [],
+                questsCompleted: [],
+                decisions: []
+            },
+            chapterNumber: 0,
+            
+            generateChapter: function() {
+                this.chapterNumber++;
+                const chapter = {
+                    number: this.chapterNumber,
+                    title: `Chapter ${this.chapterNumber}`,
+                    content: `This is the content of chapter ${this.chapterNumber}.`,
+                    type: 'story',
+                    setting: 'real_world',
+                    statChanges: []
+                };
+                log(`Generated chapter ${chapter.number}: ${chapter.title}`);
+                return chapter;
+            },
+            
+            getMcState: function() {
+                return this.mcState;
+            },
+            
+            getStoryTracker: function() {
+                return this.storyTracker;
+            },
+            
+            reset: function() {
+                this.chapterNumber = 0;
+            },
+            
+            addDirective: function(text, chapters) {
+                log(`Directive added: ${text}`);
+            },
+            
+            getAllDirectives: function() {
+                return [];
+            }
+        };
+        
+        log('StoryEngine loaded');
+        
+        // Define constants
+        const STORY_START = new Date('2026-02-26T00:00:00Z').getTime();
+        const CHAPTER_INTERVAL_MS = 30000;
+        const MAX_CHAPTERS = 10000;
+        
+        log(`STORY_START: ${new Date(STORY_START).toISOString()}`);
+        log(`CHAPTER_INTERVAL_MS: ${CHAPTER_INTERVAL_MS}ms`);
+        log(`Current time: ${new Date().toISOString()}`);
+        
+        // Define getTotalChaptersShouldExist
+        function getTotalChaptersShouldExist() {
+            const elapsed = Date.now() - STORY_START;
+            const chapters = Math.min(MAX_CHAPTERS, Math.max(1, Math.floor(elapsed / CHAPTER_INTERVAL_MS)));
+            log(`Elapsed: ${elapsed}ms, Chapters should exist: ${chapters}`);
+            return chapters;
+        }
+        
+        // Define addSidebarItem
+        function addSidebarItem(chapter) {
+            log(`Added sidebar item for chapter ${chapter.number}`);
+        }
+        
+        // Define updateBadge
+        function updateBadge() {
+            log(`Updated badge: ${AppState.totalGenerated} chapters`);
+        }
+        
+        // Define updateStatsBar
+        function updateStatsBar() {
+            log(`Updated stats bar`);
+        }
+        
+        // Define showChapter
+        function showChapter(num) {
+            if (num < 1 || num > AppState.totalGenerated) {
+                log(`Cannot show chapter ${num}: out of range (1-${AppState.totalGenerated})`);
+                return;
+            }
+            AppState.currentChapter = num;
+            log(`Showing chapter ${num}`);
+        }
+        
+        // Define catchUpAndStart
+        function catchUpAndStart() {
+            log('=== catchUpAndStart called ===');
+            
+            const totalNeeded = getTotalChaptersShouldExist();
+            log(`Total chapters needed: ${totalNeeded}`);
+            
+            const BATCH_SIZE = 100;
+            let generated = 0;
+            
+            function generateBatch() {
+                const batchEnd = Math.min(generated + BATCH_SIZE, totalNeeded);
+                log(`Generating batch: ${generated} to ${batchEnd}`);
+                
+                for (let i = generated; i < batchEnd; i++) {
+                    const chapter = StoryEngine.generateChapter();
+                    AppState.chapters.push(chapter);
+                    addSidebarItem(chapter);
+                }
+                
+                generated = batchEnd;
+                AppState.totalGenerated = generated;
+                log(`Generated ${generated} chapters total`);
+                
+                if (generated < totalNeeded) {
+                    const pct = Math.floor((generated / totalNeeded) * 100);
+                    log(`Progress: ${pct}%`);
+                    requestAnimationFrame(generateBatch);
+                } else {
+                    log('=== All chapters generated ===');
+                    showChapter(1);
+                    updateStatsBar();
+                    updateBadge();
+                }
+            }
+            
+            generateBatch();
+        }
+        
+        // Run initialization
+        log('=== Starting initialization ===');
+        catchUpAndStart();
+        
+        log('=== Initialization complete ===');
+        log(`Final state: ${AppState.totalGenerated} chapters generated`);
+    </script>
+</body>
+</html>

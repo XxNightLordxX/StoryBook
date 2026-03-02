@@ -50,9 +50,6 @@
                       ⚙️ Preferences
                   </button>
                   <button class="tab-btn" data-tab="achievements" onclick="UserFeaturesUI.switchTab('achievements')">
-                      🏆 Achievements
-                  </button>
-                  <button class="tab-btn" data-tab="social" onclick="UserFeaturesUI.switchTab('social')">
                       💬 Social
                   </button>
                   <button class="tab-btn" data-tab="messages" onclick="UserFeaturesUI.switchTab('messages')">
@@ -69,9 +66,6 @@
                       ${createPreferencesContent()}
                   </div>
                   <div id="tab-achievements" class="tab-content">
-                      ${createAchievementsContent()}
-                  </div>
-                  <div id="tab-social" class="tab-content">
                       ${createSocialContent()}
                   </div>
                   <div id="tab-messages" class="tab-content">
@@ -164,10 +158,6 @@
                   <span class="stat-label">Bookmarks</span>
               </div>
               <div class="stat-item">
-                  <span class="stat-value" id="stat-achievements">0</span>
-                  <span class="stat-label">Achievements</span>
-              </div>
-          </div>
       </div>
   </div>
 `;
@@ -261,52 +251,6 @@
 /**
      * Create achievements tab content
      */
-    const createAchievementsContent = () => {
-        return `
-      <div class="user-achievements">
-          <div class="achievements-header">
-              <h3>🏆 Achievements</h3>
-              <div class="achievements-progress">
-                  <span id="achievements-unlocked">0</span> / <span id="achievements-total">0</span>
-                  <span id="achievements-percentage">0%</span>
-              </div>
-          </div>
-
-          <div class="achievements-categories">
-              <div class="achievement-category">
-                  <h4>📖 Reading</h4>
-                  <div class="achievements-grid" id="achievements-reading">
-                      <p class="no-data">Loading achievements...</p>
-                  </div>
-              </div>
-              <div class="achievement-category">
-                  <h4>⏰ Time</h4>
-                  <div class="achievements-grid" id="achievements-time">
-                      <p class="no-data">Loading achievements...</p>
-                  </div>
-              </div>
-              <div class="achievement-category">
-                  <h4>🔖 Bookmarks</h4>
-                  <div class="achievements-grid" id="achievements-bookmark">
-                      <p class="no-data">Loading achievements...</p>
-                  </div>
-              </div>
-              <div class="achievement-category">
-                  <h4>🔥 Streaks</h4>
-                  <div class="achievements-grid" id="achievements-streak">
-                      <p class="no-data">Loading achievements...</p>
-                  </div>
-              </div>
-          </div>
-      </div>
-  `;
-    }
-
-    /**
- * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
- */
-/**
-     * Create social tab content
      */
     const createSocialContent = () => {
         return `
@@ -413,7 +357,6 @@
             userFeaturesModal.style.display = 'block';
             loadUserProfile();
             loadPreferences();
-            loadAchievements();
             loadSocialStats();
             loadMessages();
         }
@@ -461,9 +404,6 @@
         } else if (tabName === 'preferences') {
             loadPreferences();
         } else if (tabName === 'achievements') {
-            loadAchievements();
-        } else if (tabName === 'social') {
-            loadSocialStats();
         } else if (tabName === 'messages') {
             loadMessages();
         }
@@ -680,54 +620,6 @@
     /**
  * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
  */
-/**
-     * Load achievements
-     */
-    const loadAchievements = () => {
-        const username = UserProfiles.getCurrentUser();
-        if (!username) {
-            return;
-        }
-
-        const progress = Achievements.getAchievementProgress(username);
-        const allAchievements = Achievements.getAllAchievements();
-
-        // Update progress
-        DOMHelpers.safeSetText('achievements-unlocked', progress.unlocked);
-        DOMHelpers.safeSetText('achievements-total', progress.total);
-        DOMHelpers.safeSetText('achievements-percentage', progress.percentage + '%');
-
-        // Load achievements by category
-        const categories = ['reading', 'time', 'bookmark', 'streak'];
-        categories.forEach(category => {
-            const container = DOMHelpers.safeGetElement('achievements-' + category);
-            if (!container) return;
-
-            const categoryAchievements = Object.values(allAchievements).filter(a => a.category === category);
-            const userAchievements = Achievements.getUserAchievements(username);
-            const unlockedIds = userAchievements.map(a => a.id);
-
-            container.innerHTML = categoryAchievements.map(achievement => {
-                const unlocked = unlockedIds.includes(achievement.id);
-                return `
-                  <div class="achievement-card ${unlocked ? 'unlocked' : 'locked'}">
-                      <div class="achievement-icon">${achievement.icon}</div>
-                      <div class="achievement-info">
-                      <div class="achievement-name">${achievement.name}</div>
-                      <div class="achievement-description">${achievement.description}</div>
-                      <div class="achievement-points">${achievement.points} pts</div>
-                      </div>
-                      <div class="achievement-status">
-                      ${unlocked ? '✅' : '🔒'}
-                      </div>
-                  </div>
-                `;
-            }).join('');
-        });
-    }
-
-    /**
- * Updated to use DOM Helpers for null safety (UZF-MSR v1.0 Rule 18)
  */
 /**
      * Load social stats
@@ -1027,7 +919,6 @@
             const data = {
                 profile: UserProfiles.getProfile(username),
                 preferences: UserPreferences.getPreferences(username),
-                achievements: Achievements.getUserAchievements(username),
                 social: SocialFeatures.getSocialStats(username),
                 exportedAt: new Date().toISOString()
             };
@@ -1177,9 +1068,6 @@
         loadPreferences: loadPreferences,
         updatePreference: updatePreference,
         resetPreferences: resetPreferences,
-        loadAchievements: loadAchievements,
-        loadSocialStats: loadSocialStats,
-        searchUsers: searchUsers,
         followUser: followUser,
         unfollowUser: unfollowUser,
         loadMessages: loadMessages,

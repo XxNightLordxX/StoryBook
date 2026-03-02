@@ -378,9 +378,6 @@
             //     body: notification.message
             // };
 
-            Analytics.trackEvent('email_notification_sent', {
-                type: notification.type
-            });
 
             return true;
         } catch (error) {

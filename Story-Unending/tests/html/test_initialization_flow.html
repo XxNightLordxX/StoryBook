@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Initialization Flow</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .info { background: #d1ecf1; border-color: #bee5eb; }
+        #storyContainer { border: 2px solid #333; padding: 20px; margin: 20px 0; min-height: 200px; background: white; }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Test Initialization Flow</h1>
+    <div id="results"></div>
+    <div id="storyContainer"></div>
+    
+    <script src="backstory-engine.js"></script>
+    <script src="story-engine.js"></script>
+    <script>
+        const results = document.getElementById('results');
+        const storyContainer = document.getElementById('storyContainer');
+        
+        function addResult(message, type) {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.textContent = message;
+            results.appendChild(div);
+        }
+        
+        // Simulate AppState
+        const AppState = {
+            currentUser: null,
+            isAdmin: false,
+            chapters: [],
+            currentChapter: 1,
+            totalGenerated: 0,
+            generationInterval: null,
+            sessionStart: Date.now(),
+            timerInterval: null,
+            sidebarOpen: false,
+            dropdownOpen: false,
+            selectedDonation: null,
+            generating: false,
+            paused: false
+        };
+        
+        // Constants
+        const STORY_START = Date.now();
+        const CHAPTER_INTERVAL_MS = 30000;
+        const MAX_CHAPTERS = 10000;
+        
+        // Simulate showChapter function
+        const showChapter = (num) => {
+            addResult(`\n=== showChapter(${num}) called ===`, 'info');
+            
+            if (num < 1 || num > AppState.totalGenerated) {
+                addResult(`✗ Invalid chapter number: ${num}`, 'error');
+                return;
+            }
+            
+            AppState.currentChapter = num;
+            const chapter = AppState.chapters[num - 1];
+            
+            addResult(`✓ Displaying chapter: ${chapter.title}`, 'success');
+            
+            const settingIcon = chapter.setting === 'vr_world' ? '🎮' : '🌍';
+            const typeIcon = chapter.type;
+            
+            let statTagsHtml = '';
+            if (chapter.statChanges && chapter.statChanges.length > 0) {
+                chapter.statChanges.forEach(change => {
+                    const isUp = change.val.toString().startsWith('+') || change.levelUp;
+                    statTagsHtml += `<span class="chapter-stat-tag"><span class="${isUp ? 'up' : 'down'}">${isUp ? '▲' : '▼'}</span> ${change.stat}: ${change.val}</span>`;
+                });
+            }
+            
+            storyContainer.innerHTML = `
+                <div class="chapter" id="chapter-${chapter.number}">
+                    <div class="chapter-divider">
+                        <span class="chapter-divider-label">Chapter ${chapter.number} of ${AppState.totalGenerated}</span>
+                    </div>
+                    <div class="chapter-heading">
+                        <div class="chapter-title">${chapter.title}</div>
+                        <div class="chapter-meta-line">
+                            <span>${settingIcon} ${chapter.location}</span>
+                            <span>${typeIcon} ${chapter.type.replace(/_/g, ' ')}</span>
+                            <span>📝 ${chapter.wordCount}w</span>
+                            <span>📖 ${chapter.arc}</span>
+                        </div>
+                    </div>
+                    <div class="chapter-body">
+                        ${chapter.paragraphs.map((p, i) => i === 0 ? `<p class="first-para">${p}</p>` : `<p>${p}</p>`).join('')}
+                    </div>
+                    ${statTagsHtml ? `<div class="chapter-stats">${statTagsHtml}</div>` : ''}
+                </div>
+            `;
+            
+            addResult(`✓ Chapter rendered to storyContainer`, 'success');
+        };
+        
+        // Simulate addSidebarItem function
+        const addSidebarItem = (chapter) => {
+            addResult(`  Added sidebar item: ${chapter.number}. ${chapter.title}`, 'info');
+        };
+        
+        // Simulate catchUpAndStart function
+        const catchUpAndStart = () => {
+            addResult('\n=== catchUpAndStart called ===', 'info');
+            
+            const totalNeeded = 10; // Generate 10 chapters for testing
+            addResult(`Generating ${totalNeeded} chapters...`, 'info');
+            
+            const BATCH_SIZE = 100;
+            let generated = 0;
+            
+            function generateBatch() {
+                const batchEnd = Math.min(generated + BATCH_SIZE, totalNeeded);
+                
+                for (let i = generated; i < batchEnd; i++) {
+                    const chapter = StoryEngine.generateChapter();
+                    AppState.chapters.push(chapter);
+                    addSidebarItem(chapter);
+                }
+                
+                generated = batchEnd;
+                AppState.totalGenerated = generated;
+                
+                if (generated < totalNeeded) {
+                    requestAnimationFrame(generateBatch);
+                } else {
+                    addResult(`✓ All ${totalNeeded} chapters generated`, 'success');
+                    
+                    // Show chapter 1
+                    let startChapter = 1;
+                    showChapter(startChapter);
+                }
+            }
+            
+            generateBatch();
+        };
+        
+        // Run initialization
+        addResult('=== Starting initialization ===', 'info');
+        
+        setTimeout(() => {
+            catchUpAndStart();
+        }, 100);
+    </script>
+</body>
+</html>

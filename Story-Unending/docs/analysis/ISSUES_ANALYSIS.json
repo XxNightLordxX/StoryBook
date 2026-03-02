@@ -1,0 +1,1383 @@
+{
+  "summary": {
+    "total_files": 62,
+    "files_with_issues": 38,
+    "total_issues": 196
+  },
+  "issues_by_type": {
+    "UNDEFINED_REFERENCE": 188,
+    "MISSING_ERROR_HANDLING": 8
+  },
+  "issues_by_severity": {
+    "LOW": 188,
+    "MEDIUM": 8
+  },
+  "files": [
+    {
+      "file": "js/ui/notifications-ui.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: undefined",
+          "line": 26
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: undefined",
+          "line": 27
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: undefined",
+          "line": 400
+        }
+      ]
+    },
+    {
+      "file": "js/ui/screenshot-ui.js",
+      "issues": [
+        {
+          "type": "MISSING_ERROR_HANDLING",
+          "severity": "MEDIUM",
+          "message": "Async function captureScreenshot lacks error handling",
+          "line": 134
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 264
+        }
+      ]
+    },
+    {
+      "file": "js/ui/analytics-ui.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 11
+        }
+      ]
+    },
+    {
+      "file": "js/ui/ab-testing-ui.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 20
+        }
+      ]
+    },
+    {
+      "file": "js/ui/content-management-ui.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 11
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 12
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 13
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 14
+        }
+      ]
+    },
+    {
+      "file": "js/ui/user-features-ui.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 11
+        }
+      ]
+    },
+    {
+      "file": "js/ui/search-ui-enhanced.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 10
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: undefined",
+          "line": 381
+        }
+      ]
+    },
+    {
+      "file": "js/ui/social-sharing-ui.js",
+      "issues": [
+        {
+          "type": "MISSING_ERROR_HANDLING",
+          "severity": "MEDIUM",
+          "message": "Async function shareNative lacks error handling",
+          "line": 179
+        }
+      ]
+    },
+    {
+      "file": "js/ui/leaderboards-ui.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 26
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 27
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 28
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 29
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 30
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 31
+        }
+      ]
+    },
+    {
+      "file": "js/utils/sentry.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 11
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 63
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 72
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 77
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 97
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 105
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 121
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 130
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 144
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 153
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 240
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 250
+        }
+      ]
+    },
+    {
+      "file": "js/utils/storage.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 61
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 62
+        }
+      ]
+    },
+    {
+      "file": "js/utils/security.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 168
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 232
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 248
+        }
+      ]
+    },
+    {
+      "file": "js/utils/ui-helpers.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 49
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 49
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 56
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 58
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 61
+        }
+      ]
+    },
+    {
+      "file": "js/modules/search.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 46
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 63
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 81
+        }
+      ]
+    },
+    {
+      "file": "js/modules/leaderboards.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 52
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 287
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 293
+        }
+      ]
+    },
+    {
+      "file": "js/modules/analytics.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 19
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 20
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 21
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 66
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 106
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 165
+        }
+      ]
+    },
+    {
+      "file": "js/modules/fuzzy-search.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 11
+        }
+      ]
+    },
+    {
+      "file": "js/modules/app-state.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 11
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 16
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 18
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 21
+        }
+      ]
+    },
+    {
+      "file": "js/modules/performance.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 64
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 71
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 286
+        }
+      ]
+    },
+    {
+      "file": "js/modules/reading-history.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 35
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 51
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 90
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 151
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 297
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 302
+        }
+      ]
+    },
+    {
+      "file": "js/modules/dynamic-content.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 497
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 981
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 981
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 1005
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 1008
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 1354
+        }
+      ]
+    },
+    {
+      "file": "js/modules/user-profiles.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 12
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 88
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 122
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 122
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 125
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 193
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 257
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 257
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 265
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 265
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 269
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 294
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 364
+        }
+      ]
+    },
+    {
+      "file": "js/modules/api.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 111
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 112
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 368
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 433
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 434
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 440
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 441
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 476
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 477
+        }
+      ]
+    },
+    {
+      "file": "js/modules/social-sharing.js",
+      "issues": [
+        {
+          "type": "MISSING_ERROR_HANDLING",
+          "severity": "MEDIUM",
+          "message": "Async function shareText lacks error handling",
+          "line": 94
+        },
+        {
+          "type": "MISSING_ERROR_HANDLING",
+          "severity": "MEDIUM",
+          "message": "Async function shareChapter lacks error handling",
+          "line": 165
+        },
+        {
+          "type": "MISSING_ERROR_HANDLING",
+          "severity": "MEDIUM",
+          "message": "Async function shareAchievement lacks error handling",
+          "line": 184
+        },
+        {
+          "type": "MISSING_ERROR_HANDLING",
+          "severity": "MEDIUM",
+          "message": "Async function shareSave lacks error handling",
+          "line": 197
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: undefined",
+          "line": 68
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: undefined",
+          "line": 68
+        }
+      ]
+    },
+    {
+      "file": "js/modules/backup.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 19
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 55
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 108
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 108
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 113
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 116
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 254
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 254
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 263
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 277
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 297
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 298
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 304
+        }
+      ]
+    },
+    {
+      "file": "js/modules/content-management.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 182
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 182
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 186
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 206
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 206
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 209
+        }
+      ]
+    },
+    {
+      "file": "js/modules/messaging.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 97
+        }
+      ]
+    },
+    {
+      "file": "js/modules/search-suggestions.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 138
+        }
+      ]
+    },
+    {
+      "file": "js/modules/save-load.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 91
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 119
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 119
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 123
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 124
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 127
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 244
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 253
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 274
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 280
+        }
+      ]
+    },
+    {
+      "file": "js/modules/screenshot-capture.js",
+      "issues": [
+        {
+          "type": "MISSING_ERROR_HANDLING",
+          "severity": "MEDIUM",
+          "message": "Async function captureScreenshot lacks error handling",
+          "line": 90
+        },
+        {
+          "type": "MISSING_ERROR_HANDLING",
+          "severity": "MEDIUM",
+          "message": "Async function captureRegionScreenshot lacks error handling",
+          "line": 192
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 11
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 236
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 236
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 242
+        }
+      ]
+    },
+    {
+      "file": "js/modules/achievements.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 227
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 262
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 277
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 277
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 280
+        }
+      ]
+    },
+    {
+      "file": "js/modules/performance-advanced.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 96
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 218
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 328
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 349
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 372
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 387
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 552
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 572
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 580
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 699
+        }
+      ]
+    },
+    {
+      "file": "js/modules/notifications.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 87
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 90
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 259
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 274
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 288
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: undefined",
+          "line": 300
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 571
+        }
+      ]
+    },
+    {
+      "file": "js/modules/bookmarks.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 89
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 108
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 118
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 175
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 210
+        }
+      ]
+    },
+    {
+      "file": "js/modules/auth.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 15
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 19
+        }
+      ]
+    },
+    {
+      "file": "js/modules/ab-testing.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 132
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 151
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 155
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 171
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 178
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 208
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 220
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 231
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 247
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 253
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 435
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 484
+        }
+      ]
+    },
+    {
+      "file": "js/modules/branching-narrative.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 1380
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 1386
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 1392
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 1398
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: undefined",
+          "line": 1553
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 1695
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 1695
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 1702
+        }
+      ]
+    },
+    {
+      "file": "js/modules/misc.js",
+      "issues": [
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 85
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 343
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 354
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 678
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 707
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 736
+        },
+        {
+          "type": "UNDEFINED_REFERENCE",
+          "severity": "LOW",
+          "message": "Potential undefined/null reference: null",
+          "line": 961
+        }
+      ]
+    }
+  ]
+}

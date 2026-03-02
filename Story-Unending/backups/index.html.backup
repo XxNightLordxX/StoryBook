@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Endless Story Engine — Vampire Progenitor: Extraction</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧛</text></svg>">
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="btn btn-icon" id="sidebarToggle" title="Chapters (S)">☰</button>
+      <div class="topbar-info">
+        <div class="topbar-title">🧛 Vampire Progenitor: Extraction</div>
+        <div class="topbar-subtitle" id="arcDisplay">Arc: Awakening</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <!-- Chapter Nav in topbar -->
+      <div class="topbar-nav">
+        <button class="nav-btn" id="prevBtnTop" onclick="prevChapter()" title="Previous Chapter">◀</button>
+        <span class="nav-current" id="navCurrentTop">Ch. 1</span>
+        <button class="nav-btn" id="nextBtnTop" onclick="nextChapter()" title="Next Chapter">▶</button>
+      </div>
+      <div class="dropdown-wrapper">
+        <button class="menu-toggle-btn" id="menuToggle" onclick="toggleDropdown()">⚙️</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+
+          <!-- Auth: Logged Out -->
+          <div class="dropdown-section" id="dropdownAuthSection">
+            <div class="dropdown-section-title">Account</div>
+            <button class="dropdown-btn purple-btn" onclick="openModal('loginOverlay'); closeDropdown();">
+              <span class="dropdown-btn-icon">🔑</span><span class="dropdown-btn-text">Login</span>
+            </button>
+            <button class="dropdown-btn green-btn" onclick="openModal('registerOverlay'); closeDropdown();">
+              <span class="dropdown-btn-icon">📝</span><span class="dropdown-btn-text">Register</span>
+            </button>
+          </div>
+
+          <!-- Auth: Logged In -->
+          <div class="dropdown-section" id="dropdownUserSection" style="display:none;">
+            <div class="dropdown-section-title">Account</div>
+            <div class="dropdown-user-info" id="dropdownUserInfo" onclick="toggleDirectorModeFromUser()" style="cursor:pointer;">
+              <span class="dui-icon" id="dropdownUserIcon">👤</span>
+              <div>
+                <div class="dui-name" id="dropdownUserName"></div>
+                <div class="dui-role" id="dropdownUserRole">Reader</div>
+              </div>
+              <span class="dui-toggle-hint" id="duiToggleHint" style="display:none;">🎬 Click for Director Mode</span>
+            </div>
+            <button class="dropdown-btn blue-btn" id="addEmailBtn" onclick="openModal('addEmailOverlay'); closeDropdown();" style="display:none;">
+              <span class="dropdown-btn-icon">📧</span>
+              <div><span class="dropdown-btn-text">Add Email</span><br><span class="dropdown-btn-sub">Enable password reset</span></div>
+            </button>
+            <button class="dropdown-btn red-btn" onclick="logout(); closeDropdown();">
+              <span class="dropdown-btn-icon">🚪</span><span class="dropdown-btn-text">Logout</span>
+            </button>
+
+          <!-- Director Section (Admin Only) -->
+          </div>
+          <div class="dropdown-section" id="dropdownDirectorSection" style="display:none;">
+            <div class="dropdown-section-title">🎬 Director Controls</div>
+            <button class="dropdown-btn purple-btn" onclick="toggleDirectorModeFromUser(); closeDropdown();">
+              <span class="dropdown-btn-icon">🎬</span>
+              <div><span class="dropdown-btn-text">Director Mode</span><br><span class="dropdown-btn-sub">Full director panel</span></div>
+            </button>
+            <button class="dropdown-btn red-btn" onclick="resetStory(); closeDropdown();">
+              <span class="dropdown-btn-icon">🔄</span>
+              <div><span class="dropdown-btn-text">Reset Story</span><br><span class="dropdown-btn-sub">Start from Chapter 1</span></div>
+            </button>
+          </div>
+
+          <!-- MC Stat Sheet -->
+          <div class="dropdown-section dropdown-stat-sheet">
+            <div class="dropdown-section-title">🧛 Kael — Vampire Progenitor (Lv. <span id="ddLevel">1</span>)</div>
+            <div id="ddChapterIndicator" class="dd-chapter-indicator">
+              <span class="dd-chapter-badge latest">📖 Latest — Ch. 1</span>
+            </div>
+            <button class="btn btn-jump-latest" id="ddJumpLatest" onclick="jumpToLatestChapter()" style="display:none;">
+              ⚡ Jump to Latest Chapter
+            </button>
+            <div class="dropdown-stat-bars">
+              <div class="dropdown-stat-bar"><span class="ds-label">❤️ HP</span><div class="ds-track"><div class="ds-fill hp" id="ddBarHp" style="width:100%"></div></div><span class="ds-val" id="ddHpVal">500/500</span></div>
+              <div class="dropdown-stat-bar"><span class="ds-label">💚 SP</span><div class="ds-track"><div class="ds-fill sp" id="ddBarSp" style="width:100%"></div></div><span class="ds-val" id="ddSpVal">300/300</span></div>
+              <div class="dropdown-stat-bar"><span class="ds-label">💙 MP</span><div class="ds-track"><div class="ds-fill mp" id="ddBarMp" style="width:100%"></div></div><span class="ds-val" id="ddMpVal">400/400</span></div>
+              <div class="dropdown-stat-bar"><span class="ds-label">🩸 Blood</span><div class="ds-track"><div class="ds-fill blood" id="ddBarBlood" style="width:100%"></div></div><span class="ds-val" id="ddBloodVal">100/100</span></div>
+            </div>
+            <div class="dropdown-stat-grid">
+              <div class="dropdown-stat-cell"><span class="dsc-name">💪 STR</span><span class="dsc-val purple" id="ddStr">12</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🏃 AGI</span><span class="dsc-val green" id="ddAgi">15</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🧠 INT</span><span class="dsc-val blue" id="ddInt">18</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">❤️ VIT</span><span class="dsc-val red" id="ddVit">14</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🛡️ END</span><span class="dsc-val green" id="ddEnd">13</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🍀 LCK</span><span class="dsc-val gold" id="ddLuck">10</span></div>
+            </div>
+            <div class="dropdown-stat-grid">
+              <div class="dropdown-stat-cell"><span class="dsc-name">🩸 Bloodlust</span><span class="dsc-val crimson" id="ddBloodlust">0</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🌑 Dark</span><span class="dsc-val purple" id="ddDark">15</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">💗 Regen</span><span class="dsc-val green" id="ddRegen">5</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">👁️ Dom</span><span class="dsc-val crimson" id="ddDom">8</span></div>
+            </div>
+            <div class="dropdown-stat-grid">
+              <div class="dropdown-stat-cell"><span class="dsc-name">⚔️ ATK</span><span class="dsc-val red" id="ddAtk">25</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🛡️ DEF</span><span class="dsc-val blue" id="ddDef">18</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">💥 Crit</span><span class="dsc-val gold" id="ddCrit">8%</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">💨 Eva</span><span class="dsc-val green" id="ddEva">12%</span></div>
+            </div>
+            <div class="dropdown-stat-grid">
+              <div class="dropdown-stat-cell"><span class="dsc-name">⚖️ Karma</span><span class="dsc-val gold" id="ddKarma">50</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🔮 Instinct</span><span class="dsc-val purple" id="ddInstinct">10</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🧠 Will</span><span class="dsc-val blue" id="ddWill">16</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">👤 Presence</span><span class="dsc-val crimson" id="ddPresence">12</span></div>
+            </div>
+            <div class="dropdown-stat-grid">
+              <div class="dropdown-stat-cell"><span class="dsc-name">🪙 Gold</span><span class="dsc-val gold" id="ddGold">0</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🔮 Extract</span><span class="dsc-val cyan" id="ddExtract">0</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">💀 Kills</span><span class="dsc-val red" id="ddKills">0</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">👑 Bosses</span><span class="dsc-val gold" id="ddBosses">0</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">🏰 Dungeons</span><span class="dsc-val purple" id="ddDungeons">0</span></div>
+              <div class="dropdown-stat-cell"><span class="dsc-name">📍 Location</span><span class="dsc-val" id="ddLocation">Real World</span></div>
+            </div>
+          </div>
+
+          <!-- Text Size -->
+          <div class="dropdown-section">
+            <div class="dropdown-section-title">📖 Text Size</div>
+            <div class="text-size-controls">
+              <input type="number" id="textSizeInput" class="text-size-input" min="10" max="32" value="16" onchange="setTextSize(this.value)">
+              <span class="text-size-unit">px</span>
+            </div>
+          </div>
+
+          <!-- Full Status -->
+          <div class="dropdown-section">
+            <button class="dropdown-btn purple-btn" onclick="toggleSection('statusContent')">
+              <span class="dropdown-btn-icon">📊</span>
+              <div><span class="dropdown-btn-text">Status</span><br><span class="dropdown-btn-sub">Full status screen</span></div>
+              <span class="dropdown-toggle-icon">▼</span>
+            </button>
+            <div class="dropdown-section-content" id="statusContent">
+              <button class="dropdown-btn purple-btn" onclick="toggleStatusScreen(); closeDropdown();">
+                <span class="dropdown-btn-icon">📊</span>
+                <div><span class="dropdown-btn-text">Full Status Screen</span><br><span class="dropdown-btn-sub">Skills, abilities & stats</span></div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Support -->
+          <div class="dropdown-section">
+            <button class="dropdown-btn gold-btn" onclick="toggleSection('supportContent')">
+              <span class="dropdown-btn-icon">💰</span>
+              <div><span class="dropdown-btn-text">Support</span><br><span class="dropdown-btn-sub">Donate & Subscribe</span></div>
+              <span class="dropdown-toggle-icon">▼</span>
+            </button>
+            <div class="dropdown-section-content" id="supportContent">
+              <button class="dropdown-btn gold-btn" onclick="openModal('donateOverlay'); closeDropdown();">
+                <span class="dropdown-btn-icon">💰</span>
+                <div><span class="dropdown-btn-text">Donate</span><br><span class="dropdown-btn-sub">Support the story</span></div>
+              </button>
+              <button class="dropdown-btn purple-btn" onclick="openModal('subscribeOverlay'); closeDropdown();">
+                <span class="dropdown-btn-icon">⭐</span>
+                <div><span class="dropdown-btn-text">Subscribe</span><br><span class="dropdown-btn-sub">$4.99/mo — Premium</span></div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Session -->
+          <div class="dropdown-section">
+            <button class="dropdown-btn blue-btn" onclick="toggleSection('sessionContent')">
+              <span class="dropdown-btn-icon">⏱️</span>
+              <div><span class="dropdown-btn-text">Session Stats</span><br><span class="dropdown-btn-sub">Chapters, words & time</span></div>
+              <span class="dropdown-toggle-icon">▼</span>
+            </button>
+            <div class="dropdown-section-content" id="sessionContent">
+              <div class="dropdown-stat-grid">
+                <div class="dropdown-stat-cell"><span class="dsc-name">📖 Chapters</span><span class="dsc-val purple" id="ddChapters">0</span></div>
+                <div class="dropdown-stat-cell"><span class="dsc-name">📝 Words</span><span class="dsc-val blue" id="ddWords">0</span></div>
+                <div class="dropdown-stat-cell"><span class="dsc-name">⏱️ Time</span><span class="dsc-val" id="ddTimer">00:00:00</span></div>
+                <div class="dropdown-stat-cell"><span class="dsc-name">⚔️ Level</span><span class="dsc-val purple" id="ddLevelBottom">1</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Director Panel (Admin Only) -->
+          </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats bar removed — all stats now in dropdown menu -->
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h3>📖 Chapters</h3>
+      <button class="btn btn-icon btn-sm" onclick="toggleSidebar()">✕</button>
+    </div>
+    <div class="sidebar-jump">
+      <input type="number" id="sidebarJumpInput" placeholder="Go to chapter..." min="1" onkeypress="handleSidebarJumpKey(event)" />
+      <button class="btn btn-primary btn-sm" onclick="jumpToChapter()">Go</button>
+    </div>
+    <div class="sidebar-list" id="sidebarList"></div>
+  </aside>
+
+  <!-- MAIN CONTENT — Single Chapter View -->
+  <main class="main-content" id="mainContent">
+    <!-- Single chapter renders here -->
+    <div id="storyContainer"></div>
+
+    <!-- Chapter Navigation (bottom) -->
+    <div class="chapter-nav" id="chapterNav">
+      <button class="chapter-nav-btn prev" id="prevBtn" onclick="prevChapter()">
+        <span class="cnb-arrow">←</span>
+        <span class="cnb-label">Previous Chapter</span>
+        <span class="cnb-title" id="prevTitle"></span>
+      </button>
+      <button class="chapter-nav-btn next" id="nextBtn" onclick="nextChapter()">
+        <span class="cnb-label">Next Chapter</span>
+        <span class="cnb-title" id="nextTitle"></span>
+        <span class="cnb-arrow">→</span>
+      </button>
+    </div>
+
+    <!-- Generating indicator -->
+    <div class="generating-indicator" id="generatingIndicator">
+      <span>Generating chapters</span>
+      <span class="generating-dots"><span></span><span></span><span></span></span>
+    </div>
+  </main>
+
+  <!-- Full Status Screen -->
+  <div class="status-screen" id="statusScreen" style="display:none;">
+    <div class="status-screen-header">
+      <h1>📊 Full Status Screen</h1>
+      <button class="btn btn-primary" onclick="toggleStatusScreen()">← Back to Reader Mode</button>
+    </div>
+    <div class="status-screen-content">
+      <!-- Character Info -->
+      <div class="status-section">
+        <div class="status-section-title">🧛 Character Information</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">Name</div>
+            <div class="status-card-value">Kael</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Class</div>
+            <div class="status-card-value">Vampire Progenitor</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Level</div>
+            <div class="status-card-value" id="statusLevel">1</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Extractions</div>
+            <div class="status-card-value" id="statusExtractions">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Stats -->
+      <div class="status-section">
+        <div class="status-section-title">❤️ Core Stats</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">HP</div>
+            <div class="status-card-value" id="statusHP">100</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">SP</div>
+            <div class="status-card-value" id="statusSP">100</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">MP</div>
+            <div class="status-card-value" id="statusMP">50</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Blood Essence</div>
+            <div class="status-card-value" id="statusBloodEssence">100</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Primary Stats -->
+      <div class="status-section">
+        <div class="status-section-title">⚔️ Primary Stats</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">Strength</div>
+            <div class="status-card-value" id="statusSTR">10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Agility</div>
+            <div class="status-card-value" id="statusAGI">10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Intelligence</div>
+            <div class="status-card-value" id="statusINT">10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Vitality</div>
+            <div class="status-card-value" id="statusVIT">10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Endurance</div>
+            <div class="status-card-value" id="statusEND">10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Luck</div>
+            <div class="status-card-value" id="statusLUCK">5</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vampire Stats -->
+      <div class="status-section">
+        <div class="status-section-title">🧛 Vampire Stats</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">Bloodlust</div>
+            <div class="status-card-value" id="statusBloodlust">0</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Dark Affinity</div>
+            <div class="status-card-value" id="statusDarkAffinity">0</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Regeneration</div>
+            <div class="status-card-value" id="statusRegeneration">0</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Domination</div>
+            <div class="status-card-value" id="statusDomination">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Combat Stats -->
+      <div class="status-section">
+        <div class="status-section-title">⚔️ Combat Stats</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">Attack Power</div>
+            <div class="status-card-value" id="statusAttackPower">15</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Defense</div>
+            <div class="status-card-value" id="statusDefense">10</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Critical Rate</div>
+            <div class="status-card-value" id="statusCriticalRate">5%</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Evasion</div>
+            <div class="status-card-value" id="statusEvasion">5%</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Attack Speed</div>
+            <div class="status-card-value" id="statusAttackSpeed">10</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hidden Stats -->
+      <div class="status-section">
+        <div class="status-section-title">🌟 Hidden Stats</div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-label">Karma</div>
+            <div class="status-card-value" id="statusKarma">0</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Instinct</div>
+            <div class="status-card-value" id="statusInstinct">0</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Willpower</div>
+            <div class="status-card-value" id="statusWillpower">0</div>
+          </div>
+          <div class="status-card">
+            <div class="status-card-label">Presence</div>
+            <div class="status-card-value" id="statusPresence">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="status-section">
+        <div class="status-section-title">✨ Skills</div>
+        <div class="status-list" id="statusSkills">
+          <div class="status-empty">No skills yet</div>
+        </div>
+      </div>
+
+      <!-- Abilities -->
+      <div class="status-section">
+        <div class="status-section-title">🌟 Abilities</div>
+        <div class="status-list" id="statusAbilities">
+          <div class="status-empty">No abilities yet</div>
+        </div>
+      </div>
+
+      <!-- Inventory -->
+      <div class="status-section">
+        <div class="status-section-title">🎒 Inventory</div>
+        <div class="status-list" id="statusInventory">
+          <div class="status-empty">No items yet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full Director Screen -->
+  <div class="director-screen" id="directorScreen" style="display:none;">
+    <div class="director-screen-header">
+      <h1>🎬 Story Director Panel</h1>
+      <button class="btn btn-primary" onclick="toggleDirectorMode()">← Back to Reader Mode</button>
+    </div>
+    <div class="director-screen-content">
+      <!-- Chapter Speed Control -->
+      <div class="director-section">
+        <div class="director-section-title">⏱️ Chapter Generation Speed</div>
+        <div class="speed-presets">
+          <button class="btn btn-sm" data-speed="5000" onclick="setSpeed(5000)">5s</button>
+          <button class="btn btn-sm" data-speed="10000" onclick="setSpeed(10000)">10s</button>
+          <button class="btn btn-sm" data-speed="15000" onclick="setSpeed(15000)">15s</button>
+          <button class="btn btn-sm" data-speed="30000" onclick="setSpeed(30000)">30s</button>
+          <button class="btn btn-sm" data-speed="60000" onclick="setSpeed(60000)">1m</button>
+          <button class="btn btn-sm" data-speed="300000" onclick="setSpeed(300000)">5m</button>
+        </div>
+        <div class="speed-custom-row">
+          <input type="number" id="customSpeedInputScreen" min="1" max="3600" placeholder="30" />
+          <button class="btn btn-primary btn-sm" onclick="setCustomSpeedScreen()">Set</button>
+        </div>
+      </div>
+      <div class="speed-current" id="speedCurrentDisplayScreen">
+        Current: <strong>1 chapter every <span id="speedValueDisplayScreen">30s</span></strong>
+      </div>
+      <button class="btn btn-pause" id="pauseBtnScreen" onclick="togglePause()">
+        <span id="pauseIconScreen">⏸️</span> <span id="pauseLabelScreen">Pause Generation</span>
+      </button>
+
+      <!-- Story Directive -->
+      <div class="director-section">
+        <div class="director-section-title">📝 Story Directive</div>
+        <div class="form-group">
+          <label>Directive</label>
+          <textarea id="directiveTextScreen" placeholder="e.g. A mysterious NPC appears offering a forbidden quest..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Apply within next</label>
+          <input type="number" id="directiveChaptersScreen" min="1" max="50" value="3" />
+          <span>chapters</span>
+        </div>
+        <button class="btn btn-primary" onclick="submitDirectiveScreen()">Submit Directive</button>
+      </div>
+
+      <!-- Admin Account Settings -->
+      <div class="director-section">
+        <div class="director-section-title">👑 Admin Account Settings</div>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="adminUsernameScreen" value="admin" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <div class="password-input-group">
+            <input type="password" id="adminPasswordScreen" placeholder="Enter admin password" />
+            <button class="btn btn-sm" onclick="togglePasswordVisibility('adminPasswordScreen')">👁️</button>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="updateAdminCredentialsScreen()">Update Credentials</button>
+      </div>
+
+      <!-- User Management -->
+      <div class="director-section">
+        <div class="director-section-title">👥 User Management</div>
+        <div class="user-management-header">
+          <span id="userCountScreen">0 users</span>
+          <button class="btn btn-sm" onclick="toggleUserManagementScreen()">Minimize</button>
+        </div>
+        <div class="user-search">
+          <input type="text" id="userSearchInputScreen" placeholder="Search users..." oninput="filterUsersScreen()" />
+        </div>
+        <div class="user-list" id="userListScreen">
+          <!-- Users will be populated here -->
+        </div>
+      </div>
+
+      <!-- Story Rules -->
+      <div class="director-section">
+        <div class="director-section-title">📜 Story Rules</div>
+        <div class="form-group">
+          <label>Add New Rule</label>
+          <textarea id="storyRuleText" placeholder="e.g. Keep Yuna in the story, change MC to female, add a new companion..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Rule Type</label>
+          <select id="ruleType" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.9);">
+            <option value="character">Character Change</option>
+            <option value="plot">Plot Direction</option>
+            <option value="world">World Rule</option>
+            <option value="system">System Change</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="addStoryRule()">Add Rule</button>
+        <div class="story-rules-list" id="storyRulesList"></div>
+      </div>
+
+      <!-- Story Control -->
+      <div class="director-section">
+        <div class="director-section-title">🎮 Story Control</div>
+        <div class="form-group">
+          <label>Generation Mode</label>
+          <select id="generationMode" onchange="updateGenerationMode()" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.9);">
+            <option value="unlimited">Unlimited Generation</option>
+            <option value="admin_progress">Limit to Admin Reading Progress</option>
+          </select>
+        </div>
+        <div class="form-group" id="adminProgressInfo" style="display:none;">
+          <label>Admin Current Chapter: <span id="adminCurrentChapter">1</span></label>
+          <label>Generated Chapters: <span id="generatedChaptersCount">0</span></label>
+        </div>
+        <button class="btn btn-danger" onclick="resetStory()" style="width:100%;justify-content:center;margin-top:10px;">
+          🔄 Reset Story to Chapter 1
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING -->
+  <div class="chapter-badge" id="chapterBadge" onclick="toggleSidebar()">
+    📖 <span id="badgeCount">0</span>
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="notification-container" id="notificationContainer"></div>
+
+  <!-- REGISTER MODAL -->
+  <div class="modal-overlay" id="registerOverlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('registerOverlay')">✕</button>
+      <h2>📝 Create Account</h2>
+      <p class="modal-desc">Join the Endless Story Engine</p>
+      <div class="form-group">
+        <label>Username *</label>
+        <input type="text" id="regUsername" placeholder="Enter username" />
+      </div>
+      <div class="form-group">
+        <label>Email <span class="optional">(optional)</span></label>
+        <input type="email" id="regEmail" placeholder="Enter email" />
+      </div>
+      <div class="form-group">
+        <label>Password *</label>
+        <input type="password" id="regPassword" placeholder="Enter password" />
+      </div>
+      <button class="btn btn-primary" onclick="register()" style="width:100%;justify-content:center;">Create Account</button>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal-overlay" id="loginOverlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('loginOverlay')">✕</button>
+      <h2>🔑 Login</h2>
+      <p class="modal-desc">Welcome back, reader</p>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="loginUsername" placeholder="Enter username" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter password" />
+      </div>
+      <button type="button" class="btn btn-primary" onclick="login()" style="width:100%;justify-content:center;">Login</button>
+      <div class="forgot-password">
+        <a href="#" onclick="openModal('resetPasswordOverlay'); closeModal('loginOverlay'); return false;">Forgot password?</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESET PASSWORD MODAL -->
+  <div class="modal-overlay" id="resetPasswordOverlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('resetPasswordOverlay')">✕</button>
+      <h2>🔐 Reset Password</h2>
+      <p class="modal-desc">Enter your email to receive a password reset link</p>
+      <div id="resetStep1">
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="resetEmail" placeholder="Enter your email address" />
+        </div>
+        <button class="btn btn-primary" onclick="sendResetEmail()" style="width:100%;justify-content:center;">Send Reset Link</button>
+      </div>
+      <div id="resetStep2" style="display:none;">
+        <div class="reset-success">
+          <div class="reset-success-icon">📧</div>
+          <h3>Email Sent!</h3>
+          <p>A password reset link has been sent to <strong id="resetEmailDisplay"></strong>.</p>
+          <p class="reset-note">Check your inbox and click the link to reset your password.</p>
+          <button class="btn btn-primary" onclick="simulateResetLink()" style="width:100%;justify-content:center;margin-top:16px;">🔗 Simulate Clicking Reset Link</button>
+        </div>
+      </div>
+      <div id="resetStep3" style="display:none;">
+        <div class="form-group">
+          <label>New Password *</label>
+          <input type="password" id="resetNewPassword" placeholder="Enter new password" />
+        </div>
+        <div class="form-group">
+          <label>Confirm Password *</label>
+          <input type="password" id="resetConfirmPassword" placeholder="Confirm new password" />
+        </div>
+        <button class="btn btn-primary" onclick="resetPassword()" style="width:100%;justify-content:center;">Reset Password</button>
+      </div>
+      <div id="resetStep4" style="display:none;">
+        <div class="reset-success">
+          <div class="reset-success-icon">✅</div>
+          <h3>Password Reset!</h3>
+          <p>Your password has been successfully updated.</p>
+          <button class="btn btn-primary" onclick="closeModal('resetPasswordOverlay'); openModal('loginOverlay');" style="width:100%;justify-content:center;margin-top:16px;">Login with New Password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD EMAIL MODAL -->
+  <div class="modal-overlay" id="addEmailOverlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('addEmailOverlay')">✕</button>
+      <h2>📧 Add Email</h2>
+      <p class="modal-desc">Add an email to your account for password reset</p>
+      <div class="form-group">
+        <label>Email *</label>
+        <input type="email" id="addEmailInput" placeholder="Enter your email address" />
+      </div>
+      <button class="btn btn-primary" onclick="addEmailToAccount()" style="width:100%;justify-content:center;">Add Email</button>
+    </div>
+  </div>
+
+  <!-- DONATE MODAL -->
+  <div class="modal-overlay" id="donateOverlay">
+    <div class="modal modal-payment">
+      <button class="modal-close" onclick="closeModal('donateOverlay')">✕</button>
+      <h2>💰 Support the Story</h2>
+      <p class="modal-desc">Help keep the Endless Story Engine running</p>
+      <div id="donateStep1">
+        <div class="donate-amounts">
+          <button class="donate-amount-btn" onclick="selectDonation(3)">$3</button>
+          <button class="donate-amount-btn" onclick="selectDonation(5)">$5</button>
+          <button class="donate-amount-btn" onclick="selectDonation(10)">$10</button>
+          <button class="donate-amount-btn" onclick="selectDonation(25)">$25</button>
+          <button class="donate-amount-btn" onclick="selectDonation(50)">$50</button>
+          <button class="donate-amount-btn" onclick="selectDonation(100)">$100</button>
+        </div>
+        <div class="form-group">
+          <label>Custom Amount ($)</label>
+          <input type="number" id="donateCustom" placeholder="Enter amount" min="1" />
+        </div>
+        <div class="form-group">
+          <label>Message <span class="optional">(optional)</span></label>
+          <textarea id="donateMessage" placeholder="Leave a message..." rows="2"></textarea>
+        </div>
+        <button class="btn btn-paypal" onclick="openPayPalDonation()" style="width:100%;justify-content:center;">
+          <svg class="paypal-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="#fff" d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797H9.603c-.564 0-1.04.408-1.13.964L7.076 21.337z"/><path fill="#fff" d="M18.171 7.394c-.074.44-.16.89-.27 1.345-1.2 5.87-5.347 7.394-9.163 7.394H7.403L5.806 24h2.564a.56.56 0 0 0 .553-.468l.023-.117.437-2.77.028-.152a.56.56 0 0 1 .553-.469h.348c2.254 0 4.02-.916 4.536-3.564.216-1.106.104-2.03-.467-2.678a2.23 2.23 0 0 0-.21-.182z"/></svg>
+          Pay with PayPal →
+        </button>
+        <div class="paypal-divider"><span>or scan QR code</span></div>
+        <div class="paypal-qr-section">
+          <img src="IMG_6653.jpeg" alt="PayPal QR Code - Johnathon Wood" class="paypal-qr-img" />
+          <p class="paypal-qr-label">Scan with PayPal app to pay <strong>Johnathon Wood</strong></p>
+        </div>
+        <div class="paypal-confirm-section" style="display:none;">
+          <p class="paypal-confirm-text">Already paid via PayPal?</p>
+          <button class="btn btn-ghost" onclick="confirmDonation()" style="width:100%;justify-content:center;">✓ I've Completed Payment</button>
+        </div>
+      </div>
+      <div id="donateStep3" style="display:none;">
+        <div class="payment-success">
+          <div class="payment-success-icon">✨</div>
+          <h3>Thank You!</h3>
+          <p>Your generous donation helps keep the story alive forever.</p>
+          <button class="btn btn-primary" onclick="closeDonateModal()" style="width:100%;justify-content:center;margin-top:16px;">Continue Reading</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBSCRIBE MODAL -->
+  <div class="modal-overlay" id="subscribeOverlay">
+    <div class="modal modal-payment">
+      <button class="modal-close" onclick="closeModal('subscribeOverlay')">✕</button>
+      <h2>⭐ Subscribe</h2>
+      <p class="modal-desc">Unlock the premium experience</p>
+      <div id="subStep1">
+        <div class="subscribe-plan">
+          <div class="subscribe-price">$4.99<span>/month</span></div>
+          <div class="subscribe-plan-name">Premium Reader</div>
+        </div>
+        <ul class="subscribe-benefits">
+          <li>Ad-free reading experience</li>
+          <li>Early access to new chapters</li>
+          <li>Exclusive subscriber badge</li>
+          <li>Priority story directive submissions</li>
+          <li>Detailed MC stat analytics</li>
+          <li>Custom reading themes</li>
+        </ul>
+        <button class="btn btn-paypal" onclick="openPayPalSubscription()" style="width:100%;justify-content:center;">
+          <svg class="paypal-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="#fff" d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797H9.603c-.564 0-1.04.408-1.13.964L7.076 21.337z"/><path fill="#fff" d="M18.171 7.394c-.074.44-.16.89-.27 1.345-1.2 5.87-5.347 7.394-9.163 7.394H7.403L5.806 24h2.564a.56.56 0 0 0 .553-.468l.023-.117.437-2.77.028-.152a.56.56 0 0 1 .553-.469h.348c2.254 0 4.02-.916 4.536-3.564.216-1.106.104-2.03-.467-2.678a2.23 2.23 0 0 0-.21-.182z"/></svg>
+          Subscribe with PayPal — $4.99/mo →
+        </button>
+        <div class="paypal-divider"><span>or scan QR code</span></div>
+        <div class="paypal-qr-section">
+          <img src="IMG_6653.jpeg" alt="PayPal QR Code - Johnathon Wood" class="paypal-qr-img" />
+          <p class="paypal-qr-label">Scan with PayPal app to pay <strong>Johnathon Wood</strong></p>
+          <p class="paypal-qr-note">Send $4.99 and include "Subscribe" in the note</p>
+        </div>
+        <div class="paypal-confirm-section">
+          <p class="paypal-confirm-text">Already paid via PayPal?</p>
+          <button class="btn btn-ghost" onclick="confirmSubscription()" style="width:100%;justify-content:center;">✓ I've Completed Payment</button>
+        </div>
+      </div>
+      <div id="subStep3" style="display:none;">
+        <div class="payment-success">
+          <div class="payment-success-icon">⭐</div>
+          <h3>Welcome, Premium Reader!</h3>
+          <p>Your subscription is now active. Enjoy the premium experience.</p>
+          <button class="btn btn-primary" onclick="closeSubModal()" style="width:100%;justify-content:center;margin-top:16px;">Continue Reading</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="backstory-engine.js"></script>
+  <script src="story-engine.js"></script>
+  <!-- External JavaScript Modules -->
+  <script src="js/utils/security.js"></script>
+  <script src="js/utils/storage.js"></script>
+  <script src="js/utils/helpers.js"></script>
+  
+  <script src="js/modules/app-state.js"></script>
+  <script src="js/modules/story-timeline.js"></script>
+  <script src="js/modules/auth.js"></script>
+  <script src="js/modules/navigation.js"></script>
+  <script src="js/modules/admin.js"></script>
+  <script src="js/modules/generation.js"></script>
+  <script src="js/modules/donation.js"></script>
+  <script src="js/modules/directive.js"></script>
+  <script src="js/modules/reset-password.js"></script>
+  <script src="js/modules/misc.js"></script>
+  <script src="js/modules/initialization.js"></script>
+  
+  <script src="js/ui/dropdown.js"></script>
+  <script src="js/ui/text-size.js"></script>
+  <script src="js/ui/modals.js"></script>
+  <script src="js/ui/notifications.js"></script>
+  <script src="js/ui/keyboard-shortcuts.js"></script>
+  <script src="js/ui/sidebar.js"></script>
+  <script src="js/ui/stats.js"></script>
+  
+  <script>
+    console.log('✅ All JavaScript modules loaded successfully');
+  </script>
+</body>
+</html>

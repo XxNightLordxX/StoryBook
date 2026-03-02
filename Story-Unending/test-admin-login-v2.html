@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-section {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Admin Login Test</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Check Required Modules</h2>
+        <div id="test1"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 2: Check ADMIN_USER Object</h2>
+        <div id="test2"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 3: Check Storage Functions</h2>
+        <div id="test3"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 4: Manual Login Test</h2>
+        <input type="text" id="testUsername" placeholder="Username" value="Admin">
+        <input type="password" id="testPassword" placeholder="Password" value="admin123">
+        <button onclick="testLogin()">Test Login</button>
+        <div id="test4"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 5: Check localStorage</h2>
+        <button onclick="checkLocalStorage()">Check localStorage</button>
+        <div id="test5"></div>
+    </div>
+
+    <!-- Load required scripts -->
+    <script src="js/utils/error-handler.js?v=3"></script>
+    <script src="js/utils/security.js?v=3"></script>
+    <script src="js/utils/safe-html.js?v=3"></script>
+    <script src="js/utils/storage.js?v=5"></script>
+    <script src="js/utils/prompt-modal.js?v=3"></script>
+    <script src="js/utils/helpers.js?v=3"></script>
+    <script src="js/utils/formatters.js?v=3"></script>
+    <script src="js/utils/ui-helpers.js?v=3"></script>
+    <script src="js/utils/lazy-loader.js?v=3"></script>
+    <script src="js/utils/dependency-validator.js?v=3"></script>
+    <script src="js/utils/config.js?v=3"></script>
+    <script src="js/utils/sentry.js?v=3"></script>
+    <script src="js/utils/rate-limiter.js?v=3"></script>
+    <script src="js/ui/modals.js?v=3"></script>
+    <script src="js/ui/notifications.js?v=3"></script>
+    <script src="js/modules/app-state.js?v=5"></script>
+    <script src="js/modules/auth.js?v=3"></script>
+
+    <script>
+        function runTests() {
+            console.log('=== Running Admin Login Tests ===');
+            
+            // Test 1: Check Required Modules
+            const test1Div = document.getElementById('test1');
+            let test1Results = [];
+            
+            test1Results.push(`Storage: ${typeof Storage !== 'undefined' ? '<span class="success">✓ Loaded</span>' : '<span class="error">✗ Not loaded</span>'}`);
+            test1Results.push(`RateLimiter: ${typeof RateLimiter !== 'undefined' ? '<span class="success">✓ Loaded</span>' : '<span class="error">✗ Not loaded</span>'}`);
+            test1Results.push(`showNotification: ${typeof showNotification !== 'undefined' ? '<span class="success">✓ Loaded</span>' : '<span class="error">✗ Not loaded</span>'}`);
+            test1Results.push(`closeModal: ${typeof closeModal !== 'undefined' ? '<span class="success">✓ Loaded</span>' : '<span class="error">✗ Not loaded</span>'}`);
+            test1Results.push(`Auth: ${typeof Auth !== 'undefined' ? '<span class="success">✓ Loaded</span>' : '<span class="error">✗ Not loaded</span>'}`);
+            test1Results.push(`AppState: ${typeof AppState !== 'undefined' ? '<span class="success">✓ Loaded</span>' : '<span class="error">✗ Not loaded</span>'}`);
+            
+            test1Div.innerHTML = '<ul>' + test1Results.map(r => `<li>${r}</li>`).join('') + '</ul>';
+            
+            // Test 2: Check ADMIN_USER Object
+            const test2Div = document.getElementById('test2');
+            let test2Results = [];
+            
+            if (typeof ADMIN_USER !== 'undefined') {
+                test2Results.push('<span class="success">✓ ADMIN_USER is defined</span>');
+                test2Results.push(`<pre>ADMIN_USER = ${JSON.stringify(ADMIN_USER, null, 2)}</pre>`);
+            } else {
+                test2Results.push('<span class="error">✗ ADMIN_USER is NOT defined</span>');
+            }
+            
+            test2Div.innerHTML = test2Results.join('');
+            
+            // Test 3: Check Storage Functions
+            const test3Div = document.getElementById('test3');
+            let test3Results = [];
+            
+            if (typeof Storage !== 'undefined') {
+                test3Results.push('<span class="success">✓ Storage module loaded</span>');
+                
+                try {
+                    const adminConfig = Storage.getAdminConfig();
+                    test3Results.push(`<span class="info">Storage.getAdminConfig():</span>`);
+                    test3Results.push(`<pre>${JSON.stringify(adminConfig, null, 2)}</pre>`);
+                    
+                    const adminUser = Storage.getAdminUser();
+                    test3Results.push(`<span class="info">Storage.getAdminUser():</span>`);
+                    test3Results.push(`<pre>${JSON.stringify(adminUser, null, 2)}</pre>`);
+                } catch (e) {
+                    test3Results.push(`<span class="error">✗ Error calling Storage functions: ${e.message}</span>`);
+                }
+            } else {
+                test3Results.push('<span class="error">✗ Storage module NOT loaded</span>');
+            }
+            
+            test3Div.innerHTML = test3Results.join('');
+        }
+        
+        function testLogin() {
+            const username = document.getElementById('testUsername').value;
+            const password = document.getElementById('testPassword').value;
+            const test4Div = document.getElementById('test4');
+            
+            console.log(`Testing login with username: "${username}", password: "${password}"`);
+            
+            let results = [];
+            
+            // Check if ADMIN_USER is defined
+            if (typeof ADMIN_USER === 'undefined') {
+                results.push('<span class="error">✗ ADMIN_USER is not defined</span>');
+                test4Div.innerHTML = results.join('');
+                return;
+            }
+            
+            results.push(`<span class="info">ADMIN_USER.username = "${ADMIN_USER.username}"</span>`);
+            results.push(`<span class="info">ADMIN_USER.password = "${ADMIN_USER.password}"</span>`);
+            
+            // Check credentials
+            const usernameMatch = username === ADMIN_USER.username;
+            const passwordMatch = password === ADMIN_USER.password;
+            
+            results.push(`<span class="info">Username match: ${usernameMatch}</span>`);
+            results.push(`<span class="info">Password match: ${passwordMatch}</span>`);
+            
+            if (usernameMatch && passwordMatch) {
+                results.push('<span class="success">✓ Credentials match! Login should succeed.</span>');
+                
+                // Try to call loginUser
+                try {
+                    if (typeof Auth !== 'undefined' && typeof Auth.loginUser !== 'undefined') {
+                        Auth.loginUser(ADMIN_USER);
+                        results.push('<span class="success">✓ Auth.loginUser() called successfully</span>');
+                    } else {
+                        results.push('<span class="error">✗ Auth.loginUser is not available</span>');
+                    }
+                } catch (e) {
+                    results.push(`<span class="error">✗ Error calling Auth.loginUser(): ${e.message}</span>`);
+                }
+            } else {
+                results.push('<span class="error">✗ Credentials do not match</span>');
+            }
+            
+            test4Div.innerHTML = results.join('');
+        }
+        
+        function checkLocalStorage() {
+            const test5Div = document.getElementById('test5');
+            let results = [];
+            
+            const currentUser = localStorage.getItem('ese_currentUser');
+            const adminUser = localStorage.getItem('ese_adminUser');
+            
+            results.push(`<span class="info">ese_currentUser:</span>`);
+            results.push(`<pre>${currentUser || 'null'}</pre>`);
+            
+            results.push(`<span class="info">ese_adminUser:</span>`);
+            results.push(`<pre>${adminUser || 'null'}</pre>`);
+            
+            if (currentUser) {
+                try {
+                    const parsed = JSON.parse(currentUser);
+                    results.push(`<span class="info">Parsed current user:</span>`);
+                    results.push(`<pre>${JSON.stringify(parsed, null, 2)}</pre>`);
+                } catch (e) {
+                    results.push(`<span class="error">✗ Error parsing current user: ${e.message}</span>`);
+                }
+            }
+            
+            test5Div.innerHTML = results.join('');
+        }
+        
+        // Run tests when page loads
+        window.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>

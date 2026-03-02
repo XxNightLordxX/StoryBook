@@ -1,0 +1,37 @@
+{
+  "total": 35,
+  "passed": 21,
+  "failed": 14,
+  "categories": {
+    "screenshots": {
+      "passed": 2,
+      "failed": 4,
+      "total": 6
+    },
+    "leaderboards": {
+      "passed": 5,
+      "failed": 1,
+      "total": 6
+    },
+    "achievements": {
+      "passed": 3,
+      "failed": 2,
+      "total": 5
+    },
+    "analytics": {
+      "passed": 4,
+      "failed": 2,
+      "total": 6
+    },
+    "performance": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "integration": {
+      "passed": 0,
+      "failed": 5,
+      "total": 5
+    }
+  }
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test 3 - DOMContentLoaded</title>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+  <h1>Test Page 3 - DOMContentLoaded Test</h1>
+  <div id="output"></div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOMContentLoaded fired!');
+      document.getElementById('output').innerHTML = '<p style="color:green">DOMContentLoaded fired successfully!</p>';
+    });
+    
+    // Also test window.onload
+    window.onload = () => {
+      console.log('window.onload fired!');
+      document.getElementById('output').innerHTML += '<p style="color:blue">window.onload fired successfully!</p>';
+    };
+    
+    // Test immediate execution
+    console.log('Script executed immediately');
+    document.getElementById('output').innerHTML = '<p>Script executed immediately</p>';
+  </script>
+</body>
+</html>

@@ -1,0 +1,374 @@
+/**
+ * Social Sharing Styles
+ * Styles for social sharing interface
+ */
+
+/* Share Modal */
+.share-content {
+  max-width: 600px;
+  width: 90%;
+}
+
+.share-options {
+  margin-bottom: 24px;
+}
+
+.share-type-selector {
+  margin-bottom: 16px;
+}
+
+.share-type-selector label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.share-type-selector select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+}
+
+.share-type-selector select:hover {
+  border-color: #667eea;
+}
+
+.share-content-input,
+.share-url-input {
+  margin-bottom: 16px;
+}
+
+.share-content-input label,
+.share-url-input label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.share-content-input textarea,
+.share-url-input input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.share-content-input textarea:focus,
+.share-url-input input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.share-content-input textarea[readonly] {
+  background: #f9f9f9;
+  cursor: default;
+}
+
+/* Share Platforms */
+.share-platforms {
+  margin-bottom: 24px;
+}
+
+.share-platforms h3 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.platform-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.platform-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+}
+
+.platform-btn:hover {
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.platform-btn:active {
+  transform: translateY(0);
+}
+
+.platform-icon {
+  font-size: 28px;
+}
+
+.platform-name {
+  text-align: center;
+}
+
+/* Platform-specific styles */
+.native-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+}
+
+.native-btn:hover {
+  background: linear-gradient(135deg, #5a6fd6 0%, #6a4190 100%);
+}
+
+.twitter-btn:hover {
+  border-color: #1DA1F2;
+  background: #1DA1F2;
+  color: white;
+}
+
+.facebook-btn:hover {
+  border-color: #4267B2;
+  background: #4267B2;
+  color: white;
+}
+
+.linkedin-btn:hover {
+  border-color: #0077B5;
+  background: #0077B5;
+  color: white;
+}
+
+.whatsapp-btn:hover {
+  border-color: #25D366;
+  background: #25D366;
+  color: white;
+}
+
+.reddit-btn:hover {
+  border-color: #FF4500;
+  background: #FF4500;
+  color: white;
+}
+
+.email-btn:hover {
+  border-color: #EA4335;
+  background: #EA4335;
+  color: white;
+}
+
+.copy-btn:hover {
+  border-color: #34A853;
+  background: #34A853;
+  color: white;
+}
+
+/* Share History */
+.share-history {
+  margin-bottom: 24px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.share-history h3 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.history-icon {
+  font-size: 20px;
+}
+
+.history-type {
+  flex: 1;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.history-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.no-history {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 20px;
+}
+
+/* Share Statistics */
+.share-stats {
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.share-stats h3 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.stat-label {
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+}
+
+.stat-value {
+  font-weight: bold;
+  color: #667eea;
+  font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .platform-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .history-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .share-options,
+  .share-history,
+  .share-stats {
+    background: #2d2d2d;
+  }
+  
+  .share-type-selector label,
+  .share-content-input label,
+  .share-url-input label,
+  .share-platforms h3,
+  .share-history h3,
+  .share-stats h3 {
+    color: #e0e0e0;
+  }
+  
+  .share-type-selector select,
+  .share-content-input textarea,
+  .share-url-input input {
+    background: #3d3d3d;
+    border-color: #555;
+    color: #e0e0e0;
+  }
+  
+  .share-content-input textarea[readonly] {
+    background: #2d2d2d;
+  }
+  
+  .platform-btn {
+    background: #3d3d3d;
+    border-color: #555;
+    color: #e0e0e0;
+  }
+  
+  .platform-btn:hover {
+    background: #4d4d4d;
+  }
+  
+  .history-item {
+    background: #3d3d3d;
+    border-color: #555;
+  }
+  
+  .history-type {
+    color: #e0e0e0;
+  }
+  
+  .stat-item {
+    background: #3d3d3d;
+    border-color: #555;
+  }
+  
+  .stat-label {
+    color: #b0b0b0;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.share-platforms,
+.share-history,
+.share-stats {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Loading State */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}

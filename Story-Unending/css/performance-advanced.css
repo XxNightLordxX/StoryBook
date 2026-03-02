@@ -1,0 +1,372 @@
+/**
+ * Performance Optimizations CSS
+ * 
+ * Styles for advanced performance features including:
+ * - Virtual scrolling containers
+ * - Lazy loading states
+ * - Performance monitoring UI
+ * - Connection-aware loading indicators
+ */
+
+/* ============================================================================
+   VIRTUAL SCROLLING
+   ============================================================================ */
+
+.virtual-scroll-container {
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  will-change: scroll-position;
+}
+
+.virtual-scroll-item {
+  position: absolute;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+}
+
+.virtual-scroll-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  will-change: transform;
+}
+
+/* ============================================================================
+   IMAGE LAZY LOADING
+   ============================================================================ */
+
+img[data-src],
+img[data-lazy] {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  background-color: #f0f0f0;
+  min-height: 50px;
+}
+
+img.loaded {
+  opacity: 1;
+}
+
+img.error {
+  opacity: 0.5;
+  background-color: #ffcccc;
+}
+
+/* Loading skeleton for lazy images */
+img[data-src]:not(.loaded)::before,
+img[data-lazy]:not(.loaded)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ============================================================================
+   PERFORMANCE MONITORING UI
+   ============================================================================ */
+
+.performance-monitor {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.9);
+  color: #00ff00;
+  padding: 15px;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  z-index: 10000;
+  max-width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.performance-monitor.minimized {
+  max-height: 40px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.performance-monitor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #333;
+}
+
+.performance-monitor-title {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.performance-monitor-toggle {
+  background: none;
+  border: none;
+  color: #00ff00;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.performance-metric {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding: 3px 0;
+}
+
+.performance-metric-label {
+  color: #888;
+}
+
+.performance-metric-value {
+  font-weight: bold;
+}
+
+.performance-metric-value.good {
+  color: #00ff00;
+}
+
+.performance-metric-value.warning {
+  color: #ffff00;
+}
+
+.performance-metric-value.bad {
+  color: #ff0000;
+}
+
+.performance-section {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #333;
+}
+
+.performance-section-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+/* ============================================================================
+   CONNECTION STATUS INDICATOR
+   ============================================================================ */
+
+.connection-status {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.connection-status.online {
+  background: #4caf50;
+  color: white;
+}
+
+.connection-status.offline {
+  background: #f44336;
+  color: white;
+}
+
+.connection-status.slow {
+  background: #ff9800;
+  color: white;
+}
+
+.connection-status-icon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ============================================================================
+   LOADING INDICATORS
+   ============================================================================ */
+
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-bar {
+  width: 100%;
+  height: 4px;
+  background: #f0f0f0;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.loading-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ============================================================================
+   PERFORMANCE OPTIMIZATION UTILITIES
+   ============================================================================ */
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Prevent layout thrashing */
+.no-layout-thrashing {
+  contain: layout style paint;
+}
+
+/* Optimize rendering */
+.optimize-rendering {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth scrolling */
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+/* Prevent text selection during interactions */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* ============================================================================
+   RESPONSIVE PERFORMANCE
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .performance-monitor {
+    bottom: 10px;
+    right: 10px;
+    max-width: 250px;
+    font-size: 11px;
+    padding: 10px;
+  }
+
+  .connection-status {
+    top: 10px;
+    right: 10px;
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .performance-monitor {
+    background: rgba(20, 20, 20, 0.95);
+    color: #00ff00;
+  }
+
+  .performance-metric-label {
+    color: #666;
+  }
+
+  img[data-src],
+  img[data-lazy] {
+    background-color: #2a2a2a;
+  }
+
+  img.error {
+    background-color: #3a1a1a;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  img[data-src],
+  img[data-lazy] {
+    transition: none;
+  }
+
+  .loading-spinner {
+    animation: none;
+  }
+
+  .loading-bar-fill {
+    animation: none;
+  }
+
+  .connection-status-icon {
+    animation: none;
+  }
+
+  .smooth-scroll {
+    scroll-behavior: auto;
+  }
+}

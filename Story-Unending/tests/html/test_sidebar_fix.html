@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Sidebar Fix</title>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Testing Sidebar Fix</h1>
+    <div id="test-output"></div>
+    
+    <script>
+        // Test if sidebar.js loads without errors
+        const script = document.createElement('script');
+        script.src = 'js/ui/sidebar.js';
+        script.onload = function() {
+            document.getElementById('test-output').innerHTML = '<p style="color: green;">✓ sidebar.js loaded successfully!</p>';
+            console.log('sidebar.js loaded successfully');
+        };
+        script.onerror = function() {
+            document.getElementById('test-output').innerHTML = '<p style="color: red;">✗ sidebar.js failed to load!</p>';
+            console.error('sidebar.js failed to load');
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
