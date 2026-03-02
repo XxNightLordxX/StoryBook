@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 1 - TESTS 1.3-1.5: Verify No Duplicates</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .pass { background-color: #d4edda; border-color: #c3e6cb; }
+        .fail { background-color: #f8d7da; border-color: #f5c6cb; }
+        .step { margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-left: 3px solid #007bff; }
+        .success { color: green; }
+        .error { color: red; }
+        button { padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; }
+        #log { background-color: #f8f9fa; padding: 10px; border: 1px solid #ccc; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px; }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <h1>Phase 1 - TESTS 1.3-1.5: Verify No Duplicates in 10 Chapters</h1>
+    
+    <div class="test-section">
+        <h2>Test Information</h2>
+        <p><strong>Priority:</strong> P0 - CRITICAL</p>
+        <p><strong>Estimated Time:</strong> 10 minutes</p>
+        <p><strong>Prerequisites:</strong> TEST 1.2 passed</p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test Controls</h2>
+        <button id="startTest">Start Tests</button>
+        <button id="resetTest" disabled>Reset Tests</button>
+    </div>
+    
+    <div id="log"></div>
+    <div id="test-results"></div>
+    
+    <script src="backstory-engine.js?v=5"></script>
+    <script src="story-engine.js?v=5"></script>
+    <script src="js/uniqueness-tracker.js?v=5"></script>
+    <script src="js/uniqueness-tracker-wrapper.js?v=1"></script>
+    <script>
+        const logDiv = document.getElementById('log');
+        const resultsDiv = document.getElementById('test-results');
+        const startBtn = document.getElementById('startTest');
+        const resetBtn = document.getElementById('resetTest');
+        
+        function log(msg) {
+            const p = document.createElement('p');
+            p.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            logDiv.appendChild(p);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        function addStep(num, desc, expected, actual, passed) {
+            const div = document.createElement('div');
+            div.className = 'step';
+            const resultClass = passed ? 'success' : 'error';
+            div.innerHTML = `<strong>Step ${num}:</strong> ${desc}<br><span class="${resultClass}">${passed ? '✓ PASS' : '✗ FAIL'}</span><br><em>Expected:</em> ${expected}<br><em>Actual:</em> ${actual}`;
+            resultsDiv.appendChild(div);
+        }
+        
+        async function runTests() {
+            startBtn.disabled = true;
+            resetBtn.disabled = true;
+            resultsDiv.innerHTML = '';
+            logDiv.innerHTML = '';
+            
+            log('Starting TESTS 1.3-1.5...');
+            
+            // Wait for scripts to load
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            if (typeof window.StoryEngine === 'undefined' || typeof window.UniquenessTracker === 'undefined') {
+                log('ERROR: Required modules not loaded!');
+                return;
+            }
+            
+            try {
+                // Generate 10 chapters first
+                log('Generating 10 chapters...');
+                for (let i = 1; i <= 10; i++) {
+                    log(`Chapter ${i}...`);
+                    window.StoryEngine.generateChapter();
+                }
+                log('10 chapters generated');
+                
+                // TEST 1.3: Verify No Duplicate Paragraphs
+                log('TEST 1.3: Checking for duplicate paragraphs...');
+                const paragraphs = window.UniquenessTracker.getTrackedParagraphs();
+                const uniqueParagraphs = new Set(paragraphs);
+                const duplicateParagraphs = paragraphs.length - uniqueParagraphs.size;
+                const test13Passed = duplicateParagraphs === 0;
+                addStep(1.3, 'No duplicate paragraphs in 10 chapters', '0 duplicates', `${duplicateParagraphs} duplicates`, test13Passed);
+                
+                // TEST 1.4: Verify No Duplicate Titles
+                log('TEST 1.4: Checking for duplicate titles...');
+                const titles = window.UniquenessTracker.getTrackedTitles();
+                const uniqueTitles = new Set(titles);
+                const duplicateTitles = titles.length - uniqueTitles.size;
+                const test14Passed = duplicateTitles === 0;
+                addStep(1.4, 'No duplicate titles in 10 chapters', '0 duplicates', `${duplicateTitles} duplicates`, test14Passed);
+                
+                // TEST 1.5: Verify No Duplicate Chapters
+                log('TEST 1.5: Checking for duplicate chapters...');
+                const chapters = window.UniquenessTracker.getTrackedChapters();
+                const uniqueChapters = new Set(chapters);
+                const duplicateChapters = chapters.length - uniqueChapters.size;
+                const test15Passed = duplicateChapters === 0;
+                addStep(1.5, 'No duplicate chapters in 10 chapters', '0 duplicates', `${duplicateChapters} duplicates`, test15Passed);
+                
+                // Summary
+                const allPassed = test13Passed && test14Passed && test15Passed;
+                const summary = document.createElement('div');
+                summary.className = `test-section ${allPassed ? 'pass' : 'fail'}`;
+                summary.innerHTML = `
+                    <h2>Test Summary</h2>
+                    <p><strong>Overall Result:</strong> ${allPassed ? '✓ PASS' : '✗ FAIL'}</p>
+                    <p><strong>Tests Passed:</strong> ${allPassed ? '3/3' : 'Some tests failed'}</p>
+                    <p><strong>Verification Points:</strong></p>
+                    <ul>
+                        <li>${test13Passed ? '✓' : '✗'} All paragraphs are unique (${paragraphs.length} total, ${uniqueParagraphs.size} unique)</li>
+                        <li>${test14Passed ? '✓' : '✗'} All titles are unique (${titles.length} total, ${uniqueTitles.size} unique)</li>
+                        <li>${test15Passed ? '✓' : '✗'} All chapters are unique (${chapters.length} total, ${uniqueChapters.size} unique)</li>
+                    </ul>
+                `;
+                resultsDiv.appendChild(summary);
+                
+                log('Tests completed!');
+                resetBtn.disabled = false;
+                
+            } catch (error) {
+                log(`Error: ${error.message}`);
+                resetBtn.disabled = false;
+            }
+        }
+        
+        function resetTests() {
+            if (window.UniquenessTracker) window.UniquenessTracker.clearAll();
+            if (window.StoryEngine) window.StoryEngine.reset();
+            resultsDiv.innerHTML = '';
+            logDiv.innerHTML = '';
+            startBtn.disabled = false;
+            resetBtn.disabled = true;
+            log('Reset complete');
+        }
+        
+        startBtn.addEventListener('click', runTests);
+        resetBtn.addEventListener('click', resetTests);
+    </script>
+</body>
+</html>
