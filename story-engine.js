@@ -2024,6 +2024,27 @@ const StoryEngine = (() => {
     }
 
     return chapter;
+
+      // Track content with UniquenessTracker for Phase 1 testing
+      if (typeof window !== 'undefined' && window.UniquenessTracker) {
+        // Track title
+        if (chapter.title) {
+          window.UniquenessTracker.addTitle(chapter.title);
+        }
+        
+        // Track all paragraphs
+        if (chapter.paragraphs && Array.isArray(chapter.paragraphs)) {
+          chapter.paragraphs.forEach(paragraph => {
+            if (paragraph && typeof paragraph === 'string') {
+              window.UniquenessTracker.addParagraph(paragraph);
+            }
+          });
+        }
+        
+        // Track entire chapter content
+        const chapterContent = chapter.paragraphs ? chapter.paragraphs.join(' ') : '';
+        window.UniquenessTracker.addChapter(chapterContent);
+      }
   }
 
   // ============================================
