@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 1 - TEST 1.2 V2</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .pass { background-color: #d4edda; border-color: #c3e6cb; }
+        .fail { background-color: #f8d7da; border-color: #f5c6cb; }
+        .step { margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-left: 3px solid #007bff; }
+        .success { color: green; }
+        .error { color: red; }
+        button { padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; }
+        #log { background-color: #f8f9fa; padding: 10px; border: 1px solid #ccc; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Phase 1 - TEST 1.2 V2: Generate 10 Chapters and Verify Tracking</h1>
+    
+    <div class="test-section">
+        <h2>Test Controls</h2>
+        <button id="startTest">Start Test</button>
+        <button id="resetTest" disabled>Reset Test</button>
+    </div>
+    
+    <div id="log"></div>
+    <div id="test-results"></div>
+    
+    <script src="backstory-engine.js?v=5"></script>
+    <script src="story-engine.js?v=5"></script>
+    <script src="js/uniqueness-tracker.js?v=5"></script>
+    <script>
+        const logDiv = document.getElementById('log');
+        const resultsDiv = document.getElementById('test-results');
+        const startBtn = document.getElementById('startTest');
+        const resetBtn = document.getElementById('resetTest');
+        
+        function log(msg) {
+            const p = document.createElement('p');
+            p.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            logDiv.appendChild(p);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        function addStep(num, desc, expected, actual, passed) {
+            const div = document.createElement('div');
+            div.className = 'step';
+            const resultClass = passed ? 'success' : 'error';
+            div.innerHTML = `<strong>Step ${num}:</strong> ${desc}<br><span class="${resultClass}">${passed ? '✓ PASS' : '✗ FAIL'}</span><br><em>Expected:</em> ${expected}<br><em>Actual:</em> ${actual}`;
+            resultsDiv.appendChild(div);
+        }
+        
+        async function runTest() {
+            startBtn.disabled = true;
+            resetBtn.disabled = true;
+            resultsDiv.innerHTML = '';
+            logDiv.innerHTML = '';
+            
+            log('Starting TEST 1.2...');
+            
+            // Wait for scripts to load
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            log('Checking modules...');
+            log(`StoryEngine: ${typeof window.StoryEngine}`);
+            log(`UniquenessTracker: ${typeof window.UniquenessTracker}`);
+            
+            if (typeof window.StoryEngine === 'undefined') {
+                log('ERROR: StoryEngine not loaded!');
+                return;
+            }
+            
+            if (typeof window.UniquenessTracker === 'undefined') {
+                log('ERROR: UniquenessTracker not loaded!');
+                return;
+            }
+            
+            try {
+                log('Generating 10 chapters...');
+                for (let i = 1; i <= 10; i++) {
+                    log(`Chapter ${i}...`);
+                    const chapter = window.StoryEngine.generateChapter();
+                    log(`  Title: ${chapter.title}`);
+                }
+                
+                const paragraphs = window.UniquenessTracker.getTrackedParagraphs();
+                const titles = window.UniquenessTracker.getTrackedTitles();
+                const chapters = window.UniquenessTracker.getTrackedChapters();
+                
+                addStep(1, '10 chapters generated', '10', '10', true);
+                addStep(2, 'Paragraphs tracked', '> 0', paragraphs.length, paragraphs.length > 0);
+                addStep(3, 'Titles tracked', '10', titles.length, titles.length === 10);
+                addStep(4, 'Chapters tracked', '10', chapters.length, chapters.length === 10);
+                
+                const allPassed = paragraphs.length > 0 && titles.length === 10 && chapters.length === 10;
+                const summary = document.createElement('div');
+                summary.className = `test-section ${allPassed ? 'pass' : 'fail'}`;
+                summary.innerHTML = `<h2>Test Summary</h2><p><strong>Result:</strong> ${allPassed ? '✓ PASS' : '✗ FAIL'}</p>`;
+                resultsDiv.appendChild(summary);
+                
+                log('Test completed!');
+                resetBtn.disabled = false;
+            } catch (error) {
+                log(`Error: ${error.message}`);
+                resetBtn.disabled = false;
+            }
+        }
+        
+        function resetTest() {
+            if (window.UniquenessTracker) window.UniquenessTracker.clearAll();
+            if (window.StoryEngine) window.StoryEngine.reset();
+            resultsDiv.innerHTML = '';
+            logDiv.innerHTML = '';
+            startBtn.disabled = false;
+            resetBtn.disabled = true;
+            log('Reset complete');
+        }
+        
+        startBtn.addEventListener('click', runTest);
+        resetBtn.addEventListener('click', resetTest);
+    </script>
+</body>
+</html>
